@@ -1,0 +1,179 @@
+.setupLink {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    display: block;
+    border: 1px solid #ddd;
+    color: #000;
+    transition: all 0.2s ease;
+    margin-bottom: 20px;
+    position: relative;
+    padding-right: 40px;
+    &:hover {
+        box-shadow: 0px 0px 15px 3px rgb(43 154 255 / 15%);
+        border: 1px solid #2b9aff;
+        .caretRight {
+            right: 20px;
+        }
+    }
+    .bigLink {
+        font-size: 20px;
+        line-height: 20px;
+        margin-bottom: 10px;
+        display: block;
+    }
+    .smallLink {
+        font-size: 18px;
+        line-height: 22px;
+        display: block;
+        margin-bottom: 7px;
+    } 
+    .smallLinkGrey {
+        font-size: 14px;
+        line-height: 16px;
+        display: block;
+        opacity: 0.6;
+    }
+    .caretRight {
+        position: absolute;
+        right: 25px;
+        top: calc(50% - 7px);
+        transition: all 0.2s;
+    }
+
+}
+
+.setUpiconWrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    img {
+        width: 35px;
+    }
+    .bigLink {
+        color: #fff;
+        margin: 0;
+    }
+}
+
+.boxHolderLeftsecSetupBg {
+    // background-color: #ffe4d6;
+}
+
+.backlinkBtnSec {
+    // color: #f17222;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    &:hover {
+        box-shadow: 0px 5px 10px rgba(189, 80, 13, 0.3);
+        // color: #f17222;
+    }
+}
+.authWrapperSecSetup {
+    // background: -webkit-linear-gradient(left , #f17222 0% , #f17222 65% , #FFF 65% , #FFF 100%);
+    position: relative;
+    @media screen and (max-width: 576px) {
+        background: #f17222;
+        padding-top: 80px;
+    }
+    .authHolder {
+        box-shadow: 0px 10px 20px rgb(0 0 0 / 10%);
+        border-radius: 20px;
+        width: 1000px;
+        max-width: 90%;
+        display: flex;
+        min-height: 80vh;
+        // background-color: rgb(255 255 255 / 6%);
+    }
+}
+
+.passwordStatusWrap {
+    display: inline-block;
+    margin-left: 20px;
+    h2 {
+        font-size: 18px;
+        font-weight: 400;
+        color: #fff;
+        margin-bottom: 15px;
+        span {
+            font-size: 16px;
+            color: #FF443C;
+            font-weight: 400;
+        }  
+    }
+    .pswStatusTxt {
+        font-size: 16px;
+        color: #fff;
+        margin-bottom: 10px;
+        display: block;
+        line-height: 16px;
+        img {
+            margin-right: 10px;
+            position: relative;
+            top: -1px;
+            width: 13px;
+            height: 10px;
+            object-fit: contain;
+        }
+    }
+    
+}
+
+.passwordSetWrap {
+    .greyInpField {
+        // background-color: #2C2C2C !important;
+    }
+}
+.skyAddressFieldWrap {
+    margin-top: 30px;
+}
+.passwordSetWrap {
+    display: flex;
+}
+.formField {
+    input {
+        display: inline-block;
+        width: 320px;
+        background-color: transparent;
+        border-radius: 4px;
+        // border: 2px solid rgba(18, 122, 244, 0.48);
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        vertical-align: top;
+    }
+    .domainName {
+        display: inline-block;
+        vertical-align: text-top;
+        font-size: 15px;
+        color: #fff !important;
+        line-height: 15px;
+        margin-left: 5px;
+    }
+}
+input{
+    height: auto;
+}
+.picturePswImgWrap {
+    position: relative;
+    .charNameWrap {
+        position: absolute;
+        top: -7px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        line-height: 10px;
+        span {
+            padding: 3px 5px;
+            background-color: #2b9aff;
+            color: #fff;
+            font-size: 10px;
+            display: inline-block !important;
+            max-width: 90%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 10px;
+            margin: 0;
+            border-radius: 5px;
+        }
+    }
+}

@@ -1,0 +1,237 @@
+<div class="transWrapper" *ngIf="!afterClick">
+  <div class="headerbackWrap">
+    <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+    <span class="titleOne">Withdraw CC from {{this.userLocal}}</span>
+  </div>
+  <div class="transBody">
+    <!-- <ng-container *ngIf="showNormal">
+      <form (ngSubmit)="withdraw()">
+        <h2 class="subInnerHeader">Withdraw</h2>
+      <div class="formField">
+        <label>Enter Amount to withdraw</label>
+        <input #autofocus name="amount" type="text" placeholder="XX" [(ngModel)]="amount">
+      </div>
+      <div class="text-center">
+        <button class="btnCustomBlack" (click)="withdraw()">Withdraw</button>
+      </div>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="showError">
+      <ng-lottie height="100px" [options]="errorOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <div class="text-center" style="color:#ffffff;margin-bottom: 10px">{{errorMessage}}</div>
+      <div class="text-center">
+        <button class="btnCustomBlack" (click)="hideErrorMessage()">
+          <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="showLoader">
+      <div class="text-center subInnerHeader">
+        <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+        <span style="color:#ffffff">Fetching CloudCoin..</span>
+      </div>
+    </ng-container> -->
+    <ng-container *ngIf="showNormal">
+      <form [formGroup]="exportForm">
+        <!-- <div class="formInline">
+          <label>From: </label>
+          <span>johnHaltiwanger.skywallet.cc</span>
+          <span>{{skywallet}}</span> -->
+        <!-- </div> -->
+        <!-- <div class="gap20"></div> -->
+        <div class="formField">
+          <label for="username">Withdraw to:</label>
+          <div class="uploadFileWrap">
+            <span>{{file}}</span>
+            <div class="uploadIconWrap" (click)="getPath()">
+              <!-- <input type="file" formControlName="folder" disabled> -->
+              <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+            </div>
+          </div>
+          <!-- <ng-container>
+            <span class="errorMsg"><img src="assets/error_info_icon.svg" alt="error icon"> Do not use space for your username</span>
+            <span class="successMsg"><img src="assets/info_green.svg" alt="error icon"> CC 1000 have been deteced</span>
+          </ng-container> -->
+        </div>
+        <!-- <div class="row">
+          <div class="col-md-6">
+              <div class="formField">
+                  <label for="username">Download to:</label>
+                  <div class="fileLocationgrip">
+                      <span></span>
+                      <img src="assets/folder.svg" alt="folder" class="float-right">
+                      <div class="clearfix"></div>
+                  </div>
+                  <a href="javascript:void(0);" class="fileLocationIcon btnCustomBlue">change location</a>
+                  <span class="errorMsg">Please enter a username for your Cloud wallet</span>
+              </div>
+          </div>
+      </div> -->
+        <div class="gap10"></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="formField">
+              <label for="">Amount</label>
+            </div>
+          </div>
+          <div class="col-md-6 dispFlex dispFlexPriceTrans">
+            <div class="inputTagWrapper">
+              <span href="javascript:;" class="inpTag">CC</span>
+              <input type="tel" style="text-align:center;" placeholder="0" formControlName="amount"
+                (keypress)="_keyUp($event)">
+            </div>
+            <!-- <img src="assets/equal.svg" alt="" class="equalSign">
+          <div class="inputTagWrapper">
+            <select class="inpTagSelect" name="" id="">
+              <option value="USD" selected="selected">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+            <input type="text" placeholder="0">
+          </div> -->
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col-md-6">
+              <div class="formField">
+                  <label for="username">Amount</label>
+                  <div class="inputTagWrapper">
+                      <a href="javascript:;" class="inpTag">CC</a>
+                      <input type="text" placeholder="0">
+                  </div>
+              </div>
+          </div>
+      </div> -->
+        <!-- <div class="exchangeDesc">
+          <img src="assets/exchange.svg" alt="">
+          <span>1 USD = 100 CC</span>
+      </div> -->
+        <!-- <div class="row">
+          <div class="col-md-6">
+              <div class="formField">
+                  <div class="inputTagWrapper">
+                      <select class="inpTagSelect" name="" id="">
+                          <option value="USD">USD</option>
+                          <option value="EUR">EUR</option>
+                          <option value="GBP">GBP</option>
+                      </select>
+                      <input type="text" placeholder="0">
+                  </div>
+              </div>
+          </div>
+      </div> -->
+        <div class="gap20"></div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="formField">
+              <label for="">Format <img data-toggle="tooltip" data-placement="top"
+                  ngbTooltip="CCs are hidden inside files such as PNG or zip. The recipient will receive it in this format."
+                  class="infoicon" src="assets/info.svg" alt=""></label>
+            </div>
+            <div class="radioInpHolder">
+              <input type="radio" name="format" formControlName="format" value="png" checked><span>PNG file</span>
+            </div>
+            <div class="radioInpHolder">
+              <input type="radio" name="format" formControlName="format" value="zip"><span>ZIP file</span>
+            </div>
+            <div class="radioInpHolder">
+              <input type="radio" name="format" formControlName="format" value="bin"><span>Binary file</span>
+            </div>
+            <div class="gap10"></div>
+            <!-- <p class="smallPara"><small>You can choose your own image file or use our default image. Your coin
+                serial number and passwords are stored in the metadata, not in the image</small></p>
+            <div class="formField">
+              <div class="uploadFileWrap">
+                <span>{{fil || "Choose an image (Optional)"}}</span>
+                <div class="uploadIconWrap">
+                  <input type="file" accept=".png, .id. .bin" (change)="getPng($event.target)">
+                  <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+                </div>
+              </div>
+              <ng-container>
+                <span class="errorMsg"><img src="assets/error_info_icon.svg" alt="error icon"> Do not use space for your
+                  username</span>
+                <span class="successMsg"><img src="assets/info_green.svg" alt="error icon"> CC 1000 have been
+                  deteced</span>
+              </ng-container>
+            </div> -->
+            <!-- <div class="formField" [ngClass]="{disabled: pngCheck}">
+                  <input type="file" (change)="onFileChanged($event)" [disabled]="pngCheck">
+              </div> -->
+
+            <div class="gap10"></div>
+            <!-- <div class="formField">
+              <label for="">Transaction Memo <small>(optional)</small></label>
+              <input type="text" formControlName="tag" placeholder="Ex: Send it to Antoine">
+              <textarea placeholder="Ex. Gift for John" [disabled]="pngCheck"></textarea>
+            </div> -->
+            <div class="formField">
+              <label for="">Name Tag <small>(optional)</small></label>
+              <input type="text" formControlName="fileName" placeholder="Ex: Coins">
+            </div>
+            <div *ngIf="isValidInput('fileName')">
+              <span class="errorMsg" *ngIf="exportForm.controls['fileName'].errors?.maxlength"><img
+                  src="assets/error_info_icon.svg" alt="error icon">Name Tag can't be longer than 64
+                characters.</span>
+            </div>
+            <div class="gap20"></div>
+            <div class="hideimage">
+              <canvas #quoteCanvas width="300" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="showError">
+      <ng-lottie height="100px" [options]="errorOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <div class="text-center" style="color:#ffffff;margin-bottom: 10px">{{errorMessage}}</div>
+      <div class="text-center">
+        <button class="customBtn" (click)="hideErrorMessage()">
+          <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="showLoader">
+      <div class="text-center subInnerHeader">
+        <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+        <span style="color:#ffffff">Fetching CC..</span>
+      </div>
+    </ng-container>
+    <div class="transBottomFooter">
+      <a href="javascript:void(0);" [ngClass]="{'btnDisable': this.exportForm.invalid || file =='Choose folder'}"
+        (click)="exoprt()" class="btnCustomBlue">Withdraw CC</a>
+    </div>
+  </div>
+</div>
+
+<div class="transWrapper" *ngIf="afterClick">
+  <div class="headerbackWrap">
+    <span class="titleOne">You withdrew CC </span>
+  </div>
+  <div class="transBody">
+    <div class="gap10"></div>
+    <div class="formField">
+      <label for="">Withdrawn to: &nbsp; <span style="opacity: 0.7;">../Downloads</span></label>
+    </div>
+    <div class="formField">
+      <label for="">File format: &nbsp; <span style="opacity: 0.7;" *ngIf="pngCheck">PNG</span> <span
+          style="opacity: 0.7;" *ngIf="!pngCheck">zip</span></label>
+    </div>
+    <div class="formField">
+      <label for="">Current balance: &nbsp; <span style="opacity: 0.7;">{{transaction?.payload?.balance}}</span>
+      </label>
+    </div>
+    <div class="gap20"></div>
+    <div class="transBottomFooter">
+      <a href="javascript:;" class="btnCustomBlue btnLarge" (click)="go()">close</a>
+    </div>
+  </div>
+</div>
+<div class="onEventLoadWrap" *ngIf="showLoader">
+  <ng-container>
+    <div class="text-center loader_show">
+      <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <span style="color:#ffffff">{{loadingMessage}}</span>
+    </div>
+  </ng-container>
+</div>

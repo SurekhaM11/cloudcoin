@@ -1,0 +1,153 @@
+.container {
+    margin-top: 5%;
+    margin-right: 2%;
+    margin-left: 5%;
+}
+
+.nft-icon{
+    height: 40px;
+    width: 40px;
+}
+
+.nftGalleryWrap {
+    .btnFlexWrap {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+
+        @media (max-width: 576px) {
+            flex-wrap: wrap;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        a,
+        button {
+            margin-right: 15px;
+
+            @media (max-width: 576px) {
+                margin-right: 5px;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+.nftsHolder {
+    background-color: #fff;
+    //border-radius: 10px;
+    margin-bottom: 0.1rem;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+        .customCheckboxWrap {
+            opacity: 1;
+        }
+    }
+
+    &.checked {
+        .customCheckboxWrap {
+            opacity: 1;
+        }
+    }
+
+    .customCheckboxWrap {
+        position: absolute;
+        right: 0px;
+        top: 7px;
+        opacity: 0;
+        transition: all 0.1s ease;
+        // display: none;
+    }
+    // span{
+    //     display: block;
+    //     padding-left: auto;
+    //     font-size: 18px;
+    //     color: gray;
+    // }
+}
+.nftsHolderSm {
+    background-color: #fff;
+    //border-radius: 10px;
+    margin-bottom: 0.1rem;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+        .customCheckboxWrap {
+            opacity: 1;
+        }
+    }
+
+    &.checked {
+        .customCheckboxWrap {
+            opacity: 1;
+        }
+    }
+
+    .customCheckboxWrap {
+        position: absolute;
+        right: 0;
+        top: 7px;
+        opacity: 0;
+        transition: all 0.1s ease;
+    }
+    span{
+        display: block;
+        text-align: center;
+        font-size: 16px;
+        color: gray;
+    }
+}
+.nfts {
+    width: auto;
+    height: 150px;
+    background-size: cover;
+}
+
+.nftMainImgHolder {
+    background-color: #fff;
+    //border-radius: 10px;
+    margin-bottom: 0.1rem;
+
+    .nftMainImg {
+        // width: 100%;
+        height: 300px;
+
+        @media (max-width:576px) {
+            height: 300px;
+        }
+    }
+
+
+    .nftMainImgSm {
+        height: 250px;
+
+        @media (max-width:576px) {
+            height: 140px;
+        }
+    }
+}
+
+.authenticity_wrap {
+    display: flex;
+    align-items: flex-start;
+    margin-left: -10px;
+    margin-right: -10px;
+
+    @media screen and (max-width: 576px) {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .auth_left_panel,
+    .auth_right_panel {
+        padding: 0 10px;
+        width: 50%;
+
+        @media screen and (max-width: 576px) {
+            padding: 0 5px;
+        }
+    }
+}

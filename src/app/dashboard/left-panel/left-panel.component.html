@@ -1,0 +1,93 @@
+<div class="leftPanelHolder">
+    <div class="leftPlogoWrap">
+        <img src="assets/logo_new_only_cc.svg" alt="" class="lpLogoImg">
+    </div>
+    <div class="lpBodyWrap">
+        <div class="lpBodyTop">
+            <a class="lpuserName">
+                <span class="totBlncText">Total Balance</span>
+                <span class="totBlncVal">{{totalBalance + totalSkyBalance}} <sup>cc</sup></span>
+            </a>
+
+            <div class="walletInfoOuter">
+            <div class="walletInfoWrapper walletInfoLocal">
+            <div class="walletInfoHolder">
+                       <!-- <ul class="">
+                          <li class=""> -->
+                              <a   class="tab-item" [ngClass]="tabSelector == 'wallet' ? 'active' : ''"
+                              (click)="walletTab()">Wallets</a>
+                          <!-- </li> -->
+                          <!-- <li href="javascript:;" class="nav-item"> -->
+                              <a class="tab-item mr-auto" [ngClass]="tabSelector == 'skyvault' ? 'active' : ''"
+                              (click)="skyvaultTab()">SkyVaults</a>
+                              <a class="tab-item mr-auto" [ngClass]="tabSelector == 'nft' ? 'active' : ''"
+                              (click)="nftTab()">NFTs</a>
+                          <!-- </li>
+                       </ul> -->
+
+                </div>
+
+
+            <div class="tabBody">
+                <div *ngIf="tabSelector == 'wallet' ">
+                    <div class="" *ngFor="let data of all; let i = index;">
+                        <div class="walletAcntHolder" style="cursor: pointer;"
+                          [ngClass]="{'activeHolder': type === 'localwallet' && data.name === userLocal}"
+                          (click)="getWalletDetail(data.name)">
+                          <img src="assets/1093522-200.png" class="wallet-icon mr-3"alt="localwallet icon"><span class="acntVal mr-auto">{{data.name}}</span>
+                          <span class="acntVal">{{data.balance}}</span>
+                        </div>
+                    </div>
+
+                    <div class="walletInfoHolder">
+                        <div class="wltInfoLeft">
+                           <span>Create a New Wallet</span>
+                        </div>
+                        <a href="javascript:;" class="addWallet" routerLink="/dashboard/create-localwallet-dash"
+                        (click)="createWallet(userLocal)"><img
+                          src="assets/add_circle_img.svg" alt="add circle"></a>
+                    </div>
+
+            </div>
+            </div>
+
+                <div *ngIf="tabSelector == 'skyvault' ">
+
+                      <div class="" *ngFor="let data of allSky; let i = index;">
+                        <div class="walletAcntHolder" style="cursor: pointer;"
+                            [ngClass]="{'activeHolder': type === 'skywallet' && data.name === userSky}"
+                            (click)="getSkyDetail(data.name, data?.idcoin?.sn)">
+                            <img src="assets/skywallet-cloud-white.svg" class="mr-3" alt="skyvault img">
+                            <span class="acntHoldName mr-auto">{{data.name}}</span>
+                            <span class="acntVal">{{ type === 'skywallet' && data.name === userSky && check ?
+                                "counting"
+                                : data.balance}} <sup *ngIf="check==false">cc</sup></span>
+                        </div>
+                    </div>
+
+                    <div class="walletInfoHolder">
+                        <div class="wltInfoLeft">
+                           <span>Create a New SkyVault</span>
+                        </div>
+                        <a href="javascript:;" class="addWallet" routerLink="/dashboard/create-skyvault-dash"
+                        (click)='createSkyVault(userSky)'><img
+                          src="assets/add_circle_img.svg" alt="add circle"></a>
+                    </div>
+
+                </div>
+
+                <div *ngIf="tabSelector== 'nft' ">
+                    <div class="lpBottomPart">
+                        <a href="javascript:;" routerLink="/dashboard/create-nft-gallery" class="bottomLink"
+                          routerLinkActive="active" (click)='goToGallery("NFT")'  [routerLinkActiveOptions]="{exact:
+                        true}"><img style="margin-left:-10px;" src="assets/nft.png" alt="settings"> <span>NFT Gallery</span></a>
+                    </div>
+                </div>
+
+
+        </div>
+
+            </div>
+        </div>
+    </div>
+</div>

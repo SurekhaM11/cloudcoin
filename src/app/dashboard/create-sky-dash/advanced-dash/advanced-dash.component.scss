@@ -1,0 +1,115 @@
+.authWrapperAdvncSetp {
+    // background: -webkit-linear-gradient(left, #007a84 0%, #007a84 65%, #FFF 65%, #FFF 100%);
+    position: relative;
+
+    @media screen and (max-width: 576px) {
+        background: #007a84;
+        padding-top: 80px;
+    }
+
+    .authHolder {
+        box-shadow: 0px 10px 20px rgb(0 0 0 / 10%);
+        border-radius: 20px;
+        width: 1000px;
+        max-width: 90%;
+        display: flex;
+        min-height: 80vh;
+        // background-color: rgb(255 255 255 / 6%);
+    }
+}
+
+// .backlinkBtnAdvncSet {
+//     color: #007a84;
+// }
+
+.skyAddressFieldWrap {
+    margin-top: 30px;
+}
+
+.answer {
+    display: inline-block;
+    text-align: left;
+    width: 45%;
+}
+
+
+  
+.formField {
+    input {
+        display: inline-block;
+        width: 250px;
+        background-color: transparent !important;
+        border-radius: 4px;
+        // border: 2px solid rgba(18, 122, 244, 0.48);
+        border: 1px solid rgba(255, 255, 255, 0.26);
+    }
+
+    .domainName {
+        display: inline-block;
+        vertical-align: text-top;
+        font-size: 15px;
+        color: #fff !important;
+        line-height: 15px;
+        margin-left: 5px;
+    }
+}
+
+.uploadBtnWrap {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+
+    .uploadLaterLink {
+        font-size: 16px;
+        color: #fff;
+        margin-left: 10px;
+        opacity: 0.8;
+        transition: all 0.2s;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.downloadingCCWrap {
+    width: 100%;
+    padding: 10px;
+    background-color: #2C2C2C;
+    border-radius: 4px;
+    margin: 15px 0 15px;
+    position: relative;
+
+    .dwnloadStatIcon {
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 6px);
+        z-index: 3;
+        cursor: pointer;
+        height: 12px;
+    }
+
+    .downloadBar {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        bottom: 5px;
+        background-color: #181818;
+        border-radius: 3px;
+        z-index: 1;
+    }
+
+    .downloadText {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        color: #fff;
+        position: relative;
+        z-index: 2;
+
+        img {
+            width: 18px;
+            margin-right: 10px;
+        }
+    }
+}

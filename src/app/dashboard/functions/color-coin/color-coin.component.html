@@ -1,0 +1,13 @@
+<div class="transWrapper">
+    <div class="headerbackWrap">
+        <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg"
+                alt=""></a>
+        <img class="local-wallet-icon mr-3 "src="assets/localwallet_icon.svg" alt="localwallet icon">
+        <span class="titleOne">{{this.userLocal}}</span>
+    </div>
+<div class="container">
+    <div *ngFor=" let content of final_color,let i=index" class="boxes" [ngStyle]="{backgroundColor: final_color[i]}">
+         <!-- <p class="textCenter">{{final_color[i]}}  </p>  -->
+    </div>
+</div>
+

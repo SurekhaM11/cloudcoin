@@ -1,0 +1,1175 @@
+<div class="settingsWrapper">
+  <div class="headerbackWrap">
+    <span class="titleOne">Settings</span>
+  </div>
+  <div class="gap10"></div>
+  <div class="settingBody">
+    <div class="tabHolder">
+      <div class="tabHeader">
+        <!-- <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'general' ? 'active' : ''"
+          (click)="tabToggler('general')">General</a> -->
+        <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'performance' ? 'active' : ''"
+          (click)="tabToggler('performance')">Performance</a>
+        <!-- <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'password' ? 'active' : ''"
+          (click)="tabToggler('password')">Password</a> -->
+        <!-- <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'passkey' ? 'active' : ''"
+          (click)="tabToggler('passkey')">Passkey</a> -->
+        <!-- <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'history' ? 'active' : ''"
+          (click)="tabToggler('history')">History</a> -->
+        <!-- <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'recoveryEmail' ? 'active' : ''"
+          (click)="tabToggler('recoveryEmail')">Recovery Email</a> -->
+        <!-- <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'healthCheck' ? 'active' : ''"
+          (click)="tabToggler('healthCheck')">Health Check</a>
+        <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'backup' ? 'active' : ''"
+          (click)="tabToggler('backup')">Backup</a>
+        <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'fixFracked' ? 'active' : ''"
+          (click)="tabToggler('fixFracked')">Fix Fracked</a> -->
+        <!-- <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'raida' ? 'active' : ''"
+          (click)="tabToggler('raida')">RAIDA Status</a> -->
+        <!-- <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'listSerials' ? 'active' : ''"
+          (click)="tabToggler('listSerials')">List Serials</a> -->
+        <!-- <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'trusted' ? 'active' : ''"
+          (click)="tabToggler('trusted')">Trusted RAIDA</a>
+      </div> -->
+      <a href="javascript:;" class="tabItem" [ngClass]="tabSelector == 'nft' ? 'active' : ''" (click)="tabToggler('nft')">NFT Publishing</a>
+        <div class="tabBody">
+
+          <div class="tabGeneralCont" *ngIf="tabSelector == 'general'">
+            <!-- <h2 class="subHedOne">Change preferred currency</h2>
+
+          <div class="lineSection">
+            <div class="customeDropdown">
+              <div class="triger" (click)="customSelToggler()">
+                <img [src]="cSelectorImg" alt="">
+                <span>{{cSelectorText}}</span>
+              </div>
+              <div class="menuShow" *ngIf="customSelectorOpen">
+                <div class="menus" (click)="customSelector('usd')">
+                  <img src="assets/usd.svg" alt="icon">
+                  <span>USD</span>
+                </div>
+                <div class="menus" (click)="customSelector('gbp')">
+                  <img src="assets/gbp.svg" alt="icon">
+                  <span>GBP</span>
+                </div>
+                <div class="menus" (click)="customSelector('eur')">
+                  <img src="assets/eur.svg" alt="icon">
+                  <span>EUR</span>
+                </div>
+              </div>
+            </div>
+            <p>$ 1 = CC 100</p>
+            <p>€ 1 = CC 100</p>
+          </div> -->
+            <!-- <div class="gap40"></div> -->
+            <h2 class="subHedOne">Delete Wallet</h2>
+            <p class="textOne">Select your wallet below to delete</p>
+            <div class="gap10"></div>
+            <div class="lineSection">
+              <div class="customeDropdownTwo">
+                <div class="triger" (click)="customSelTogglerThree()">
+                  <img [src]="cSelectorImgThree" alt="image" *ngIf="cSelectorImgThree != ''">
+                  <span>{{cSelectorTextThree}}</span>
+                </div>
+                <div class="menuShowTwo scroll" *ngIf="customSelectorOpenThree">
+                  <div class="menus" (click)="customSelectorThree(data.name, 'local')" *ngFor="let data of all">
+                    <img src="assets/folder-w-border.svg" alt="icon">
+                    <span>{{data.name}}</span>
+                  </div>
+                  <div class="menus" (click)="customSelectorThree(data.name, 'sky')" *ngFor="let data of allSky">
+                    <img src="assets/cloud-transfer.svg" alt="icon">
+                    <span>{{data.name}}</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Success message -->
+              <div class="successMessage" *ngIf="deleteCheck">
+                <img src="assets/green-check.svg" alt="icon">
+                <p>{{cSelectorTextThree}} has been successfully deleted</p>
+              </div>
+              <!-- ================ -->
+            </div>
+            <div class="gap40"></div>
+            <button class="btnCustomRed" [ngClass]="{'btnDisable':cSelectorTextThree == 'Select a wallet' }"
+              (click)="deleteUserModalToggler()">Delete wallet</button>
+          </div>
+
+          <div class="tabPerformCont" *ngIf="tabSelector == 'performance'">
+            <h2 class="subHedOne">Performance Settings</h2>
+            <p class="textOne">These settings are used to manually control your server timeouts, modes of transaction,
+              etc.
+            </p>
+            <p class="note"><img src="assets/info-white.svg" alt="icon" data-toggle="tooltip" data-placement="top"
+                ngbTooltip="Minimum means that it is faster but more likely to time out. Maximum means it is slower and less likely to time out.">
+              These are optimised based on your internet speed.
+              & location</p>
+            <div class="gap20"></div>
+            <!-- <div class="formField">
+            <label for="">Mode <img data-toggle="tooltip" data-placement="top"
+                ngbTooltip="Mode determines how the 25 servers of RAIDA function in order to the transactions" class=""
+                src="assets/question-white.svg" alt="icon"></label>
+          </div>
+          <div class="radioInpHolder radioInpHolderTri">
+            <input type="radio" name="hiddenFile"><span>Auto</span>
+          </div>
+          <div class="radioInpHolder radioInpHolderTri">
+            <input type="radio" name="hiddenFile"><span>Serial</span>
+          </div>
+          <div class="radioInpHolder radioInpHolderTri">
+            <input type="radio" name="hiddenFile"><span>Parallel</span>
+          </div>
+          <div class="gap20"></div> -->
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="formField">
+                  <label for="">Max Notes <img data-toggle="tooltip" data-placement="top"
+                      ngbTooltip="Coins the program will send at one time." src="assets/question-white.svg"
+                      alt="icon"></label>
+                  <span class="text-white">1</span>
+                  <mat-slider style="width:65%" class="min" thumbLabel [displayWith]="formatLabel1"
+                    (change)="updateSetting($event, 'max')" [value]="max" tickInterval="100" min="1" max="1800"
+                    aria-label="units"></mat-slider>
+                  <span class="text-white">1800</span>
+
+                  <span class="badge badge-primary"
+                    style="border-radius:100%; width:auto; height:30px; padding-top:10px; margin-left:60px;">{{max}}</span>
+
+
+                </div>
+
+
+
+                <div class="formField">
+                  <label for="">Request Timeout <img data-toggle="tooltip" data-placement="top"
+                      ngbTooltip="This is the amount of time the program will wait for a RAIDA to respond before it gives up. Normally a RAIDA should respond within .5 seconds. Increasing this to 100% will have it wait for 2 seconds. You can reduce this time to make the program run faster at the expense of accuracy."
+                      src="assets/question-white.svg" alt="icon"></label>
+                  <span class="text-white">1%</span>
+                  <mat-slider style="width:65%" class="min" thumbLabel [displayWith]="formatLabel"
+                    (change)="updateSetting($event, 'req')" [value]="req" tickInterval="100" min="1" max="100"
+                    aria-label="units"></mat-slider>
+                  <span class="text-white">100%</span>
+
+                  <span class="badge badge-primary"
+                    style="border-radius:100%; width:auto; height:30px; padding-top:10px; margin-left:50px;">{{req}}</span>
+
+                </div>
+
+                <div class="formField">
+                  <label for="">Echo Timeout <img data-toggle="tooltip" data-placement="top"
+                      ngbTooltip="This is the amount of time the program will wait for a RAIDA to respond before it gives up. Normally a RAIDA should respond within .5 seconds. Increasing this to 100% will have it wait for 2 seconds. You can reduce this time to make the program run faster at the expense of accuracy."
+                      src="assets/question-white.svg" alt="icon"></label>
+                  <span class="text-white">1%</span>
+                  <mat-slider style="width:65%" class="min" thumbLabel [displayWith]="formatLabel"
+                    (change)="updateSetting($event, 'echo')" [value]="echo" tickInterval="100" min="1" max="100"
+                    aria-label="units"></mat-slider>
+                  <span class="text-white">100%</span>
+
+                  <span class="badge badge-primary"
+                    style="border-radius:100%; width:auto; height:30px; padding-top:10px; margin-left:50px;">{{echo}}</span>
+
+                </div>
+
+                <!-- <div class="formField">
+                <label for="">DDNS Server <img data-toggle="tooltip" data-placement="top"
+                    ngbTooltip="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                    src="assets/question-white.svg" alt="icon"></label>
+                <input type="text" value="ddns.cloudcoin.global">
+              </div>
+              <div class="radioInpHolder radioInpHolderSingle">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="setupRecovery" type="checkbox"
+                  data-toggle="toggle"/>
+                  <label for="setupRecovery" class="custom-control-label">Use custom domain <img data-toggle="tooltip" data-placement="top" ngbTooltip="Lorem Ipsum is simply dummy text of the printing and typesetting industry." class="infoicon" src="assets/info.svg" alt="" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?">
+                  </label>
+                </div>
+              </div>
+              <div class="formField bgFill">
+                <input type="text" placeholder="Ex: john.io">
+              </div> -->
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="tabSelector == 'nft' ">
+            <form [formGroup]="nftSettingsForm" (ngSubmit)="onSubmit(nftSettingsForm)">
+              <ng-container>
+                <p class="titleTwo" style="opacity: 0.8;"> You can publish your NFTs on your web server and record their authenticity in your DNS server.
+                  This allows people to verify the authenticity of the NFTs you have created and will make them more valuable.
+                </p>
+                <div class="gap10"></div>
+                <p class="titleTwo" style="opacity: 0.8;"> You can find instructions on how to do this here:
+                </p>
+                <p>
+                  <a href="https://github.com/CloudCoinConsortium/CoinManager/tree/main/nft"
+                    target="_blank">https://github.com/CloudCoinConsortium/CoinManager/tree/main/nft</a>
+                </p>
+
+                <div class="formfield">
+                  <div class="row">
+                  <div class="col-md-3">
+                  <label class="dark_mode_text" for="qualname"> Your Domain Name:
+                    <span class ="ml-2">
+                      <img
+                          src="assets/icons_info1.png" title="You can create records in your DNS Server that prove that you are the creator of the NFT and customize each NFT."  style="height: 18px ; width:18px" />
+                      </span>
+                  </label>
+                  </div>
+                  <div class="col-md-2">
+                  <input class="form-control text_box_two" type="text" formControlName="dnsname"
+                    placeholder="YourDomain.com" maxlength="61" (keydown.enter)="$event.preventDefault()">
+                  </div>
+                  </div>
+                  <div *ngIf="isValidInput('dnsname')">
+                    <span class="errorMsg1"><img src="assets/error_info_icon.svg" alt="error icon">Please enter domain
+                      name in valid format. Max length is 61.</span>
+                  </div>
+                </div>
+                <div class="gap10"></div>
+                <div class="formfield">
+                  <div class="row">
+                  <div class="col-md-3">
+                  <label class="dark_mode_text" for="url">Upload NFTs To:</label>
+                  </div>
+                  <div class="col-md-2">
+                  <input class="form-control text_box_two" type="text" formControlName="url"
+                    (keydown.enter)="$event.preventDefault()">
+                  </div>
+                  </div>
+                </div>
+                <div class="gap10"></div>
+                <div class="formfield">
+                  <div class="row">
+                  <div class="col-md-3">
+                  <label class="dark_mode_text" for="secretkey">Upload Page Password:</label>
+                  </div>
+                  <div class="col-md-2">
+                  <input class="form-control text_box_two" type="text" formControlName="secretkey"
+                    (keydown.enter)="$event.preventDefault()">
+                  </div>
+                  </div>
+                </div>
+                <div class="gap10"></div>
+                <div class="formfield">
+                  <div class="row">
+                  <div class="col-md-3">
+                  <label class="dark_mode_text" for="apikey">CloudFlare DNS Api Key:</label>
+                  </div>
+                  <div class="col-md-2">
+                  <input class="form-control text_box_two" type="text" formControlName="apikey"
+                    (keydown.enter)="$event.preventDefault()">
+                  </div>
+                  </div>
+                </div>
+
+              </ng-container>
+              <div class="transBottomFooter">
+                <div class="bottomPartSubmit">
+                    <div class="bottomFooter">
+                        <div class="container">
+                            <button href="javascript:;" class="btnCustomBlack"
+                                [ngClass]="{btnDisable:this.nftSettingsForm.invalid}"
+                                type="submit">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </form>
+
+          </div>
+          <div class="onEventLoadWrap" *ngIf="showLoader">
+            <ng-container>
+                <div class="text-center  loader_show">
+                    <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+                    <span style="color:#ffffff">{{loadingMessage}}</span>
+                </div>
+            </ng-container>
+        </div>
+
+          <div class="tabPasswordCont" *ngIf="tabSelector == 'password'">
+            <h2 class="subHedOne">Password</h2>
+            <p class="textOne">Having a password adds a layer of security to your wallets. Make sure you remember it.
+            </p>
+            <div class="gap20"></div>
+            <div class="lineSection">
+
+              <div class="customeDropdownTwo">
+                <div class="formField">
+                  <label for="select wallet">Choose Wallet</label>
+                  <div class="triger" (click)="customSelTogglerFour()">
+                    <img [src]="cSelectorImgFour" alt="image" *ngIf="cSelectorImgFour != ''">
+                    <span>{{cSelectorTextFour}}</span>
+                  </div>
+                  <div class="menuShowTwo" *ngIf="customSelectorOpenFour">
+                    <div class="menus" (click)="customSelectorFour('userThree')">
+                      <img src="assets/cloud-transfer.svg" alt="icon">
+                      <span>johnHaltiwanger.skywallet.cc</span>
+                    </div>
+                    <div class="menus" (click)="customSelectorFour('userFour')">
+                      <img src="assets/folder-w-border.svg" alt="icon">
+                      <span>johny4</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="gap10"></div>
+              <div class="formField">
+                <div class="checkboxInpHolder">
+                  <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> You don’t need password
+                    protection for the selected wallet as you have already downloaded the authentication file.</span>
+                </div>
+              </div>
+              <div class="gap20"></div>
+
+              <div class="passwordCloud">
+                <div class="inputSelectTwo">
+                  <label for="">Password Protection</label>
+                  <div class="passEdit">
+                    <span>********</span>
+                    <button><img src="assets/pen.svg" alt="icon"> Edit</button>
+                  </div>
+                </div>
+                <div class="gap20"></div>
+                <!-- cloud password -->
+                <div class="passEditOption">
+                  <div class="formFieldThree">
+                    <label for="">Existing Password</label>
+                    <div class="inputLine">
+                      <input [type]="existingPswShow ? 'password' : 'text'">
+                      <button (click)="toggleExtPswType()">
+                        <img src="{{ existingPswShow ? 'assets/eyeopen.svg' : 'assets/eyeclose.svg'}}" type="button" />
+                      </button>
+                    </div>
+                    <span class="errorPass"><img src="assets/cross-red.svg" alt="">Wrong password</span>
+                  </div>
+                  <div class="formFieldThree">
+                    <label for="">New Password</label>
+                    <div class="inputLine">
+                      <input [type]="newPswShow ? 'password' : 'text'">
+                      <button (click)="toggleNewPswType()">
+                        <img src="{{ newPswShow ? 'assets/eyeopen.svg' : 'assets/eyeclose.svg'}}" type="button" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- local password -->
+                <div class="localPassword">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="setupRecovery" type="checkbox"
+                      data-toggle="toggle" (click)="removeProModalToggler()" />
+                    <label for="setupRecovery" class="custom-control-label">Password Protection </label>
+                  </div>
+                  <!--<div class="gap10"></div>
+                <div class="localPassDiv">
+                  <div class="formField">
+                    <input type="text" placeholder="Enter a password" disabled  >
+                  </div>
+                  <div class="passParamiter">
+                    <h5>Strength:
+                      <span style="color: #f00;">Low</span>
+                      <span style="color: #FF6100;">Medium</span>
+                      <span style="color: #2A4;">High</span>
+                    </h5>
+                    <p>
+                      <img src="assets/check-green.svg" alt="icon">
+                      <img src="assets/cross-red.svg" alt="icon">
+                      At least 8 characters</p>
+                      <p>
+                        <img src="assets/check-green.svg" alt="icon">
+                        <img src="assets/cross-red.svg" alt="icon">
+                        At least 1 capital letter</p>
+                        <p>
+                          <img src="assets/check-green.svg" alt="icon">
+                          <img src="assets/cross-red.svg" alt="icon">
+                          At least 1 special character</p>
+
+                  </div>
+                </div>
+
+              </div> -->
+
+                </div>
+
+
+                <!-- <div class="formField">
+              <div class="checkboxInpHolder">
+                <img src="assets/cross-red.svg" alt="icon"> <span style="color: #f00;"> Existing password and New password can’t be the same.</span>
+              </div>
+            </div> -->
+                <!-- <div class="formField">
+              <div class="checkboxInpHolder">
+                <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Your password has been changed</span>
+              </div>
+            </div> -->
+                <!-- <div class="formField">
+              <div class="checkboxInpHolder">
+                <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Password saved</span>
+              </div>
+            </div> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="tabPasswordCont" *ngIf="tabSelector == 'passkey'">
+          <h2 class="subHedOne">Passkey</h2>
+          <p class="textOne">Use the passkey image to make transactions on any CC supported platforms.</p>
+          <div class="gap20"></div>
+          <div class="lineSection">
+            <div class="inputSelectTwo">
+              <label for="">Choose skyvault</label>
+
+              <div class="customeDropdownTwo">
+                <div class="triger" (click)="passkeyToggler()">
+                  <img [src]="cSelectorImgEleven" alt="image" *ngIf="cSelectorImgEleven != ''">
+                  <span>{{cSelectorTextEleven}}</span>
+                </div>
+                <div class="menuShowTwo" *ngIf="customSelectorOpenEleven">
+                  <div class="menus" (click)="customSelectorEleven(data.name)" *ngFor="let data of allSky">
+                    <img src="assets/cloud-transfer.svg" alt="icon">
+                    <span>{{data.name}}</span>
+                  </div>
+                  <div class="menus" *ngIf="allSky.length == 0">
+                    <span class="text-center">No SkyVault to show Passkeys for</span>
+                  </div> -->
+          <!-- <div class="menus" (click)="customSelectorEleven('user20')">
+                    <img src="assets/folder-w-border.svg" alt="icon">
+                    <span>johny4</span>
+                  </div> -->
+          <!-- <div class="menus" (click)="customSelectorEleven('user21')">
+                    <img src="assets/cloud-transfer.svg" alt="icon">
+                    <span>johnHaltiwanger.skywallet.cc</span>
+                  </div> -->
+          <!-- </div>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <div class="passkeyOne">
+            <div class="gap30"></div>
+            <div class="cardImg" *ngIf="passkeyImage !== ''">
+              <img [src]="passkeyImage?.url" alt="card">
+            </div>
+          </div>
+        </div> -->
+
+          <div class="tabHistoryCont" *ngIf="tabSelector == 'history'">
+            <h2 class="subHedOne">Clear History</h2>
+            <p class="subTitleTwo">Clearing history will ensure your privacy if somebody gains access to your computer.
+            </p>
+            <div class="gap20"></div>
+            <div class="lineSection">
+              <div class="inputSelectTwo">
+
+                <div class="customeDropdownTwo">
+                  <div class="triger" (click)="customSelTogglerFive()">
+                    <img [src]="cSelectorImgFive" alt="image" *ngIf="cSelectorImgFive != ''">
+                    <span>{{cSelectorTextFive}}</span>
+                  </div>
+                  <div class="menuShowTwo" *ngIf="customSelectorOpenFive">
+                    <div class="menus" (click)="customSelectorFive(data.name, 'local')" *ngFor="let data of all">
+                      <img src="assets/folder-w-border.svg" alt="icon">
+                      <span>{{data.name}}</span>
+                    </div>
+                    <!-- <div class="menus" (click)="customSelectorFive('userFive')">
+                    <img src="assets/cloud-transfer.svg" alt="icon">
+                    <span>johnHaltiwanger.skywallet.cc</span>
+                  </div>
+                  <div class="menus" (click)="customSelectorFive('userSix')">
+                    <img src="assets/folder-w-border.svg" alt="icon">
+                    <span>johny4</span>
+                  </div> -->
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="gap30"></div>
+            <div class="formField">
+              <div class="checkboxInpHolder">
+                <img src="assets/green-check.svg" alt="icon"> <span> No CC will be deleted.</span>
+              </div>
+            </div>
+            <div class="formField">
+              <div class="checkboxInpHolder">
+                <img src="assets/green-check.svg" alt="icon"> <span> Only log files and transaction history will be
+                  deleted.</span>
+              </div>
+            </div>
+            <!-- <div class="formField">
+            <label class="checkboxInpHolder checkBoxWrap">
+              <input type="checkbox"><span>Backup log files and transaction history.</span>
+            </label>
+          </div> -->
+            <div class="formField">
+              <label class="checkboxInpHolder checkBoxWrap">
+                <input type="checkbox"><span>I understand that this process is permanent and irreversable.</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="tabPerformCont" *ngIf="tabSelector == 'recoveryEmail'">
+            <h2 class="subHedOne">Recovery Email</h2>
+            <p class="subTitleTwo">Having a recovery email helps you to recover your lost coins.</p>
+            <div class="gap20"></div>
+            <div class="lineSection">
+              <div class="inputSelectTwo">
+                <label for="">Choose wallet</label>
+                <div class="customeDropdownTwo">
+                  <div class="triger" (click)="recoveryEmailToggler()">
+                    <img [src]="cSelectorImgSix" alt="image" *ngIf="cSelectorImgSix != ''">
+                    <span>{{cSelectorTextSix}}</span>
+                  </div>
+                  <div class="menuShowTwo" *ngIf="customSelectorOpenSix">
+                    <div class="menus" (click)="customSelectorSix(data.name, 'local')" *ngFor="let data of all">
+                      <img src="assets/folder-w-border.svg" alt="icon">
+                      <span>{{data.name}}</span>
+                    </div>
+                    <!-- <div class="menus" (click)="customSelectorSix('userSeven')">
+                    <img src="assets/cloud-transfer.svg" alt="icon">
+                    <span>johnHaltiwanger.skywallet.cc</span>
+                  </div>
+                  <div class="menus" (click)="customSelectorSix('userEight')">
+                    <img src="assets/folder-w-border.svg" alt="icon">
+                    <span>johny4</span>
+                  </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="localEmailDiv">
+              <div class="formField">
+                <input type="text" placeholder="Enter an email address." disabled>
+              </div>
+            </div>
+            <!-- for checkboxes and others open the code -->
+            <div class="recovaryEdit">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="setupRecovery" type="checkbox"
+                  data-toggle="toggle" (click)="removeProModalTogglerTwo()" />
+                <label for="setupRecovery" class="custom-control-label">Recovery Email <img data-toggle="tooltip"
+                    data-placement="top" ngbTooltip="This will allow you to recover your password in case you forgot it"
+                    class="infoiconTwo" src="assets/question-border.svg" alt="" data-toggle="popover"
+                    data-content="And here's some amazing content. It's very engaging. Right?">
+                </label>
+              </div>
+              <div class="passEdit">
+                <span>john@gmail.com</span>
+                <button><img src="assets/pen.svg" alt="icon"> Edit</button>
+              </div>
+              <div class="formField">
+                <div class="checkboxInpHolder">
+                  <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Recovery email saved</span>
+                </div>
+              </div>
+              <div class="formField">
+                <div class="checkboxInpHolder">
+                  <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Recovery email
+                    changed</span>
+                </div>
+              </div>
+              <div class="formField">
+                <div class="checkboxInpHolder">
+                  <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Recovery email turned off
+                    for
+                    the wallet johnHaltiwanger.skyvault.cc</span>
+                </div>
+              </div>
+            </div>
+            <!-- ================= -->
+
+          </div>
+
+          <div class="tabSerialsCont" *ngIf="tabSelector == 'listSerials'">
+            <h2 class="subHedOne">List Serials</h2>
+            <p class="subTitleTwo">Download the coin serials on your computer. With List Serials
+              you can reclaim your lost CC.</p>
+            <div class="gap20"></div>
+
+            <div class="inputSelectTwo">
+              <div class="customeDropdownTwo">
+                <div class="triger" (click)="listSecrialToggler()">
+                  <img [src]="cSelectorImgSeven" alt="image" *ngIf="cSelectorImgSeven != ''">
+                  <span>{{cSelectorTextSeven}}</span>
+                </div>
+                <div class="menuShowTwo" *ngIf="customSelectorOpenSeven">
+                  <div class="menus" (click)="customSelectorSeven(data.name, 'local')" *ngFor="let data of all">
+                    <img src="assets/folder-w-border.svg" alt="icon">
+                    <span>{{data.name}}</span>
+                  </div>
+                  <!-- <div class="menus" (click)="customSelectorSeven('userNine')">
+                  <img src="assets/cloud-transfer.svg" alt="icon">
+                  <span>johnHaltiwanger.skywallet.cc</span>
+                </div>
+                <div class="menus" (click)="customSelectorSeven('userTen')">
+                  <img src="assets/folder-w-border.svg" alt="icon">
+                  <span>johny4</span>
+                </div> -->
+                  <!-- <div class="menus" (click)="customSelectorSeven('another','anotherFolder')">
+                  <img src="assets/folder-w-border.svg" alt="icon">
+                  <span>Choose another folder</span>
+                </div> -->
+                </div>
+              </div>
+              <span style="color: #2a4; margin-left: 20px;"><img src="assets/green-check.svg" alt="icon"> List Serials
+                CSV
+                file has been downloaded for the wallet: johny4</span>
+            </div>
+            <div class="listTableWrap">
+              <div class="listTableDiv">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Coin Serial</th>
+                      <th scope="col">Denomination</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1295268</td>
+                      <td>CC 1</td>
+                    </tr>
+                    <tr>
+                      <td>1295269</td>
+                      <td>CC 5</td>
+                    </tr>
+                    <tr>
+                      <td>1295270</td>
+                      <td>CC 100</td>
+                    </tr>
+                    <tr>
+                      <td>1295271</td>
+                      <td>CC 250</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabHealthCont" *ngIf="tabSelector == 'healthCheck'">
+            <h2 class="subHedOne">Health Check</h2>
+            <p class="subTitleTwo">Health Check will ensure that all your coins are 100% authentic. It will move coins
+              to
+              the Fracked or Counterfeit folder if they are not 100% authentic.</p>
+            <div class="gap20"></div>
+            <div class="lineSection" *ngIf="!fixSkyvault">
+              <div class="inputSelectTwo" *ngIf="(skyHealthProgress === false) && (healthProgress === false)">
+                <div class="customeDropdownTwo">
+                  <div class="triger" (click)="healthCheckToggler()">
+                    <img [src]="cSelectorImgEight" alt="image" *ngIf="cSelectorImgEight != ''">
+                    <span>{{cSelectorTextEight}}</span>
+                  </div>
+                  <div class="menuShowTwo" *ngIf="customSelectorOpenEight">
+                    <div class="menus" (click)="customSelectorEight(data.name, 'local')" *ngFor="let data of all">
+                      <img src="assets/folder-w-border.svg" alt="icon">
+                      <span>{{data.name}}</span>
+                    </div>
+                    <div class="menus" (click)="customSelectorEight(sky.name, 'sky')" *ngFor="let sky of allSky">
+                      <img src="assets/cloud-transfer.svg" alt="icon">
+                      <span>{{sky.name}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="headthSubHed" *ngIf="healthProgress || skyHealthProgress">
+                <h4>Performing Health check for the wallet: <span>{{cSelectorTextEight}}</span></h4>
+              </div>
+
+              <div class="progressWrap" *ngIf="(healthProgress && !goTODash) || (skyHealthProgress && !goTODash)">
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" [ngStyle]="{'width': healthProg?.progress + '%'}"
+                    aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">Checked
+                    <span
+                      *ngIf="healthProgress">{{this.healthProg?.data?.TotalCheckedCoins}}/{{this.healthProg?.data?.TotalCoins}}</span>
+                    Coins
+                  </div>
+                </div>
+              </div>
+
+              <div class="formField"
+                *ngIf="(healthProgress && !goTODash) || (skyHealthProgress && !goTODash) && healthProg?.progress === '100'">
+                <div class="checkboxInpHolder">
+                  <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Health Check
+                    completed</span>
+                </div>
+              </div>
+
+              <div class="healthList" *ngIf="goTODash && healthProg?.status === 'completed' && healthProgress">
+                <div class="healthListDiv">
+                  <p>Total Authentic Coins</p>
+                  <h6>{{this.healthProg?.data?.TotalAuthentic}}</h6>
+                </div>
+                <div class="healthListDiv">
+                  <p>Total Fracked Coins <span>(moved to the Fracked folder)</span></p>
+                  <h6>{{this.healthProg?.data?.TotalFracked}}</h6>
+                </div>
+                <div class="healthListDiv">
+                  <p>Total Counterfeit Coins <span>(deleted from the Wallet)</span></p>
+                  <h6>{{this.healthProg?.data?.TotalCounterfeit}}</h6>
+                </div>
+                <div class="healthListDiv">
+                  <p>Total Skipped Coins <span>(already Fracked)</span></p>
+                  <h6>{{this.healthProg?.data?.TotalAlreadyFracked}}</h6>
+                </div>
+              </div>
+
+              <div class="" *ngIf="skyHealthProgress && healthProg?.status === 'completed'">
+                <div class="ml-n3">
+                  <p>You can click FIX to synchronize your wallet on all RAIDA. You can also click on a
+                    serial number to fix a single coin</p>
+                </div>
+                <div class="gap20"></div>
+                <div class="healthListDiv">
+                  <table class="text-white table table-bordered table-responsive-sm text-center">
+                    <tr>
+                      <th></th>
+                      <th>R0</th>
+                      <th>R1</th>
+                      <th>R2</th>
+                      <th>R3</th>
+                      <th>R4</th>
+                      <th>R5</th>
+                      <th>R6</th>
+                      <th>R7</th>
+                      <th>R8</th>
+                      <th>R9</th>
+                      <th>R10</th>
+                      <th>R11</th>
+                      <th>R12</th>
+                      <th>R13</th>
+                      <th>R14</th>
+                      <th>R15</th>
+                      <th>R16</th>
+                      <th>R17</th>
+                      <th>R18</th>
+                      <th>R19</th>
+                      <th>R20</th>
+                      <th>R21</th>
+                      <th>R22</th>
+                      <th>R23</th>
+                      <th>R24</th>
+                      <th>RES</th>
+                    </tr>
+                    <tr>
+                      <td>Balance</td>
+                      <td *ngFor="let balance of healthProg?.data?.balances"
+                        [ngStyle]="{'background-color' : getColor(balance)}">{{balance}}</td>
+                      <td>{{healthProg?.data?.quorum_balance}}</td>
+                    </tr>
+                    <tr *ngFor="let sns of healthProg?.data?.sns | keyvalue; let i = index;">
+                      <td><a href="#" class="">{{sns.key}}</a></td>
+                      <td *ngFor="let elem of sns.value" [ngStyle]="{'background-color' : elem > 1 ? 'red' : 'green' }">
+                        <span [ngClass]="elem == 1 ? 'fa fa-check' : 'fa fa-minus'"></span>
+                      </td>
+                      <td>{{healthProg?.data?.quorum_balance}}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+            <div class="linesection" *ngIf="fixSkyvault">
+              <div class="headthSubHed">
+                <h4>Synchronization Complete for the wallet: <span>{{cSelectorTextEight}}</span></h4>
+                <p class="ml-n3 text-white">A request to synchronize your wallet was sent to the RAIDA. Please check
+                  your
+                  SkyVault health again to see if the synchronization was completed.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabBackupCont" *ngIf="tabSelector == 'backup'">
+            <h2 class="subHedOne">Backup</h2>
+            <p class="subTitleTwo">Backup will allow you to create a backup of your coins.</p>
+            <div class="gap20"></div>
+            <div class="lineSection">
+              <div class="inputSelectTwo">
+                <div class="inputSelectTwo">
+                  <div class="customeDropdownTwo">
+                    <div class="triger" (click)="backupToggler()">
+                      <img [src]="cSelectorImgNine" alt="image" *ngIf="cSelectorImgNine != ''">
+                      <span>{{cSelectorTextNine}}</span>
+                    </div>
+                    <div class="menuShowTwo" *ngIf="customSelectorOpenNine">
+                      <div class="menus" (click)="customSelectorNine(data.name, 'local')" *ngFor="let data of all">
+                        <img src="assets/folder-w-border.svg" alt="icon">
+                        <span>{{data.name}}</span>
+                      </div>
+                      <!-- <div class="menus" (click)="customSelectorNine('user14')">
+                    <img src="assets/folder-w-border.svg" alt="icon">
+                    <span>johny4</span>
+                  </div>
+                  <div class="menus" (click)="customSelectorNine('user15')">
+                    <img src="assets/cloud-transfer.svg" alt="icon">
+                    <span>johnHaltiwanger.skywallet.cc</span>
+                  </div>
+                  <div class="menus" (click)="customSelectorNine('user16')">
+                    <img src="assets/cloud-transfer.svg" alt="icon">
+                    <span>johnPersonal.skywallet.cc</span>
+                  </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="gap20"></div>
+              <div class="backupSectionOne">
+                <div class="formFieldThree">
+                  <label for="">Existing Password</label>
+                  <div class="inputLine">
+                    <input [type]="backupExtPswShow ? 'password' : 'text'">
+                    <button (click)="toggleBkpPswType()">
+                      <img src="{{ backupExtPswShow ? 'assets/eyeopen.svg' : 'assets/eyeclose.svg'}}" type="button" />
+                    </button>
+                  </div>
+                </div>
+                <div class="formField">
+                  <label for="">Backup Folder</label>
+                  <div class="parentContainer">
+                    <div class="controlContainer">
+                      <div class="inputFileHolder">
+                        <a href="javascript:;" title="Browse">
+                          <img src="assets/folder-border.svg" alt="">
+                        </a>
+                        <input id="fileInput" name="fileInput" class="fileInput" title="Choose file to upload"
+                          type="file" accept=".txt">
+                      </div>
+                      <div class="inputFileMask">
+                        <input class="inputFileMaskText" readonly="readonly" placeholder="Choose backup folder."
+                          type="text" id="inputFileMaskText">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="formField">
+                  <label for="">Remarks (Optional)</label>
+                  <input type="text" placeholder="Ex: Latest backup">
+                </div>
+              </div>
+              <div class="backupSectionTwo">
+                <div class="gap20"></div>
+                <div class="headthSubHed">
+                  <h4>Backup completed for the wallet: <span>johnHaltiwanger.skyvaultt.cc</span></h4>
+                </div>
+                <div class="healthList">
+                  <div class="gap20"></div>
+                  <div class="healthListDiv">
+                    <p style="margin-left: 0px;">Total CC Backed up</p>
+                    <h6>:1000CC</h6>
+                  </div>
+                  <div class="gap10"></div>
+                  <div class="healthListDiv">
+                    <p style="margin-left: 0px;">Downloaded to</p>
+                    <h6 style="color: #0884FF;">..chimpy/Desktop</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabFrackedCont" *ngIf="tabSelector == 'fixFracked'">
+            <h2 class="subHedOne">Fix Fracked</h2>
+            <p class="subTitleTwo">Fix your damaged/fracked Coins.</p>
+            <div class="gap20"></div>
+            <div class="lineSection" *ngIf="!fixProgress">
+              <div class="inputSelectTwo">
+                <label for="">Choose wallet</label>
+                <div class="customeDropdownTwo">
+                  <div class="triger" (click)="frackedToggler()">
+                    <img [src]="cSelectorImgTen" alt="image" *ngIf="cSelectorImgTen != ''">
+                    <span>{{cSelectorTextTen}}</span>
+                  </div>
+                  <div class="menuShowTwo" *ngIf="customSelectorOpenTen">
+                    <div class="menus" (click)="customSelectorTen(data.name, 'local')" *ngFor="let data of all">
+                      <img src="assets/folder-w-border.svg" alt="icon">
+                      <span>{{data.name}}</span>
+                    </div>
+                    <!-- <div class="menus" (click)="customSelectorTen(sky.name, 'sky')" *ngFor="let sky of allSky">
+                    <img src="assets/cloud-transfer.svg" alt="icon">
+                    <span>{{sky.name}}</span>
+                  </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="fixFrackedOne">
+              <div class="headthSubHed" *ngIf="fixProgress">
+                <h4>Fixing the fracked coins of the wallet: <span>{{cSelectorTextTen}}</span></h4>
+              </div>
+              <div class="progressWrap" *ngIf="fixProgress && !goTODash">
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" [ngStyle]="{'width': fixProg?.progress + '%'}"
+                    aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Checking your wallet</div>
+                </div>
+              </div>
+              <div class="formField" *ngIf="fixProg?.progress == '100' && !goTODash && fixProgress">
+                <div class="checkboxInpHolder">
+                  <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Fixed the damaged
+                    CloudCoins</span>
+                </div>
+              </div>
+            </div>
+            <div class="gap10"></div>
+            <div class="fixfrackedTwo" *ngIf="fixProg?.status === 'completed' && goTODash">
+              <div class="healthList">
+                <div class="healthListDiv">
+                  <p>Total Checked Coins</p>
+                  <h6>{{fixProg?.data?.total_fixed + fixProg?.data?.total_skipped + fixProg?.data?.total_errors}}</h6>
+                </div>
+                <div class="healthListDiv">
+                  <p>Successfully Fixed coins</p>
+                  <h6>{{fixProg?.data?.total_fixed}}</h6>
+                </div>
+                <div class="healthListDiv">
+                  <p>Total skipped coins</p>
+                  <h6>{{fixProg?.data?.total_skipped}}</h6>
+                </div>
+                <div class="healthListDiv">
+                  <p>Failed to Fix</p>
+                  <h6>{{fixProg?.data?.total_errors}}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabRaidaStat" *ngIf="tabSelector == 'raida'">
+            <div>
+              <h2 class="subHedOne">RAIDA Status and Echo Times </h2>
+            </div>
+            <div class="raidaStatOuter">
+              <div class="raidaStatWrap">
+                <div class="row">
+                  <div class="col-6 col-lg-4 col-xl-3">
+                    <table>
+                      <tr *ngFor="let data of latencies | slice: 0:13; let i = index;">
+                        <td>
+                          <span class="raidaStatDesc">RAIDA {{ ('0' + i).slice(-2)}}</span>
+                          <span class="raidaStatDesc ml-4" [ngStyle]="{color : data === 0 ? 'red' : 'green' }">{{data
+                            ===
+                            0 ? "TIMED OUT" : (data/1000).toFixed(3)+' sec'}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col-6 col-lg-4 col-xl-3">
+                    <table>
+                      <tr *ngFor="let data of latencies | slice:  13: 25; let j = index;">
+                        <td>
+                          <span class="raidaStatDesc">RAIDA {{j + 13}}</span>
+                          <span class="raidaStatDesc ml-4" [ngStyle]="{color : data === 0 ? 'red' : 'green' }">{{data
+                            ===
+                            0 ? "TIMED OUT" : (data/1000).toFixed(3)+' sec'}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col-8">
+
+                    <div class="gap20"></div>
+                    <!--  -->
+                    <span *ngIf="isTimeout" class="textOne" style="opacity: 0.7;">TIMED OUT means the response exceeded
+                      the seconds allowed to respond. This could be caused by a slow network or because the RAIDA was
+                      blocked (usually by office routers). It could also be caused by your computer being old and unable
+                      to
+                      handle 25 threads at once. Try changing your settings to increase the timeout. Or try using a more
+                      powerful computer.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabRaidaStat" *ngIf="tabSelector == 'trusted'">
+            <h2 class="subHedOne">Trusted RAIDA</h2>
+            <div class="raidaStatOuter">
+              <div class="raidaStatWrap">
+                <div class="row">
+                  <div class="col">
+                    <div class="formInline row mt-4">
+                      <div class="col-auto custom_check custom_check_radio">
+                        <input type="radio" name="radio" value="gardian" id="same" (change)="changRadio($event)">
+                        <label for="same">Use the Guardians' RAIDA hints file</label>
+                      </div>
+                      <div class="col-auto custom_check custom_check_radio">
+                        <input type="radio" name="radio" value="local" id="other" (change)="changRadio($event)">
+                        <label for="other">Use the local RAIDA hints file</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 col-lg-4 col-xl-3">
+
+                  </div>
+                  <div class="col-6 col-lg-4 col-xl-3">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- <div class="footerFixed" *ngIf="tabSelector != 'general'">
+      <button class="btnCustomBlack disabled">Save changes</button>
+    </div> -->
+    <div class="footerFixed" *ngIf="tabSelector == 'performance'">
+      <button class="btnCustomBlack" (click)="taskSetting()" [ngClass]="{'btnDisable': settings == false}">Save
+        changes</button>
+    </div>
+    <!-- <div class="footerFixed" >
+    <button class="btnCustomBlue disabled">Save</button>
+  </div> -->
+    <!-- <div class="footerFixed" *ngIf="tabSelector == 'passkey'">
+    <button class="btnCustomBlue" [ngClass]="{'btnDisable': passkeyImage == ''}" (click)="donwload()">download as
+      PNG</button>
+  </div> -->
+    <!-- <div class="footerFixed" >
+    <button class="btnCustomBlue disabled">clear history</button>
+  </div> -->
+    <!-- <div class="footerFixed" >
+    <button class="btnCustomBlue disabled">download as csv</button>
+  </div> -->
+    <div class="footerFixed" *ngIf="tabSelector == 'healthCheck'">
+      <div *ngIf="!fixSkyvault">
+        <button class="btnCustomBlue" *ngIf="(skyHealthProgress === false) && (healthProgress === false)"
+          [ngClass]="{'btnDisable': health == false}" (click)="health ? checkhealth() : ''">continue</button>
+        <button class="btnCustomBlue" *ngIf="healthProgress || skyHealthProgress"
+          [ngClass]="{'btnDisable': goTODash === false }" (click)="goTODash ? backHealth() : ''">Back</button>
+        <button class="btnCustomBlue ml-4" *ngIf="skyHealthProgress && healthProg?.status === 'completed'"
+          (click)="fixSky()">
+          Fix
+        </button>
+      </div>
+      <div *ngIf="fixSkyvault">
+        <button class="btnCustomBlue" (click)="backFixsky()">Back</button>
+      </div>
+
+
+      <!-- <button class="btnCustomBlue mr-3" *ngIf="skyHealthProgress" [ngClass]="{'btnDisable': goTODash === false }"
+        (click)="goTODash ? router.navigate(['/dashboard/home']) : ''">Fix</button> -->
+    </div>
+    <!-- <div class="footerFixed" >
+    <button class="btnCustomBlue btnDisable">backup</button>
+  </div> -->
+    <div class="footerFixed" *ngIf="tabSelector == 'fixFracked'">
+      <button class="btnCustomBlue" *ngIf="!fixProgress" [ngClass]="{'btnDisable': frackContinue == false}"
+        (click)="frackContinue ? fixFracked() : ''">continue</button>
+      <button class="btnCustomBlue" *ngIf="fixProgress" [ngClass]="{'btnDisable': goTODash === false }"
+        (click)="goTODash ? backFix(): ''">Back</button>
+    </div>
+  </div>
+
+  <!-- modal delete User-->
+  <div class="modalContainer" *ngIf="deleteUserModal">
+    <div class="modalOverlay" (click)="deleteUserModalToggler()"></div>
+    <div class="modalWrap modalMedium">
+      <div class="modalHeader">
+        <h1>Delete Wallet</h1>
+        <div class="modalClose" (click)="deleteUserModalToggler()">
+          <img src="assets/close-white.svg" alt="icon">
+        </div>
+      </div>
+      <div class="modalBody">
+        <div class="gap20"></div>
+        <div class="sectionOne">
+          <h2 class="modalSubhed">You will not be able to send or receive CC using this wallet.</h2>
+          <h2 class="modalSubhed">Are you sure you want to delete your wallet: {{this.cSelectorTextThree}}? </h2>
+          <div class="gap20"></div>
+          <form [formGroup]="deleteForm">
+            <!-- <div class="formField">
+            <label class="checkboxInpHolder checkBoxWrap">
+              <input type="checkbox" formControlName="check1"><span>Backup log files and transaction history.</span>
+            </label>
+          </div> -->
+            <div class="formField">
+              <label class="checkboxInpHolder checkBoxWrap">
+                <input type="checkbox" formControlName="check2"><span>I understand that this process is permanent and
+                  irreversable.</span>
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="gap50"></div>
+      </div>
+      <div class="modalFooter">
+        <div class="buttonWrap">
+          <button class="btnCustomBlue buttonWide" [ngClass]="{'disabled': this.deleteForm.invalid}"
+            (click)="delete()">Yes, delete wallet</button>
+          <button class="cancelTransparent" (click)="deleteUserModalToggler()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal delete User-->
+
+  <!-- modal Remove Password Protection-->
+  <div class="modalContainer" *ngIf="removeProModal">
+    <div class="modalOverlay" (click)="removeProModalToggler()"></div>
+    <div class="modalWrap modalMedium">
+      <div class="modalHeader">
+        <h1>Are you sure?</h1>
+        <div class="modalClose" (click)="removeProModalToggler()">
+          <img src="assets/close-white.svg" alt="icon">
+        </div>
+      </div>
+      <div class="modalBody">
+        <div class="gap20"></div>
+        <div class="sectionOne" style="display: flex; justify-content: flex-start; align-items: center;">
+          <img src="assets/warning.svg" alt="icon" style="margin-right: 15px; width: 40px;">
+          <h2 class="modalSubhed"> If you remove your password protection, anyone on your computer can acess your local
+            wallet: johny4 </h2>
+        </div>
+        <div class="gap50"></div>
+      </div>
+      <div class="modalFooter">
+        <div class="buttonWrap">
+          <button class="btnCustomRed buttonWide">REMOVE PASSWORD PROTECTION</button>
+          <button class="cancelTransparent">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal Remove Password Protection-->
+
+  <!-- modal Remove recovery email-->
+  <div class="modalContainer" *ngIf="removeProModalTwo">
+    <div class="modalOverlay" (click)="removeProModalTogglerTwo()"></div>
+    <div class="modalWrap modalMedium">
+      <div class="modalHeader">
+        <h1>Are you sure?</h1>
+        <div class="modalClose" (click)="removeProModalTogglerTwo()">
+          <img src="assets/close-white.svg" alt="icon">
+        </div>
+      </div>
+      <div class="modalBody">
+        <div class="gap20"></div>
+        <div class="sectionOne" style="display: flex; justify-content: flex-start; align-items: center;">
+          <img src="assets/warning.svg" alt="icon" style="margin-right: 15px; width: 40px;">
+          <h2 class="modalSubhed"> If you remove the recovery email from your coins, you will NOT be able to recover
+            your coins if they are lost!</h2>
+        </div>
+        <div class="gap50"></div>
+      </div>
+      <div class="modalFooter">
+        <div class="buttonWrap">
+          <button class="btnCustomRed buttonWide">REMOVE RECOVERY EMAIL</button>
+          <button class="cancelTransparent">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal Remove Password Protection-->
+  <div class="onEventLoadWrap" *ngIf="showLoader">
+    <ng-container>
+      <div class="text-center loader_show">
+        <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+        <span style="color:#ffffff">Loading image...</span>
+      </div>
+    </ng-container>
+  </div>
+
+  <script>
+    const range = new mdb.Range(document.getElementById('range'));
+  </script>

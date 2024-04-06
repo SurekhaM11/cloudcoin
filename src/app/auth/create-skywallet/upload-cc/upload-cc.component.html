@@ -1,0 +1,84 @@
+<div class="authWrapper">
+    <a href="javascript:;" routerLink="/skywallet/setup-password" class="backlinkBtn"><img src="assets/back_arrow.svg" alt=""></a>
+
+  <div class="bodyInnerWrapper">
+    <div class="stepperHolder">
+      <div class="stepperWrap">
+        <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Address setup</span>
+          </div>
+        </div>
+        <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Security setup</span>
+          </div>
+        </div>
+        <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Deposit CC</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2 class="titleOne">Upload CC to your SkyVault</h2>
+          <p class="titleTwo" style="opacity: 0.8;">CloudCoins are special files, of either PNG or Bin format. You can upload them to your SkyVault, or store them offline, on a USB stick for example.</p>
+          <div class="skyAddressFieldWrap">
+            <div class="formField">
+              <label for="username">Upload File</label>
+              <div class="uploadFileWrap">
+                  <span>{{fileName || "Choose a file to upload."}}</span>
+                  <div class="uploadIconWrap">
+                    <input type="file" (change)="onFileInput($event)" accept=".png, .id, .bin">
+                    <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+                  </div>
+              </div>
+                <ng-container>
+                  <span class="errorMsg" *ngIf="errorInfo"><img src="assets/error_info_icon.svg" alt="error icon">{{this.errorMsg}}</span>
+                  <span class="successMsg" *ngIf="successInfo"><img src="assets/info_green.svg" alt="error icon"> {{this.successMsg}}</span>
+                </ng-container>
+            </div>
+            <div class="gap10"></div>
+            <div class="uploadBtnWrap">
+              <a href="javascript:;"  class="btnCustomBlue btnLarge" (click)="upload()">Upload To My SkyVault</a>
+              <a href="javascript:;" routerLink="/skywallet/completed" class="uploadLaterLink">I'll Upload Later</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <img src="assets/deposit-img-black-white.png" alt="rocket image" class="stepperMainImg">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottomPartSubmit" style="border-top: 2px solid rgba(255, 255, 255, 0.26); padding-top: 20px; padding-bottom: 10px;">
+    <div class="container">
+      <span class="infoText">
+        <img src="assets/info_circle.svg" alt="">You can go to cloudcoin.global to buy CC and upload those files here.
+      </span>
+      <span class="infoText">
+        <img src="assets/info_circle.svg" alt="">Receive files that contain CC from your friends/colleagues and upload them here or later inside the application.
+      </span>
+    </div>
+  </div>
+</div>

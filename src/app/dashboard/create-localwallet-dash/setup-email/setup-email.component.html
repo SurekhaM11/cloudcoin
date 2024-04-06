@@ -1,0 +1,122 @@
+
+
+
+
+<div class="gap10"></div>
+<div class="gap20"></div>
+<div class="transWrapper">
+  <div class="headerbackWrap border-0">
+      <a href="javascript:;" routerLink="/dashboard/create-localwallet-dash" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+  </div>
+  <div class="transBody">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7" *ngIf="successInfo">
+          <p class="titleOne">Set up password & recovery email for: <span style="color: #0884FF;">{{this.user}}</span></p>
+          <p class="titleTwo" style="opacity: 0.8;">Add an extra layer of security to your Wallet by
+            <!-- setting up a strong password and  -->
+            enabling recovery email.</p>
+          <form [formGroup]="setupForm">
+            <div class="skyAddressFieldWrap">
+              <div class="formField passwordSetWrap">
+                <div class="passwordSetLeft">
+                  <!-- <label for="username">Password</label> -->
+                  <!-- <div class="custom-control custom-switch position-relative d-flex align-items-center">
+                    <div class="check_box">
+                      <input type="checkbox" class="custom-control-input" id="setupRecoveryPsw" type="checkbox" (change)="getStats($event)"
+                    data-toggle="toggle"/>
+                    <label for="setupRecoveryPsw" class="custom-control-label" >Password
+                    </label>
+                    </div>
+                    <img data-toggle="tooltip" data-placement="top" ngbTooltip="This will allow you to recover your password in case you forgot it" class="infoicon mb-1" src="assets/info.svg" alt="" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?">
+                  </div>
+                  <div class="gap10"></div>
+                  <div class="passwordWithIcon">
+                    <input class="greyInpField" (input)="setNewvalues($event)" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" [attr.disabled]="'disabled'?'isCheck == false': null"  placeholder="Enter a strong password" name="password">
+                    <button class="fa eyeIcon text-white mt-1"
+                    [ngClass]="{
+                      'fa-eye-slash': !fieldTextType,
+                      'fa-eye': fieldTextType
+                    }"
+                    (click)="toggleFieldTextType()"></button>
+                  </div>
+                  <div class="gap20"></div> -->
+                  <div class="custom-control custom-switch position-relative d-flex align-items-center">
+                    <div class="check_box">
+                      <input type="checkbox" class="custom-control-input" id="setupRecovery" type="checkbox"
+                    data-toggle="toggle" (change)="getStatus($event)"/>
+                    <label for="setupRecovery" class="custom-control-label">Set up recovery email.
+                    </label>
+                    </div>
+                    <img data-toggle="tooltip" data-placement="top" ngbTooltip="This will allow you to recover your password in case you forgot it" class="infoicon mb-1" src="assets/info.svg" alt="" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?">
+                  </div>
+                  <div class="gap10"></div>
+                  <input class="greyInpField" type="text" [attr.disabled]="'disabled'?'isSelect==false': null" formControlName="email" placeholder="Ex: john.doe@example.com" name="email" style="width: 300px;" >
+                  <div *ngIf="isValidInput('email')">
+                    <span class="errorMsg" *ngIf="setupForm.controls['email'].hasError('pattern')"><img src="assets/error_info_icon.svg" alt="error icon">Invalid Format</span>
+                    <span class="errorMsg" *ngIf="setupForm.controls['email'].hasError('required')"><img src="assets/error_info_icon.svg" alt="error icon">Email name is reqiured.</span>
+                  </div>
+                </div>
+                <!-- <div class="passwordStatusWrap">
+                  <h2>Strength:
+                    <span
+                    *ngIf=
+                    "(setupForm.controls['password'].hasError('minlength') && setupForm.controls['password'].hasError('hasCapitalCase'))
+                    || (setupForm.controls['password'].hasError('hasCapitalCase') && setupForm.controls['password'].hasError('hasSpecialCharacters'))
+                    || (setupForm.controls['password'].hasError('hasSpecialCharacters') && setupForm.controls['password'].hasError('minlength'))" style="color:#FF443C" >
+                     Low
+                    </span>
+                    <span  style="color:#FF6100" *ngIf="isMedium && setupForm.controls.password.invalid">
+                      Medium
+                    </span>
+                    <span style="color:#39D02B" *ngIf="setupForm.controls.password.valid">
+                      Strong
+                    </span>
+                  </h2>
+                  <span class="pswStatusTxt">
+                    <i [ngClass]="setupForm.controls['password'].hasError('required') || setupForm.controls['password'].hasError('minlength') || isCheck==false  ? 'text-danger fa fa-close' : 'text-success fa fa-check'"></i>
+                    At least 8 characters
+                  </span>
+                  <span class="pswStatusTxt" >
+                    <i [ngClass]="setupForm.controls['password'].hasError('required') || setupForm.controls['password'].hasError('hasCapitalCase') || isCheck==false  ? 'text-danger fa fa-close' : 'text-success fa fa-check'"></i>
+                    At least 1 capital letter
+                  </span>
+                  <span class="pswStatusTxt" >
+                    <i [ngClass]="setupForm.controls['password'].hasError('required') || setupForm.controls['password'].hasError('hasSpecialCharacters') || isCheck==false ? 'text-danger fa fa-close' : 'text-success fa fa-check'"></i>
+                    At least 1 special character
+                  </span>
+                </div> -->
+              </div>
+              <div class="locSetupMailBtnWrap">
+                <a href="javascript:;" class="btnCustomWhite" (click)="save()">Skip</a>
+                <button href="javascript:;"
+                [ngClass]="{'btnDisable':(setupForm.controls.password.invalid && this.isCheck) || (setupForm.controls.email.invalid && this.isSelect)}"
+                [disabled]="(setupForm.controls.password.invalid && this.isCheck) || (setupForm.controls.email.invalid && this.isSelect)"
+                class="btnCustomBlue" (click)="save()">
+                  Continue
+                </button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+        <div class="errorMsg col-md-7" *ngIf="errorInfo">
+          {{this.errorMsg}}
+        </div>
+        <div class="col-md-5">
+          <img src="assets/localwallet-security-setup-black-white.png" alt="localwallet image" class="stepperMainImg">
+        </div>
+      </div>
+    </div>
+      <div class="transBottomFooter">
+        <div class="bottomPartSubmit" style="border-top: 2px solid rgba(255, 255, 255, 0.26); padding-top: 20px; padding-bottom: 10px;">
+          <div class="container">
+            <span class="infoText">
+              <img src="assets/info_circle.svg" alt="">You can access your Wallet from your computer only.
+            </span>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+

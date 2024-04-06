@@ -1,0 +1,143 @@
+<div class="gap30"></div>
+<div class="transWrapper">
+  <div class="headerbackWrap border-0">
+    <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+  </div>
+  <div class="gap20"></div>
+  <div class="gap10"></div>
+  <div class="transBody">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <!-- <span class="setupTag">Advanced mode</span> -->
+          <ng-container>
+            <p class="titleOne">SkyVault Pass Key</p>
+            <p class="titleTwo" style="opacity: 0.8;">You will need a Pass Key to access your SkyVault. You can create a
+              new Pass Key or add one that you have previously created. The Pass Key is a PNG file that contains 25
+              verification keys. You will need to keep this file safe.</p>
+            <div class="skyAddressFieldWrap">
+              <!-- <div class="formField passwordSetWrap">
+                  <div class="passwordSetLeft">
+                    <label for="username">Password</label>
+                    <div class="passwordWithIcon">
+                      <input type="password" placeholder="Enter a strong password" [(ngModel)]="walletPin" name="password">
+                      <button class="eyeIcon"><img src="assets/eye.svg" alt="eye"></button>
+                    </div>
+                    <div class="gap20"></div>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input" id="setupRecovery" type="checkbox"
+                      data-toggle="toggle"/>
+                      <label for="setupRecovery" class="custom-control-label">Set up recovery email <img data-toggle="tooltip" data-placement="top" ngbTooltip="This will allow you to recover your password in case you forgot it" class="infoicon" src="assets/info.svg" alt="" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?">
+                      </label>
+                    </div>
+                    <input class="greyInpField" type="text" placeholder="Ex: mailto:john.doe@example.com" [(ngModel)]="walletPin" name="password">
+                  </div>
+                  <div class="passwordStatusWrap">
+                    <h2>Strength: <span style="color:#FF443C">Low</span> <span style="color:#FF6100">Medium</span> <span style="color:#39D02B">Strong</span></h2>
+                    <span class="pswStatusTxt"><img src="assets/cross.svg" alt="cross">At least 8 characters</span>
+                    <span class="pswStatusTxt"><img src="assets/tick_green.svg" alt="cross">At least 1 capital letter</span>
+                    <span class="pswStatusTxt"><img src="assets/cross.svg" alt="cross">At least 1 special character</span>
+                  </div>
+                </div> -->
+              <!-- <div class="uploadBtnWrap" *ngIf="!showDownload">
+                <a href="javascript:;" [ngClass]="{'btnDisable' : isDownload}" class="btnCustomBlue btnLarge"
+                  (click)="isDownload ? '' : download()">Generate New Pass Key</a>
+                <a class="uploadLaterLink ml-2" type="button" (click)="fileInput.click()">
+                  <a>IMPORT MY OWN PASS KEY</a>
+                  <input #fileInput type="file" accept=".id, .bin, .png" (change)="onFileInput($event)"
+                    style="display:none;" />
+                </a>
+              </div> -->
+
+              <div class="answer">
+                <input type="radio" name="passkey" (change)="passkeyradio($event)" value="newpasskey" checked
+                  id="passkey" class="m-3" [ngClass]="{'btnDisable' : isDownload}">
+                <label class="dark_mode_text" for="generatenewpasskey"> Generate New Pass Key</label><br>
+                <input type="radio" name="passkey" class="m-3" (change)="passkeyradio($event)" value="ownpasskey"
+                  id="passkey" (click)="fileInput.click()" [ngClass]="{'btnDisable' : isDownload}">
+                <label class=" dark_mode_text" for="importownkey"> Import Existing Pass Key</label><br>
+                <input #fileInput type="file" accept=".id, .bin, .png" (change)="onFileInput($event)"
+                  style="display:none;" />
+              </div>
+
+
+              <!-- <div class="downloadingCCWrap" *ngIf="showDownload">
+                <div class="downloadBar" [ngStyle]="{'width': this.payload?.progress != 100 ? '40%' : '99%'}"></div>
+                <span class="downloadText"><img src="assets/download_cloucoin.svg" alt="">Downloading authenticate key
+                  card</span>
+                <img src="assets/cross.svg" alt="" class="dwnloadStatIcon" *ngIf="this.payload?.progress != 100">
+                <img src="assets/tick_green.svg" *ngIf="this.payload?.progress == 100" alt="" class="dwnloadStatIcon">
+              </div> -->
+              <ng-container>
+                <!-- <span class="errorMsg" *ngIf="errorInfo"><img src="assets/error_info_icon.svg" alt="error icon"> Do not use space for your username</span>
+                  <span class="successMsg" *ngIf="successInfo"><img src="assets/info_green.svg" alt="error icon"> Your CC file has been downloaded. You can use this file to login on multiple devices. </span> -->
+                <span class="errorMsg" *ngIf="errorInfo"><img src="assets/error_info_icon.svg"
+                    alt="error icon">{{errorMsg}}</span>
+                <span class="successMsg" *ngIf="successInfo"><img src="assets/info_green.svg"
+                    alt="error icon">{{successMsg}}</span>
+              </ng-container>
+            </div>
+          </ng-container>
+          <!-- <ng-container *ngIf="advanceRecovery">
+              <p class="titleOne">Setup recovery email for: <span style="color: #0884FF;">{{this.user}}.skyvault.cc</span></p>
+              <p class="titleTwo" style="opacity: 0.8;">Having a recovery email along with list serials helps you to recover
+                your CloudCoins if lost. <a href="javascript:;" style="font-weight: 500; color: #0884ff; text-decoration: underline;">Learn more</a></p>
+              <div class="skyAddressFieldWrap">
+                <form [formGroup]="emailForm">
+                  <div class="formField passwordSetWrap">
+                    <div class="passwordSetLeft">
+                     <label for="username">Password</label>
+                      <div class="passwordWithIcon">
+                        <input type="password" placeholder="Enter a strong password" [(ngModel)]="walletPin" name="password">
+                        <button class="eyeIcon"><img src="assets/eye.svg" alt="eye"></button>
+                      </div>
+                      <div class="gap20"></div>
+                      <div class="custom-control custom-switch position-relative d-flex align-items-center">
+                        <div class="check_box">
+                          <input type="checkbox" class="custom-control-input" id="setupRecovery" type="checkbox"
+                          data-toggle="toggle" (change)="getStatus($event)"/>
+                          <label for="setupRecovery" class="custom-control-label">Set up recovery email
+                        </label>
+                        </div>
+                        <img data-toggle="tooltip" data-placement="top" ngbTooltip="This will allow you to recover your email in case you forgot it" class="infoicon mb-1" src="assets/interogative_icon.svg" alt="" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?">
+                      </div>
+                      <div class="gap10"></div>
+                      <input class="" type="text" [attr.disabled]="'disabled'?'isSelect==false': null" formControlName="email" placeholder="Ex: mailto:john.doe@example.com" [(ngModel)]="walletPin" name="email">
+                      <div *ngIf="isValidInput('email')">
+                        <span class="errorMsg" *ngIf="emailForm.controls['email'].hasError('pattern')"><img src="assets/error_info_icon.svg" alt="error icon">Invalid format</span>
+                        <span class="errorMsg" *ngIf="emailForm.controls['email'].hasError('required')"><img src="assets/error_info_icon.svg" alt="error icon">E-mail name is reqiured.</span>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </ng-container> -->
+        </div>
+        <div class="col-md-4">
+          <img src="assets/advnc-setup-img-black-white.png" alt="rocket image" class="stepperMainImg">
+        </div>
+      </div>
+    </div>
+    <div class="transBottomFooter">
+      <div class="bottomPartSubmit">
+        <div class="bottomFooter">
+          <div class="container">
+            <a href="javascript:;" class="btnCustomBlue btnLarge" (click)=createSky()>Continue</a>
+            <!-- <a href="javascript:;" *ngIf="advanceRecovery" class="btnCustomBlue btnLarge" [ngClass]="{btnDisable: this.emailForm.invalid && this.isSelect}" (click)="save()">{{isSelect==true? 'Continue' : 'Skip'}}</a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- [ngClass]=" passkey != 'newpasskey' || passkey != 'ownpasskey' "
+              (click)="continue ? createSky() : '' " -->
+<!-- <div class="onEventLoadWrap" *ngIf="showLoader">
+  <ng-container>
+    <div class="text-center loader_show">
+      <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <span style="color:#ffffff">Creating SkyVault...</span>
+    </div>
+  </ng-container>
+</div> -->

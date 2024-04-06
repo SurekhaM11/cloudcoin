@@ -1,0 +1,112 @@
+<div class="transWrapper">
+    <div class="headerbackWrap">
+        <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg"
+                alt=""></a>
+        <span class="titleOne">Backup</span>
+    </div>
+    <div class="gap20"></div>
+    <div class="transBody" *ngIf="!afterclick">
+        <p class="subTitleTwo">This will allow you to create a backup of your coins.</p>
+        <div class="gap20"></div>
+        <div class="lineSection">
+            <div class="backupSectionOne">
+                <!-- <div class="formFieldThree">
+                    <label for="">Existing Password</label>
+                    <div class="inputLine">
+                        <input [type]="backupExtPswShow ? 'password' : 'text'">
+                        <button (click)="toggleBkpPswType()">
+                            <img src="{{ backupExtPswShow ? 'assets/eyeopen.svg' : 'assets/eyeclose.svg'}}"
+                                type="button" />
+                        </button>
+                    </div>
+                </div> -->
+                <div class="formField">
+                    <label for="">Backup Folder</label>
+                    <div>
+                        <div style="border-radius: 6px;" class="filepicker">
+                            <span>{{file}}</span>
+                            <div class="icon_wrap" (click)="getPath()">
+                                <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="parentContainer">
+                        <div class="controlContainer">
+                            <div class="input-group" (click)="getPath()">
+                                <input class="form-control py-2 border-right-0 border" type="text" id="fileInput"
+                                    name="fileInput" [(ngModel)]="file" placeholder="Ex.- C:\Users"
+                                    style="cursor: pointer;" disabled>
+                                <span class="input-group-append">
+                                    <div class="input-group-text bg-transparent"><img src="assets/folder-border.svg"
+                                            alt=""></div>
+                                </span>
+                            </div> -->
+
+                    <!-- <div class="inputFileHolder">
+                                <a href="javascript:;" title="Browse">
+                                    <img src="assets/folder-border.svg" alt="">
+                                </a>
+                                <input type="text" id="fileInput" name="fileInput" [(ngModel)]="file" (click)="getPath()"
+                                    class="fileInput text-white" title={{file}}>
+                            </div>
+                            <div class="inputFileMask">
+                                <div class="inputLine">
+                                    <input [(ngModel)]="file" value="click" placeholder="Ex.- C:\Users" (click)="getPath()" type="text" disabled>
+                                </div>
+                            </div> -->
+                    <!-- </div> -->
+                    <!-- </div> -->
+                </div>
+                <div class="gap20"></div>
+                <div class="formFieldThree">
+                    <label for="">File Name Tag (optional)</label>
+                    <div class="inputLine">
+                        <input type="text" [(ngModel)]="tag" width="300" placeholder="Ex: Latest backup"
+                            (change)="getLength()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="backupSectionTwo" *ngIf="afterclick">
+        <div class="headthSubHed" *ngIf="type === 'localwallet'">
+            <h4>Backup completed for the Wallet: <span>{{userLocal}}</span></h4>
+        </div>
+        <div class="headthSubHed" *ngIf="type === 'skywallet'">
+            <h4>Backup completed for the SkyVault: <span>{{userSky}}</span></h4>
+        </div>
+        <div class="text-white" *ngIf="type == 'localwallet'">
+            <div class="gap20"></div>
+            <div class="healthListDiv">
+                <p style="margin-left: 0px;">Total CC Backed Up: <span>{{payload?.data?.TotalCoins}}</span></p>
+            </div>
+            <div class="gap10"></div>
+            <div class="healthListDiv">
+                <p style="margin-left: 0px;">Saved To: <span style="color: #0884FF;">{{payload?.data?.FileName}}</span>
+                </p>
+            </div>
+        </div>
+        <div class="text-white" *ngIf="type == 'skywallet'">
+            <div class="gap20"></div>
+            <div class="healthListDiv">
+                <p style="margin-left: 0px;">Saved To : <span style="color: #0884FF;">{{Skyfile}}</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="transBottomFooter">
+        <a href="javascript:void(0);" *ngIf="!afterclick"
+            [ngClass]="{'btnDisable': this.file === ''  || remarkInvalid == true}"
+            (click)="this.file === '' ? '' : backup()" class="btnCustomBlue">Back Up</a>
+        <a href="javascript:void(0);" *ngIf="afterclick" routerLink="/dashboard/home" class="btnCustomBlue">Continue</a>
+    </div>
+</div>
+
+<div class="onEventLoadWrap" *ngIf="showLoader">
+    <ng-container>
+        <div class="text-center loader_show">
+            <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+            <span style="color:#ffffff" *ngIf="type == 'localwallet'">Backing up Wallet...</span>
+            <span style="color:#ffffff" *ngIf="type == 'skywallet'">Backing Key Key...</span>
+        </div>
+    </ng-container>
+</div>

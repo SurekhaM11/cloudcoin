@@ -1,0 +1,64 @@
+<div class="transWrapper">
+    <div class="headerbackWrap">
+        <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg"
+                alt=""></a>
+        <span class="titleOne">Health Check</span>
+    </div>
+    <div class="gap20"></div>
+    <div class="transBody">
+        <p class="subTitleTwo">This process verifies the authenticity of your coins. If a coin is found to be fractured
+            or counterfeit, it will be placed in the appropriate folder.</p>
+        <div class="headthSubHed">
+            <h4>Performing Health check for the wallet: <span>NFTs</span></h4>
+        </div>
+        <div class="lineSection">
+            <div class="progressWrap" *ngIf="!goTODash">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped" role="progressbar"
+                        style="background-color: green!important;"
+                        [ngStyle]="{'width': healthProg?.progress < 15 ? 15 + healthProg?.progress + '%' :  healthProg?.progress + '%'}"
+                        aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">Checking
+                        coins...
+                    </div>
+                </div>
+            </div>
+            <div class="formField" *ngIf="healthProg?.progress === '100'">
+                <div class="checkboxInpHolder">
+                    <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Health check
+                        completed</span>
+                </div>
+            </div>
+            <div class="gap10"></div>
+            <div class="healthList" *ngIf="goTODash && healthProg?.status === 'completed'">
+                <div class="healthListDiv">
+                    <p>Total Coins found to be perfectly authentic:</p>
+                    <h6>{{this.healthProg?.data?.TotalAuthentic}}</h6>
+                </div>
+                <div class="healthListDiv">
+                    <p>Total Coins found to be authentic but fractured:</p>
+                    <h6>{{this.healthProg?.data?.TotalFracked + this.healthProg?.data?.TotalAlreadyFracked}}</h6>
+                </div>
+                <div class="healthListDiv">
+                    <p>Total Coins found to be counterfeit:</p>
+                    <h6>{{this.healthProg?.data?.TotalCounterfeit}}</h6>
+                </div>
+                <!-- <div class="healthListDiv">
+                    <p>Total Coins that are already fracked:</p>
+                    <h6>{{this.healthProg?.data?.TotalAlreadyFracked}}</h6>
+                </div> -->
+                <div class="healthListDiv">
+                    <p>Total Errors</p>
+                    <h6>{{this.healthProg?.data?.TotalErrors}}</h6>
+                </div>
+                <div class="healthListDiv">
+                    <p>Total Coins</p>
+                    <h6>{{this.healthProg?.data?.TotalCoins}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="transBottomFooter">
+        <button class="btnCustomBlue" [ngClass]="{'btnDisable': goTODash === false}"
+            (click)="goTODash ? router.navigate(['/dashboard//create-nft-gallery']) : ''">close</button>
+    </div>
+</div>

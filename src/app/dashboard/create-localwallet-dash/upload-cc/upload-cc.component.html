@@ -1,0 +1,56 @@
+<div class="gap10"></div>
+<div class="gap20"></div>
+<div class="transWrapper">
+  <div class="headerbackWrap border-0">
+      <a href="javascript:;" routerLink="/dashboard/create-localwallet-dash" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+  </div>
+  <div class="transBody">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2 class="titleOne">Deposit CC to Your Wallet</h2>
+          <p class="titleTwo" style="opacity: 0.8;">CloudCoins are files with verification keys inside. You can import files with the following extension: png, stack, cc and zip.</p>
+          <div class="gap10"></div>
+
+          <div class="skyAddressFieldWrap">
+            <div class="formField">
+              <label for="username">Deposit CC</label>
+              <div class="uploadFileWrap">
+                  <span>{{fileName || "Choose coins to deposit."}}</span>
+                  <div class="uploadIconWrap">
+                    <input type="file" (change)="getUploadedFiles($event)" accept=".png, .id, .bin">
+                    <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+                  </div>
+              </div>
+                <ng-container>
+                  <span class="errorMsg" *ngIf="errorInfo"><img src="assets/error_info_icon.svg" alt="error icon">{{this.errorMsg}}</span>
+                  <span class="successMsg" *ngIf="successInfo"><img src="assets/info_green.svg" alt="error icon"> {{this.successMsg}}</span>
+                </ng-container>
+            </div>
+            <div class="gap20"></div>
+            <div class="uploadBtnWrap">
+              <a href="javascript:;" [ngClass]="{'btnDisable' : this.btn == true}" class="btnCustomBlue btnLarge" (click)="next()">Deposit to my Wallet.</a>
+              <a href="javascript:;" class="btnCustomBlue ml-2" (click)="skip()">I'll deposit later.</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <img src="assets/localwallet-upload-cc-black-white.png" alt="rocket image" class="stepperMainImg">
+        </div>
+      </div>
+    </div>
+      <div class="transBottomFooter">
+        <div class="bottomPartSubmit" style="border-top: 2px solid rgba(255, 255, 255, 0.26); padding-top: 20px; padding-bottom: 10px;">
+          <div class="container">
+            <span class="infoText">
+              <img src="assets/info_circle.svg" alt="">You can learn where to get CC by going to https://CloudCoin.global.
+            </span>
+            <span class="infoText">
+              <img src="assets/info_circle.svg" alt="">Receive files that contain CC from your friends/colleagues and upload them here or later inside the application.
+            </span>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+

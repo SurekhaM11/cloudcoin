@@ -1,0 +1,456 @@
+<div class="transWrapper" *ngIf="id == 1">
+  <div class="headerbackWrap">
+    <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+    <span class="titleOne">Transfer CC to one of your SkyVaults</span>
+  </div>
+  <div class="transBody">
+    <ng-container>
+      <form [formGroup]="transferForm">
+        <div class="formInline">
+          <label for="username">Transfer From:</label>
+          <span style="opacity: 0.7;">{{userSky}}</span>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="formInline">
+              <label for="username">Transfer To:</label>
+              <span style="opacity: 0.7;">SkyVault</span>
+              <div class="gap20"></div>
+              <label>Transfer to SkyVault from the dropdown menu.</label>
+            </div>
+            <div class="gap10"></div>
+            <div class="lineSection">
+              <div class="customeDropdownTwo mb-2" (clickOutside)="closeDropdown()">
+                <div class="triger" (click)="customSelToggler('sky')">
+                  <img [src]="cSelectorImgSky" height="20" alt="">
+                  <span>{{cSelectorTextSky}}</span>
+                </div>
+                <div class="menuShowTwo scroll" *ngIf="customSelectorOpenSky">
+                  <div class="menus" *ngFor="let sky of skyAll"
+                    (click)="customSelector(sky.idcoin?.sn, sky.name, 'sky')">
+                    <img src="assets/cloud-transfer.svg" alt="icon">
+                    <span>{{sky.name}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gap10"></div>
+        <div class="formInline">
+          <label for="username">Amount</label>
+          <div class="gap10"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="formField">
+              <label *ngIf="opinions>1" style="color:#FF7777" tooltip="{{balanceBreakup}}">
+                <fa-icon icon="exclamation-circle"></fa-icon> Amount: (Balance:{{balanceString}} CC) <button
+                  class="smallButton" (click)="checkBalance()">
+                  <fa-icon icon="sync"></fa-icon>
+                </button>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-4 dispFlex dispFlexPriceTrans">
+            <div class="inputTagWrapperTwo">
+              <span href="javascript:;" class="inpTag">CC</span>
+              <input type="text" placeholder="" name="amount" formControlName="amount" (keypress)="_keyUp($event)">
+            </div>
+          </div>
+        </div>
+        <div class="gap20"></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="formField formFieldTwo">
+              <label for="">Remarks <small>(optional)</small></label>
+              <input type="text" formControlName="tag" placeholder="Ex: Send it to Antoine">
+            </div>
+            <div *ngIf="isValidInput('tag')">
+              <span class="errorMsg" *ngIf="transferForm.controls['tag'].errors?.maxlength"><img
+                  src="assets/error_info_icon.svg" alt="error icon">Remarks can't be longer than 64
+                characters.</span>
+            </div>
+            <div class="gap20"></div>
+            <!-- <div class="formField">
+                <div class="checkboxInpHolder">
+                  <input type="checkbox"><span>Send anonymously <br> <small>The receiver won’t see your username, but they
+                      will see the remarks.</small></span>
+                </div>
+              </div> -->
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="showError">
+      <ng-lottie height="100px" [options]="errorOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <div class="text-center" style="color:#ffffff;margin-bottom: 10px">{{errorMessage}}</div>
+      <div class="text-center">
+        <button class="btnCustomBlack" (click)="hideErrorMessage()">
+          <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="balanceLoader">
+      <div class="text-center">
+        <ng-lottie height="150px" [options]="loadingOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+        <span class="titleTwo">{{loadingMessage}}</span>
+      </div>
+    </ng-container>
+    <div class="transBottomFooter">
+      <a href="javascript:;" [ngClass]="{btnDisable: !this.transferForm?.valid}" class="btnCustomBlue btnLarge"
+        (click)="showLoader ? '' : transferCoin()">Transfer CC</a>
+    </div>
+  </div>
+</div>
+
+<div class="transWrapper" *ngIf="id == 2">
+  <div class="headerbackWrap">
+    <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+    <span class="titleOne">Transfer CC to another user's SkyVault</span>
+  </div>
+  <div class="transBody">
+    <ng-container>
+      <form [formGroup]="transferForm">
+        <div class="formInline">
+          <label for="username">Transfer From:</label>
+          <span style="opacity: 0.7;">{{userSky}}</span>
+        </div>
+        <div class="row">
+          <div class="col">
+            <!-- <div class="formInline row mt-4">
+              <div class="col-auto custom_check custom_check_radio">
+                <input type="radio" name="radio" value="same" id="same" (change)="changRadio($event)">
+                <label for="same">Move to one of your wallets</label>
+              </div>
+              <div class="col-auto custom_check custom_check_radio">
+                <input type="radio" name="radio" value="other" id="other" (change)="changRadio($event)">
+                <label for="other">Send to another user's Skyvault.</label>
+              </div>
+            </div> -->
+            <div class="formInline">
+              <label for="username">Transfer To:</label>
+              <span style="opacity: 0.7;">SkyVault</span>
+              <div class="gap20"></div>
+            </div>
+            <div class="lineSection">
+              <div class="lineSection">
+                <div class="formField formFieldTwo customDropdownWrap" (clickOutside)="closeDropdown()">
+                  <!-- <span style="opacity: 0.7; font-size:medium;" class="text-white">Enter Another user's skyvault address.</span><br> -->
+                  <label for="">Enter another user's SkyVault address</label>
+                  <input type="text" formControlName="anotherSky" placeholder="name.skyvault.cc"
+                    (click)="customSelToggler('otherSky')">
+
+                  <div class="customDropdownHolder scroll" *ngIf="customSelectorOpen && userDetail?.length > 0">
+                    <span class="ddItem" *ngFor="let d of filteredOptions"
+                      (click)="customSelector('none', d, 'otherSky')">{{d}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gap20"></div>
+        <div class="formInline">
+          <label for="username">Amount</label>
+          <div class="gap10"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="formField">
+              <label *ngIf="opinions>1" style="color:#FF7777" tooltip="{{balanceBreakup}}">
+                <fa-icon icon="exclamation-circle"></fa-icon> Amount: (Balance:{{balanceString}} CC) <button
+                  class="smallButton" (click)="checkBalance()">
+                  <fa-icon icon="sync"></fa-icon>
+                </button>
+              </label>
+              <label *ngIf="opinions===1">Amount: (Balance:{{balanceString}} CC)</label>
+            </div>
+          </div>
+          <div class="col-md-4 dispFlex dispFlexPriceTrans">
+            <div class="inputTagWrapperTwo">
+              <span href="javascript:;" class="inpTag">CC</span>
+              <input type="text" placeholder="" name="amount" formControlName="amount" (keypress)="_keyUp($event)">
+            </div>
+          </div>
+        </div>
+        <div class="gap20"></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="formField formFieldTwo">
+              <label for="">Remarks <small>(optional)</small></label>
+              <input type="text" formControlName="tag" placeholder="Ex: Send it to Antoine">
+            </div>
+            <div *ngIf="isValidInput('tag')">
+              <span class="errorMsg" *ngIf="transferForm.controls['tag'].errors?.maxlength"><img
+                  src="assets/error_info_icon.svg" alt="error icon">Remarks can't be longer than 64
+                characters.</span>
+            </div>
+            <div class="gap20"></div>
+            <!-- <div class="formField">
+                <div class="checkboxInpHolder">
+                  <input type="checkbox"><span>Send anonymously <br> <small>The receiver won’t see your username, but they
+                      will see the remarks.</small></span>
+                </div>
+              </div> -->
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="showError">
+      <ng-lottie height="100px" [options]="errorOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <div class="text-center" style="color:#ffffff;margin-bottom: 10px">{{errorMessage}}</div>
+      <div class="text-center">
+        <button class="btnCustomBlack" (click)="hideErrorMessage()">
+          <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="balanceLoader">
+      <div class="text-center">
+        <ng-lottie height="150px" [options]="loadingOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+        <span class="titleTwo">{{loadingMessage}}</span>
+      </div>
+    </ng-container>
+
+    <div class="text-center subInnerHeader" *ngIf="complete">
+      <fa-icon icon="check"></fa-icon> Transfer Complete
+    </div>
+    <div class="transBottomFooter">
+      <a href="javascript:;" [ngClass]="{btnDisable: !this.transferForm?.valid}" class="btnCustomBlue btnLarge"
+        (click)="showLoader ? '' : transferCoin()">Transfer CC</a>
+    </div>
+  </div>
+</div>
+
+<div class="transWrapper" *ngIf="id == 3">
+  <div class="headerbackWrap">
+    <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+    <span class="titleOne">Transfer CC to Exchange</span>
+  </div>
+  <div class="transBody">
+    <ng-container>
+      <form [formGroup]="transferForm">
+        <div class="formInline">
+          <label for="username">Transfer From:</label>
+          <span style="opacity: 0.7;">{{userLocal}}</span>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="formInline">
+              <label for="username">Transfer To:</label>
+              <span style="opacity: 0.7;">SkyVault</span>
+              <div class="gap20"></div>
+            </div>
+            <div class="lineSection">
+              <div class="lineSection">
+                <div class="formField formFieldTwo customDropdownWrap">
+                  <label for="">Enter Receiver's SkyVault address</label>
+                  <input type="text" formControlName="anotherSky" placeholder="name.skyvault.cc"
+                    (click)="customSelToggler('otherSky')">
+
+                  <div class="customDropdownHolder scroll" *ngIf="customSelectorOpen && userDetail?.length > 0">
+                    <span class="ddItem" *ngFor="let d of filteredOptions"
+                      (click)="customSelector('none', d, 'otherSky')">{{d}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gap20"></div>
+        <div class="formInline">
+          <label for="username">Amount</label>
+          <div class="gap10"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="formField">
+              <label *ngIf="opinions>1" style="color:#FF7777" tooltip="{{balanceBreakup}}">
+                <fa-icon icon="exclamation-circle"></fa-icon> Amount: (Balance:{{balanceString}} CC) <button
+                  class="smallButton" (click)="checkBalance()">
+                  <fa-icon icon="sync"></fa-icon>
+                </button>
+              </label>
+              <label *ngIf="opinions===1">Amount: (Balance:{{balanceString}} CC)</label>
+            </div>
+          </div>
+          <div class="col-md-4 dispFlex dispFlexPriceTrans">
+            <div class="inputTagWrapperTwo">
+              <span href="javascript:;" class="inpTag">CC</span>
+              <input type="text" placeholder="" name="amount" formControlName="amount" (keypress)="_keyUp($event)">
+            </div>
+          </div>
+        </div>
+        <div class="gap20"></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="formField formFieldTwo">
+              <label for="">Memo or Payment Code <small>(Supplied by exchange)</small></label>
+              <input type="text" formControlName="tag" placeholder="Ex: Send it to Antoine">
+            </div>
+            <div *ngIf="isValidInput('tag')">
+              <span class="errorMsg" *ngIf="transferForm.controls['tag'].errors?.maxlength"><img
+                  src="assets/error_info_icon.svg" alt="error icon">Memo can't be longer than 64
+                characters.</span>
+            </div>
+            <div class="gap20"></div>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="showError">
+      <ng-lottie height="100px" [options]="errorOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <div class="text-center" style="color:#ffffff;margin-bottom: 10px">{{errorMessage}}</div>
+      <div class="text-center">
+        <button class="btnCustomBlack" (click)="hideErrorMessage()">
+          <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="balanceLoader">
+      <div class="text-center">
+        <ng-lottie height="150px" [options]="loadingOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+        <span class="titleTwo">{{loadingMessage}}</span>
+      </div>
+    </ng-container>
+
+    <div class="text-center subInnerHeader" *ngIf="complete">
+      <fa-icon icon="check"></fa-icon> Transfer Complete
+    </div>
+    <div class="transBottomFooter">
+      <a href="javascript:;" [ngClass]="{btnDisable: !this.transferForm?.valid}" class="btnCustomBlue btnLarge"
+        (click)="showLoader ? '' : transferCoin()">Send to Exchange</a>
+    </div>
+  </div>
+</div>
+
+<div class="transWrapper" *ngIf="id == 4">
+  <div class="headerbackWrap">
+    <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+    <span class="titleOne">Transfer CC to Exchange</span>
+  </div>
+  <div class="transBody">
+    <ng-container>
+      <form [formGroup]="transferForm">
+        <div class="formInline">
+          <label for="username">Transfer From:</label>
+          <span style="opacity: 0.7;">{{userSky}}</span>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="formInline">
+              <label for="username">Transfer To:</label>
+              <span style="opacity: 0.7;">SkyVault</span>
+              <div class="gap20"></div>
+            </div>
+            <div class="lineSection">
+              <div class="lineSection">
+                <div class="formField formFieldTwo customDropdownWrap" (clickOutside)="closeDropdown()">
+                  <label for="">Enter Receiver's SkyVault address</label>
+                  <input type="text" formControlName="anotherSky" placeholder="name.skyvault.cc"
+                    (click)="customSelToggler('otherSky')">
+
+                  <div class="customDropdownHolder scroll" *ngIf="customSelectorOpen && userDetail?.length > 0">
+                    <span class="ddItem" *ngFor="let d of filteredOptions"
+                      (click)="customSelector('none', d, 'otherSky')">{{d}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gap20"></div>
+        <div class="formInline">
+          <label for="username">Amount</label>
+          <div class="gap10"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="formField">
+              <label *ngIf="opinions>1" style="color:#FF7777" tooltip="{{balanceBreakup}}">
+                <fa-icon icon="exclamation-circle"></fa-icon> Amount: (Balance:{{balanceString}} CC) <button
+                  class="smallButton" (click)="checkBalance()">
+                  <fa-icon icon="sync"></fa-icon>
+                </button>
+              </label>
+              <label *ngIf="opinions===1">Amount: (Balance:{{balanceString}} CC)</label>
+            </div>
+          </div>
+          <div class="col-md-4 dispFlex dispFlexPriceTrans">
+            <div class="inputTagWrapperTwo">
+              <span href="javascript:;" class="inpTag">CC</span>
+              <input type="text" placeholder="" name="amount" formControlName="amount" (keypress)="_keyUp($event)">
+            </div>
+          </div>
+        </div>
+        <div class="gap20"></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="formField formFieldTwo">
+              <label for="">Memo or Payment Code <small>(Supplied by Exchange)</small></label>
+              <input type="text" formControlName="tag" placeholder="Ex: Send it to Antoine">
+            </div>
+            <div class="gap20"></div>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="showError">
+      <ng-lottie height="100px" [options]="errorOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <div class="text-center" style="color:#ffffff;margin-bottom: 10px">{{errorMessage}}</div>
+      <div class="text-center">
+        <button class="btnCustomBlack" (click)="hideErrorMessage()">
+          <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="balanceLoader">
+      <div class="text-center">
+        <ng-lottie height="150px" [options]="loadingOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+        <span class="titleTwo">{{loadingMessage}}</span>
+      </div>
+    </ng-container>
+
+    <div class="text-center subInnerHeader" *ngIf="complete">
+      <fa-icon icon="check"></fa-icon> Transfer Complete
+    </div>
+    <div class="transBottomFooter">
+      <a href="javascript:;" [ngClass]="{btnDisable: !this.transferForm?.valid}" class="btnCustomBlue btnLarge"
+        (click)="showLoader ? '' : transferCoin()">Send to Exchange</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="transWrapper" *ngIf="afterClick">
+  <div class="headerbackWrap">
+    <span class="titleOne">You transferred {{this.payload?.data.TotalCoins}} CC!</span>
+  </div>
+  <div class="transBody">
+    <div class="gap10"></div>
+    <div class="formField">
+      <label for="">Transferred from: &nbsp; <span style="opacity: 0.7;">{{userSky}}</span></label>
+    </div>
+    <div class="formField">
+      <label for="">Transferred to: &nbsp; <span style="opacity: 0.7;">{{destName}}</span></label>
+    </div>
+    <div class="formField">
+      <label for="">Current balance: &nbsp; <span style="opacity: 0.7;">{{transSky}}</span></label>
+    </div>
+    <div class="gap20"></div>
+    <div class="transBottomFooter">
+      <a href="javascript:;" class="btnCustomBlue btnLarge" [ngClass]="{btnDisable: showLoader}"
+        (click)="showLoader ? '' : go() ">Close</a>
+    </div>
+  </div>
+</div>
+
+<div class="onEventLoadWrap" *ngIf="showLoader">
+  <ng-container>
+    <div class="text-center loader_show">
+      <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <span class="titleTwo">Transferring CC...</span>
+    </div>
+  </ng-container>
+</div>

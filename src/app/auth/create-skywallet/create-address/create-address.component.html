@@ -1,0 +1,94 @@
+<div class="authWrapper">
+  <a href="javascript:;" routerLink="/" class="backlinkBtn"><img src="assets/back_arrow.svg" alt=""></a>
+  <div class="bodyInnerWrapper">
+    <div class="stepperHolder">
+      <div class="stepperWrap">
+        <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Address setup</span>
+          </div>
+        </div>
+        <!-- <div class="step">
+            <div class="circleWrap">
+              <div class="circle"></div>
+            </div>
+            <div class="steptextWrap">
+              <span class="amount">Security setup</span>
+            </div>
+          </div> -->
+        <div class="step">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Pass Key</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2 class="titleOne">Create an Address for your SkyVault.</h2>
+          <p class="titleTwo" style="opacity: 0.8;">Using a SkyVault address helps other users of SkyVault to transfer
+            CC to you instantly.</p>
+          <div class="skyAddressFieldWrap">
+            <form [formGroup]="addressForm">
+              <div class="formField">
+                <label for="username">SkyVault Address</label>
+                <input type="text" class="form-control" placeholder="Ex: Main" name="username" id="username"
+                  formControlName="username">
+                <span class="domainName">.skyvault.cc</span>
+                <div *ngIf="isValidInput('username')">
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.cannotContainSpace"><img
+                      src="assets/error_info_icon.svg" alt="error icon"> Do not use a space for your username.</span>
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.required"><img
+                      src="assets/error_info_icon.svg" alt="error icon">Wallet name is reqiured.</span>
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.pattern"><img
+                      src="assets/error_info_icon.svg" alt="error icon">Cannot start with - (dash)</span>
+                  <!-- <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.minlength"><img src="assets/error_info_icon.svg" alt="error icon">Atleast 6 characters are required.</span>    -->
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.maxlength"><img
+                      src="assets/error_info_icon.svg" alt="error icon">SkyVault name can't be longer than 63
+                    characters.</span>
+                  <!-- <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.onlyNumber"><img src="assets/error_info_icon.svg" alt="error icon">Only numbers are not allowed.</span>       -->
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.special"><img
+                      src="assets/error_info_icon.svg" alt="error icon">Special charcters are not permitted.</span>
+                </div>
+                <span class="errorMsg" *ngIf="errorInfo"><img src="assets/error_info_icon.svg"
+                    alt="error icon">{{this.errorMsg}}</span>
+                <span class="successMsg" *ngIf="successInfo"><img src="assets/success_icon.svg"
+                    alt="success icon">{{this.successMsg}}</span>
+              </div>
+              <div class="gap30"></div>
+              <button href="javascript:;" [ngClass]="{'btnDisable':!addressForm.valid}" [disabled]="!addressForm.valid"
+                class="btnCustomBlue btnLarge" (click)="add()">Create a SkyVault</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <img src="assets/rocket-black-white.png" alt="rocket image" class="stepperMainImg">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottomPartSubmit">
+    <div class="bottomFooter">
+      <div class="container">
+        <span class="infoText">
+          <img src="assets/info_circle.svg" alt="">You can log on to multiple devices using your SkyVault address.
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="transWrapper">
+    <div class="headerbackWrap">
+        <a href="javascript:;" routerLink="/dashboard" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+        <span class="titleOne">Buy CC</span>
+    </div>
+    <hr>
+    <div class="formInline">
+        <label>Wallet username: </label>
+        <span>{{skywallet}}</span>
+    </div>
+    <div class="gap20"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="formField">
+              <label for="">How many CC do you want to buy?</label>
+            </div>
+          </div>
+        <div class="col-md-6 dispFlex dispFlexPriceTrans">
+          <div class="inputTagWrapper">
+            <span href="javascript:;" class="inpTag">CC</span>
+            <input type="text" placeholder="0">
+          </div>
+          <img src="assets/equal.svg" alt="" class="equalSign">
+          <div class="inputTagWrapper">
+            <select class="inpTagSelect" name="" id="">
+              <option value="USD" selected="selected">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+            <input type="text" placeholder="0">
+          </div>
+        </div>
+      </div>
+    <!-- <div class="row">
+        <div class="col-md-6">
+            <div class="formField">
+                <label for="username">How many Cloudcoins do you want to buy?</label>
+                <div class="inputTagWrapper">
+                    <a href="javascript:;" class="inpTag">CC</a>
+                    <input type="text" placeholder="0">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="exchangeDesc">
+        <img src="assets/exchange.svg" alt="">
+        <span>1 USD = 100 CC</span>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="formField">
+                <div class="inputTagWrapper">
+                    <select class="inpTagSelect" name="" id="">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                    <input type="text" placeholder="0">
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="gap20"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="formField">
+                <label for="">Payment options</label>
+                <select name="" id="">
+                    <option value="">Choose a payment option</option>
+                    <option value="">Debit/Credit card,</option>
+                    <option value="">UPI</option>
+
+                </select>
+            </div>
+            <div class="gap20"></div>
+            <div class="gap10"></div>
+            <a href="javascript:;" routerLink="/pay" class="btnCustomBlue">Buy CC</a>
+        </div>
+    </div>
+</div>

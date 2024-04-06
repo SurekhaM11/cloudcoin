@@ -1,0 +1,199 @@
+<div class="transWrapper" *ngIf="type === 'localwallet'">
+    <div class="headerbackWrap">
+        <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg"
+                alt=""></a>
+        <span class="titleOne">Health Check</span>
+    </div>
+    <div class="gap20"></div>
+    <div class="transBody">
+        <p class="subTitleTwo">Health Check will ensure that all your coins are 100% authentic. It will move coins to
+            the Fractured (Fracked) or Counterfeit folder if they are not 100% authentic.</p>
+        <div class="headthSubHed">
+            <h4>Verifying Coin Authenticity for the Wallet: <span>{{userLocal}}</span></h4>
+        </div>
+        <div class="lineSection">
+            <div class="progressWrap" *ngIf="!goTODash">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped"  role="progressbar"  style="background-color: green!important;"
+                        [ngStyle]="{'width': healthProg?.progress < 15 ? 15 + healthProg?.progress + '%' :  healthProg?.progress + '%'}"
+                        aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">Checking
+                        coins...
+                    </div>
+                </div>
+            </div>
+            <div class="formField" *ngIf="healthProg?.progress === '100'">
+                <div class="checkboxInpHolder">
+                    <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Coin Verification process
+                        completed.</span>
+                </div>
+            </div>
+            <div class="gap10"></div>
+            <div class="healthList" *ngIf="goTODash && healthProg?.status === 'completed'">
+                <div class="healthListDiv">
+                    <p>Total coins found to be perfectly authentic:</p>
+                    <h6>{{this.healthProg?.data?.TotalAuthentic}}</h6>
+                </div>
+                <div class="healthListDiv">
+                    <p>Total coins found to be authentic but fractured:</p>
+                    <h6>{{this.healthProg?.data?.TotalFracked + this.healthProg?.data?.TotalAlreadyFracked}}</h6>
+                </div>
+                <div class="healthListDiv">
+                    <p>Total coins found to be counterfeit:</p>
+                    <h6>{{this.healthProg?.data?.TotalCounterfeit}}</h6>
+                </div>
+                <!-- <div class="healthListDiv">
+                    <p>Total Coins that are already fracked:</p>
+                    <h6>{{this.healthProg?.data?.TotalAlreadyFracked}}</h6>
+                </div> -->
+                <div class="healthListDiv">
+                    <p>Total Errors:</p>
+                    <h6>{{this.healthProg?.data?.TotalErrors}}</h6>
+                </div>
+                <div class="healthListDiv">
+                    <p>Total Coins:</p>
+                    <h6>{{this.healthProg?.data?.TotalCoins}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="transBottomFooter">
+        <button class="btnCustomBlue" [ngClass]="{'btnDisable': goTODash === false}"
+            (click)="goTODash ? router.navigate(['/dashboard/home']) : ''">close</button>
+    </div>
+</div>
+
+<div class="transWrapper" *ngIf="type === 'skywallet'">
+    <div class="headerbackWrap">
+        <a href="javascript:;" routerLink="/dashboard/home" class="backBtnInHeader"><img src="assets/arrow.svg"
+                alt=""></a>
+        <span class="titleOne">Synchronize SkyVault</span>
+    </div>
+    <div class="gap20"></div>
+    <div class="transBody" *ngIf="!fixSkyvault">
+        <p class="subTitleTwo">This will ensure that the CCs in your SkyVault account are synchronized on all
+            RAIDA.</p>
+        <div class="lineSection">
+            <div *ngIf="!goTODash">
+                <div class="progressWrap">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped" role="progressbar" style="background-color: green!important;"
+                            [ngStyle]="{'width': syncProg?.progress < 20 ? 18 + syncProg?.progress + '%' :(syncProg?.progress - 5) + '%'}"
+                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Checking coins in your SkyVault...
+                        </div>
+                    </div>
+                </div>
+                <div class="formField" *ngIf="syncProg?.progress == '100' && goTODash">
+                    <div class="checkboxInpHolder">
+                        <img src="assets/green-check.svg" alt="icon"> <span style="color: #2a4;"> Damaged coins
+                            have been fixed.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="gap10"></div>
+            <div *ngIf="goTODash">
+                <div>
+                    <p class="subTitleTwo">You can click SYNC to synchronize your SkyVault on all RAIDA. You can also
+                        click
+                        on a
+                        serial number to fix a single coin.</p>
+                </div>
+                <div class="gap10"></div>
+                <table class="text-white table-responsive-sm">
+                    <tr>
+                        <th>
+                            <div class="colorBox mr-1" style="background-color: green;"></div>Coin is in SkyVault.
+                        </th>
+                        <th>
+                            <div class="colorBox mr-1 ml-2" style="background-color: red;"></div>Coin is not in SkyVault.
+                        </th>
+                        <th>
+                            <div class="colorBox mr-1 ml-2" style="background-color: gray;"></div>Server is down and not
+                            attempted.
+                        </th>
+                        <th>
+                            <div class="colorBox mr-1 ml-2" style="background-color: yellow;"></div>Failed to
+                            secure new authentication keys.
+                        </th>
+                    </tr>
+                </table>
+                <div class="gap10"></div>
+                <div class="healthListDiv">
+                    <table class="text-white table table-bordered table-responsive-sm text-center">
+                        <tr>
+                            <th></th>
+                            <th>R0</th>
+                            <th>R1</th>
+                            <th>R2</th>
+                            <th>R3</th>
+                            <th>R4</th>
+                            <th>R5</th>
+                            <th>R6</th>
+                            <th>R7</th>
+                            <th>R8</th>
+                            <th>R9</th>
+                            <th>R10</th>
+                            <th>R11</th>
+                            <th>R12</th>
+                            <th>R13</th>
+                            <th>R14</th>
+                            <th>R15</th>
+                            <th>R16</th>
+                            <th>R17</th>
+                            <th>R18</th>
+                            <th>R19</th>
+                            <th>R20</th>
+                            <th>R21</th>
+                            <th>R22</th>
+                            <th>R23</th>
+                            <th>R24</th>
+                            <th>RES</th>
+                        </tr>
+                        <tr>
+                            <td>Balance</td>
+                            <td *ngFor="let balance of syncProg?.data?.balances;let i = index;"
+                                [ngStyle]="{'background-color' : getColor(balance,i)}">{{balance}}</td>
+                            <td [ngStyle]="{'background-color' : getColor(syncProg?.data?.quorum_balance)}">
+                                {{syncProg?.data?.quorum_balance}}</td>
+                        </tr>
+                        <tr *ngFor="let sns of syncProg?.data?.sns | keyvalue: returnZero; let i = index;">
+                            <td><a class="text-blue" style="cursor: pointer;" (click)="syncOne(sns)">{{sns.key}}</a>
+                            </td>
+                            <td *ngFor="let elem of sns.value" [ngStyle]="{'background-color' : getBalColor(elem)}">
+                                <span [ngClass]="elem == 1 ? 'fa fa-check' : 'fa fa-minus'"></span>
+                            </td>
+                            <td [ngStyle]="{'background-color' : checkQuorum(sns.key) }">
+                                <span
+                                    [ngClass]="checkQuorum(sns.key) == 'green' ? 'fa fa-check' : 'fa fa-minus'"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="transBody" *ngIf="fixSkyvault">
+        <h4 class="text-white">Synchronization complete for the SkyVault: <span>{{userSky}}</span></h4>
+        <p class="subTitleTwo">A request to synchronize your SkyVault was sent to the RAIDA. Please check your
+            SkyVault status again to see if the synchronization was completed.</p>
+        <div class="gap20"></div>
+        <div>
+            <button class="btnCustomBlue" routerLink="/dashboard/functions/health_check" (click)="again()">View SkyVault
+                Status</button>
+            <button class="btnCustomBlue ml-3" (click)="goTODash ? router.navigate(['/dashboard/home']) : ''"
+                *ngIf="fixSkyvault">Close</button>
+        </div>
+    </div>
+    <div class="transBottomFooter">
+        <button class="btnCustomBlue" [ngClass]="{'btnDisable': syncProg?.status != 'completed'}" (click)="fixSky()"
+            *ngIf="!fixSkyvault">SYNC</button>
+    </div>
+</div>
+
+<div class="onEventLoadWrap" *ngIf="showLoader">
+    <ng-container>
+        <div class="text-center loader_show">
+            <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+            <span style="color:#ffffff">Syncing SkyVault with RAIDA...</span>
+        </div>
+    </ng-container>
+</div>

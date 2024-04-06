@@ -1,0 +1,73 @@
+x<div class="authWrapper authWrapperIntro">
+  <div class="themingWrap">
+      <div class="themiconWrap">
+          <img src="assets/color.svg" alt="" class="themeicon">
+      </div>
+      <div class="themeSelectorboxWrap">
+          <p>Choose theme </p>
+          <div class="themSelectorWrapper">
+              <a href="javascript:;" class="themeSelector" (click)="themeLightCaller()" [ngClass]="themeLightActive ? 'active' : ''"><img src="assets/sun.svg" alt="sun"><span>Light</span></a>
+              <a href="javascript:;" class="themeSelector" (click)="themeDarkCaller()" [ngClass]="themeDarkActive ? 'active' : ''"><img src="assets/moon.svg" alt="moon"><span>Dark</span></a>
+          </div>
+      </div>
+  </div>
+  <a href="javascript:;" routerLink="/login-chose" class="backlinkBtn backlinkBtnUser">Back</a>
+  <div class="authHolder text-center">
+      <div class="boxHolderLeft boxHolderLeftIntrobg">
+          <img src="assets/get-started.png" alt="" class="boxImg">
+          <!-- <img src="assets/CCLogo-2.png" alt="" class="boxImg"> -->
+      </div>
+      <div class="boxHolderRight boxHolderRightIntrobg">
+          <div class="boxHolderRightIner">
+              <img src="assets/CCLogo.svg" alt="cclogo" class="ccLogo">
+              <h1 class="smallHeading">SkyVault</h1>
+              <p class="subTitle">SkyVault helps you instantly transfer & store CloudCoins online. You can also download CloudCoins (which are essentially files from your SkyVault) and store them in your computer or on a device of your choice.</p>
+              <div class="gap20"></div>
+              <!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" ngbTooltip="Tooltip on top">
+                  Tooltip on top
+              </button> -->
+              <div class="row">
+                <div class="container">
+                  <div class="container">
+                    <ng-container *ngIf="showNormal">
+                       <!-- <h2 class="subInnerHeader">Login</h2> -->
+                      <form (ngSubmit)="login()">
+                      <div class="formField">
+                          <label for="username">SkyVault Address</label>
+                          <input #autofocus type="text" placeholder="username.skywallet.cc" id="userName"  name="userName" [(ngModel)]="userName">
+                      </div>
+                      <div class="formField">
+                          <label for="password">Password</label>
+                          <input type="password" placeholder="Password" id="password" name="password" [(ngModel)]="password">
+                      </div>
+                      <div class="gap20"></div>
+                      <div class="text-center">
+                          <button class="btnCustomBlack btn-block" (click)="login()">Submit</button>
+                      </div>
+                      </form>
+                    </ng-container>
+
+                    <ng-container *ngIf="showError">
+                      <ng-lottie  height="100px" [options]="errorOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+                      <p class="text-center subTitle" style="margin-bottom: 10px">{{errorMessage}}</p>
+                      <div class="text-center">
+                        <button class="customBtn" (click)="hideErrorMessage()"><fa-icon icon="arrow-left"></fa-icon></button>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="showLoader">
+                      <div class="text-center">
+                        <ng-lottie  height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+                      </div>
+                    </ng-container>
+                  </div>
+
+
+                </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</div>
+
+

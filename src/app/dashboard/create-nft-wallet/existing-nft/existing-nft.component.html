@@ -1,0 +1,106 @@
+<div class="gap30"></div>
+<div class="transWrapper">
+    <div class="headerbackWrap">
+        <a href="javascript:;" routerLink="/dashboard/create-nft-gallery" class="backBtnInHeader"><img
+                src="assets/arrow.svg" alt=""></a>
+        <span class="titleOne">Make Copies</span>
+    </div>
+    <div class="gap20"></div>
+    <div class="gap10"></div>
+    <ng-container>
+        <div class="transWrapper">
+            <form [formGroup]="nftForm" (ngSubmit)="onSubmit(nftForm)">
+                <div class="gap10"></div>
+                <p class="titleTwo" style="opacity: 0.8;">Here you can add more copies to an existing NFT and specify
+                    how many more you would like. </p>
+                <div class="gap10"></div>
+                <div class="row">
+                <div class="col-md-4">
+                <label class="dark_mode_text" for="title">Title of the NFT (Must be fewer than 61 characters)</label>
+                </div>
+                <div class="col-md-2">
+                <input class=" form-control text_box_two" type="text" value="{{title_name}}" maxlength="61" name="title"
+                    id="title" disabled>
+                </div>
+                </div>
+                <div class="gap10"></div>
+                <div class="row">
+                <div class="col-md-4">
+                <label class="dark_mode_text" for="qualname">Verification Domain Name:</label>
+                </div>
+                <div class="col-md-2">
+                <input class="form-control text_box_two" type="text" value="{{domain_name}}"
+                    placeholder="YourDomain.com" maxlength="61" disabled>
+                </div>
+                </div>
+                <!-- <div class="lineSection">
+            <div class="formField customDropdownWrap">
+              <label for="">Title of the NFT (Must be less than 61 characters)</label>
+              <input type="text" formControlName="title"  value="{{nftName}}"
+                 (click)="customSelToggler1()">
+
+              <div class="customDropdownHolder scroll" *ngIf="customSelectorOpen1 && data.length > 0" >
+                <span class="ddItem" *ngFor="let item of data; let i = index;"
+                (click)="customSelector1(title[i])">{{title[i]}}</span>
+              </div>
+            </div>
+          </div> -->
+
+                <div class="gap10"></div>
+                <div class="row">
+                <div class="col-md-4">
+                <label class="dark_mode_text" for="nftnumber">Number of NFTs to add:</label>
+                </div>
+                <div class="col-md-2">
+                <input class="form-control text_box_two" type="number" formControlName="nftnumber" id="nftnumber" value="1"
+                    (change)="balancecheck()" name="nftnumber">
+                </div>
+                </div>
+
+                <div class="gap20"></div>
+                <div class="row">
+                <div class="col-md-4">
+                <label class="dark_mode_text" for="IncludeOtherText">Wallet to get coins from:</label>
+                </div>
+                <div class="col-md-2">
+                <div class="lineSection">
+                    <div class="customeDropdownTwo">
+                        <div class="triger" (click)="customSelToggler()">
+                            <span>{{cSelectorText}}</span>
+                        </div>
+                        <div class="menuShowTwo scroll" *ngIf="customSelectorOpen">
+                            <div class="menus" *ngFor="let data of all; let i = index;"
+                                (click)="customSelector(data.name)">
+                                <span>{{data.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                </div>
+                </div>
+
+                <!-- </div> -->
+
+                <div class="transBottomFooter">
+                    <div class="bottomPartSubmit">
+                        <div class="bottomFooter">
+                            <div class="container">
+                                <button href="javascript:;" class="btnCustomBlue btnLarge"
+                                    [ngClass]="{btnDisable: this.nftForm.invalid ||  this.walletselected == false }"
+                                    type="submit">Create
+                                    NFT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ng-container>
+    <div class="onEventLoadWrap" *ngIf="showLoader">
+        <ng-container>
+            <div class="text-center  loader_show">
+                <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+                <span style="color:#ffffff">{{loadingMessage}}</span>
+            </div>
+        </ng-container>
+    </div>

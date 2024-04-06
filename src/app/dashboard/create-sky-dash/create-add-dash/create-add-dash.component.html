@@ -1,0 +1,95 @@
+<div class="gap30"></div>
+<div class="transWrapper">
+  <div class="headerbackWrap border-0">
+    <a href="javascript:;" routerLink="/dashboard/create-skyvault-dash" class="backBtnInHeader"><img
+        src="assets/arrow.svg" alt=""></a>
+  </div>
+  <div class="gap20"></div>
+  <div class="gap10"></div>
+  <div class="transBody">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2 class="titleOne">Create an address for your SkyVault</h2>
+          <p class="titleTwo" style="opacity: 0.8;">Using a SkyVault address helps other users of SkyVault to transfer
+            CC to you instantly.</p>
+          <div class="skyAddressFieldWrap">
+            <form [formGroup]="addressForm">
+              <div class="formField">
+                <label for="username">SkyVault Address</label>
+                <input style="width: 300px;" type="text" class="form-control" placeholder="Ex: Main" name="username"
+                  id="username" formControlName="username">
+                <span class="darkText">.skyvault.cc</span>
+                <div *ngIf="isValidInput('username')">
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.cannotContainSpace"><img
+                      src="assets/error_info_icon.svg" alt="error icon"> Do not use a space for your username.</span>
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.required"><img
+                      src="assets/error_info_icon.svg" alt="error icon">Wallet name is reqiured.</span>
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.pattern"><img
+                      src="assets/error_info_icon.svg" alt="error icon">Cannot start with - (dash)</span>
+                  <!-- <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.minlength"><img src="assets/error_info_icon.svg" alt="error icon">Atleast 6 characters are required.</span>    -->
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.maxlength"><img
+                      src="assets/error_info_icon.svg" alt="error icon">SkyVault name can't be longer than 63
+                    characters.</span>
+                  <!-- <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.onlyNumber"><img src="assets/error_info_icon.svg" alt="error icon">Only numbers are not allowed.</span>       -->
+                  <span class="errorMsg" *ngIf="addressForm.controls['username'].errors?.special"><img
+                      src="assets/error_info_icon.svg" alt="error icon">Special charcters are not allowed.</span>
+                </div>
+                <span class="errorMsg" *ngIf="errorInfo"><img src="assets/error_info_icon.svg"
+                    alt="error icon">{{this.errorMsg}}</span>
+                <span class="successMsg" *ngIf="successInfo"><img src="assets/success_icon.svg"
+                    alt="success icon">{{this.successMsg}}</span>
+              </div>
+            </form>
+            <!-- <div class="downloadingCCWrap" *ngIf="showDownload">
+               <div class="downloadBar" [ngStyle]="{'width': this.payload?.progress != 100 ? '40%' : '99%'}"></div>
+                <span class="downloadText mr-2"><img class="mr-2" src="assets/download_cloucoin.svg" alt="">Downloading authenticate pass
+                  key</span>
+                  <!-- <img src="assets/cross.svg" alt="" class="dwnloadStatIcon" *ngIf="this.payload?.progress != 100">
+                  <img src="assets/tick_green.svg" class="dwnloadStatIcon" *ngIf="this.payload?.progress == 100" alt=""> -->
+            <!-- </div>  -->
+
+            <div class="progressWrap" *ngIf="showDownload">
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar"
+                  style="background-color: green!important;"
+                  [ngStyle]="{'width': this.payload?.progress != 100 ? this.payload?.progress : '99%'}"
+                  aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Downloading authentic Pass
+                  Key...
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-4">
+          <img src="assets/rocket-black-white.png" alt="rocket image" class="stepperMainImg">
+        </div>
+      </div>
+    </div>
+    <div class="transBottomFooter">
+      <div class="bottomPartSubmit">
+        <div class="container">
+          <span class="infoText">
+            <img src="assets/info_circle.svg" alt="">You can log on to multiple devices using your SkyVault address &
+            its unique Pass Key.
+          </span>
+        </div>
+        <div class="bottomFooter">
+          <div class="container">
+            <button href="javascript:;" [ngClass]="{'btnDisable':!addressForm.valid}" class="btnCustomBlue btnLarge"
+              (click)="add('username')">Create a SkyVault</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="onEventLoadWrap" *ngIf="showLoader1">
+  <ng-container>
+    <div class="text-center loader_show">
+      <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <span style="color:#ffffff">{{loadingMessage}}</span>
+    </div>
+  </ng-container>
+</div>

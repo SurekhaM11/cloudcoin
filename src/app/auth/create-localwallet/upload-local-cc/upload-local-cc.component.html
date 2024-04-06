@@ -1,0 +1,118 @@
+<div class="authWrapper authWrapperDeposit">
+  <a href="javascript:;" routerLink="/localwallet" class="backlinkBtn"><img src="assets/back_arrow.svg" alt=""></a>
+
+  <div class="bodyInnerWrapper">
+    <div class="stepperHolder">
+      <div class="stepperWrap">
+        <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Name Setup</span>
+          </div>
+        </div>
+        <!-- <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Security setup</span>
+          </div>
+        </div> -->
+        <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Deposit CC</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8" *ngIf="!afterClick">
+          <h2 class="titleOne">Deposit CloudCoins to your Wallet.</h2>
+          <p class="titleTwo" style="opacity: 0.8;">CloudCoins are files with verification keys in them. You can import
+            files with the following extensions: png, stack, cc and zip.</p>
+          <div class="skyAddressFieldWrap">
+            <div class="formField">
+              <label for="username">Deposit CloudCoins</label>
+              <div class="uploadFileWrap">
+                <span>{{fileName || "Choose CloudCoins to Deposit"}}</span>
+                <div class="uploadIconWrap">
+                  <input type="file" (change)="getUploadedFiles($event)" accept=".png, .id, .bin">
+                  <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+                </div>
+              </div>
+              <ng-container>
+                <span class="errorMsg" *ngIf="errorInfo"><img src="assets/error_info_icon.svg"
+                    alt="error icon">{{this.errorMsg}}</span>
+                <span class="successMsg" *ngIf="successInfo"><img src="assets/info_green.svg" alt="error icon">
+                  {{this.successMsg}}</span>
+              </ng-container>
+            </div>
+            <div class="gap10"></div>
+            <div class="uploadBtnWrap">
+              <a href="javascript:;" [ngClass]="{'btnDisable' : this.btn == true}" class="btnCustomBlue btnLarge"
+                (click)="next()">Deposit To My Wallet</a>
+              <!-- <a href="javascript:;" class="uploadLaterLink" routerLink="/localwallet/localstep-completed">I'll import cc later</a> -->
+              <a href="javascript:;" class="btnCustomBlue ml-2" routerLink="/localwallet/localstep-completed">I'll
+                Deposit Later</a>
+            </div>
+          </div>
+        </div>
+        <div class="col=md-8" *ngIf="afterClick">
+          <div class="formField">
+            <label for="">Deposited to: &nbsp; <span style="opacity: 0.7;">Active Wallet</span></label>
+          </div>
+          <div class="formField">
+            <label for="">Coins Attempted: &nbsp; <span style="opacity: 0.7;">{{totalimport}}</span></label>
+          </div>
+          <div class="formField" *ngIf="payload?.data?.authentic !== 0">
+            <label for="">Authentic Coins: &nbsp; <span
+                style="opacity: 0.7;">{{payload?.data?.authentic}}</span></label>
+          </div>
+          <div class="formField" *ngIf="payload?.data?.counterfeit !== 0">
+            <label for="">Counterfeit Coins: &nbsp; <span
+                style="opacity: 0.7;">{{payload?.data?.counterfeit}}</span></label>
+          </div>
+          <div class="formField" *ngIf="payload?.data?.fracked !== 0">
+            <label for="">Fractured Coins: &nbsp; <span style="opacity: 0.7;">{{payload?.data?.fracked}}</span></label>
+          </div>
+          <div class="formField" *ngIf="payload?.data?.limbo !== 0">
+            <label for="">Unprocessed Coins: &nbsp; <span style="opacity: 0.7;">{{payload?.data?.limbo}}</span></label>
+          </div>
+          <div class="gap10"></div>
+          <a href="javascript:;" class="btnCustomBlue btnLarge" routerLink="/localwallet/localstep-completed">Next</a>
+        </div>
+        <div class="col-md-4">
+          <img src="assets/localwallet-upload-cc-black-white.png" alt="rocket image" class="stepperMainImg">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottomPartSubmit"
+    style="border-top: 2px solid rgba(255, 255, 255, 0.26); padding-top: 20px; padding-bottom: 10px;">
+    <div class="container">
+      <span class="infoText">
+        <!-- <img src="assets/info_circle.svg" alt="">You can go to exchanges.bitcoin.com or cloudcoin.global to buy CloudCoins and import those files here. -->
+        <img src="assets/info_circle.svg" alt="">You can learn where to get CC by going to
+        https://CloudCoin.global.
+      </span>
+      <span class="infoText">
+        <img src="assets/info_circle.svg" alt="">Receive files that contain CC from your friends/colleagues and
+        Deposit them here or later inside the application.
+      </span>
+    </div>
+  </div>
+</div>

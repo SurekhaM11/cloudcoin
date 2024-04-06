@@ -1,0 +1,913 @@
+<div class="leftPanleWrapper" *ngIf="showLeftBarOnSm">
+  <a href="javascript:;" class="backArroLeft" (click)="closeLeftBar()"><img src="assets/arrow.svg" alt=""></a>
+  <div class="leftPanelHolder">
+    <div class="leftPlogoWrap">
+      <img src="assets/logo_new_only_cc.svg" alt="" class="lpLogoImg">
+    </div>
+    <div class="lpBodyWrap">
+      <div class="lpBodyTop">
+        <a class="lpuserName">
+          <span class="totBlncText">Total Balance</span>
+          <span class="totBlncVal">{{totalBalance + totalSkyBalance}} <sup>cc</sup></span>
+        </a>
+
+        <div class="walletInfoOuter">
+          <div class="walletInfoWrapper walletInfoLocal">
+            <div class="walletInfoHolder">
+
+              <a class="tab-item" [ngClass]="tabSelector == 'wallet' ? 'active' : ''"
+                (click)="tabToggler('wallet' , userLocal)">Wallets</a>
+              <a class="tab-item mr-auto" [ngClass]="tabSelector == 'skyvault' ? 'active' : ''"
+                (click)="tabTogglerSky('skyvault', usersky)">SkyVaults</a>
+              <a class="tab-item mr-auto" [ngClass]="tabSelector == 'nft' ? 'active' : ''"
+                (click)="tabTogglerNft('nft' , nft)">NFTs</a>
+
+
+            </div>
+
+
+            <div class="tabBody">
+              <div *ngIf="tabSelector == 'wallet' ">
+                <div class="" *ngFor="let data of all; let i = index;">
+                  <div class="walletAcntHolder" style="cursor: pointer;"
+                    [ngClass]="{'activeHolder': type === 'localwallet' && data.name === userLocal}"
+                    (click)="getWalletDetail(data.name)">
+                    <img src="assets/1093522-200.png" class="wallet-icon mr-3" alt="localwallet icon"><span
+                      class="acntVal mr-auto">{{data.name}}</span>
+                    <span class="acntVal">{{data.balance}}</span>
+                  </div>
+                </div>
+
+                <div class="walletInfoHolder">
+                  <div class="wltInfoLeft">
+                    <span>Create a New Wallet</span>
+                  </div>
+                  <a href="javascript:;" class="addWallet" routerLink="/dashboard/create-localwallet-dash"
+                    [ngClass]="tabSelector == 'wallet' ? 'active' : ''" (click)="createWallet(userLocal)"><img
+                      src="assets/add_circle_img.svg" alt="add circle"></a>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div *ngIf="tabSelector == 'skyvault' ">
+
+              <div class="" *ngFor="let data of allSky; let i = index;">
+                <div class="walletAcntHolder" style="cursor: pointer;"
+                  [ngClass]="{'activeHolder': type === 'skywallet' && data.name === usersky}"
+                  (click)="getSkyDetail(data.name, data?.idcoin?.sn)">
+                  <img src="assets/skywallet-cloud-white.svg" class="mr-3" alt="skyvault img">
+                  <span class="acntHoldName mr-auto">{{data.name}}</span>
+                  <span class="acntVal" *ngIf="showbal && data.name == usersky">{{showbal ? data.balance :
+                    skyDetails?.balance}} <sup>cc</sup>
+                  </span>
+                  <span class="acntVal" *ngIf="data.name != usersky">{{data.balance}} <sup>cc</sup>
+                  </span>
+                  <span class="acntVal mr-3" style="position: relative" *ngIf="!showbal && data.name == usersky">
+                    <ngx-spinner size="small" color="#fff" type="ball-pulse-sync" [fullScreen]="false">
+                    </ngx-spinner>
+                  </span>
+                </div>
+              </div>
+
+              <div class="walletInfoHolder">
+                <div class="wltInfoLeft">
+                  <span>Create a New SkyVault</span>
+                </div>
+                <a href="javascript:;" class="addWallet" routerLink="/dashboard/create-skyvault-dash"
+                  [ngClass]="tabSelector == 'skyvault' ? 'active' : ''" (click)="createSkyVault(usersky)"><img
+                    src="assets/add_circle_img.svg" alt="add circle"></a>
+              </div>
+
+
+            </div>
+
+            <div *ngIf="tabSelector== 'nft' ">
+              <div class="lpBottomPart">
+                <a href="javascript:;" routerLink="/dashboard/create-nft-gallery" class="bottomLink" routerLinkActive=""
+                  (click)='goToGallery("NFT")' [routerLinkActiveOptions]="{exact:
+                      true}"><img style="margin-left:-10px;" src="assets/nft.png" alt="settings"> <span>NFT
+                    Gallery</span></a>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="rightpanelWrapper">
+  <a href="javascript:;" class="menuCaller" (click)="callLeftBar();"><img src="assets/menu.svg" alt=""></a>
+  <div class="homeWrapper">
+    <ng-container *ngIf="!showLoader">
+      <div class="row homeHeader">
+        <div class="col-12 homeHeaderInner">
+          <ng-container *ngIf="this.type === 'localwallet'">
+            <h4 class="userName">
+              <img class="wallet_icon" src="assets/1093522-200.png" alt="localwallet icon">
+              {{transaction.payload?.name != ''? transaction.payload?.name : 'Unavailable'}}
+            </h4>
+            <!-- <h4 class="blncHeading">Coins</h4> -->
+            <h2 class="blncValueHeading">{{transaction.payload?.balance != 'null'? transaction.payload?.balance :
+              'Unavailable' }} <span><sup>cc</sup></span></h2>
+          </ng-container>
+          <ng-container *ngIf="this.type === 'skywallet'">
+            <h4 class="userName">
+              <img src="assets/skywallet_icon.svg" alt="skywallet icon">
+              {{usersky}}
+            </h4>
+            <!-- <h4 class="blncHeading">Coins</h4> -->
+            <h2 class="blncValueHeading" *ngIf="checkerror">0 <span><sup>cc</sup></span></h2>
+            <h2 class="blncValueHeading" *ngIf="!checkerror">{{skyDetails?.balance}} <span><sup>cc</sup></span></h2>
+          </ng-container>
+          <ng-container *ngIf="showError">
+            <ng-lottie height="70px" [options]="errorOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+            <div class="text-center" style="color:#ffffff;margin-bottom: 10px">{{errorMessage}}</div>
+            <div class="text-center">
+              <button class="customBtn" (click)="hideErrorMessage()">
+                <fa-icon icon="arrow-left"></fa-icon>
+              </button>
+            </div>
+          </ng-container>
+          <!-- <ng-container *ngIf="showLoader">
+          <div class="text-center">
+            <ng-lottie height="70px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+            <span style="color:#ffffff">{{loadingMessage}}</span>
+          </div>
+        </ng-container> -->
+        </div>
+
+        <div class="col-12 homeHeadRight">
+          <div class="homeHeadRightDropInner">
+
+            <div class="customdropDownHolder" (clickOutside)="closeDropDown()">
+              <a href="javascript:;" class="btnCustomBlue" (click)="toggleDropDown()">
+                <!-- <img src="assets/plus.svg" alt=""
+                  class="imgInBtn">  -->
+
+                <span class="textWithIcon">New Transaction</span><img src="assets/caret-down.svg" alt=""
+                  class="imgInBtn">
+              </a>
+              <div class="dropDownBox" *ngIf="showDropDown">
+                <a href="javascript:;" class="ml-3" *ngIf="this.type === 'localwallet'"
+                  routerLink="/dashboard/transactions/import">Deposit Coins</a>
+                <a href="javascript:;" class="ml-3" *ngIf="this.type === 'localwallet'"
+                  (click)="redirect('export')">Withdraw
+                  Coins</a>
+
+                <div class="customdropDownHolder1" *ngIf="this.type === 'localwallet'">
+                  <a href="javascript:;" class="dropbtn"><span class="textWithIcon">Transfer Coins</span><i
+                      class="fa fa-caret-right imgInBtn ml-2"></i></a>
+                  <div class="dropDownBox1">
+                    <a href="javascript:;" *ngIf="this.type === 'localwallet'" (click)="transferCC()">Between
+                      Wallets</a>
+                    <a href="javascript:;" *ngIf="this.type === 'localwallet'" (click)="redirect('send')">To My
+                      SkyVault</a>
+                  </div>
+                </div>
+
+
+                <!-- skywallet dropdown -->
+                <a href="javascript:;" class="ml-3" *ngIf="this.type === 'skywallet'"
+                  (click)="redirect('withdraw')">Withdraw to
+                  Wallet</a>
+                <a href="javascript:;" class="ml-3" *ngIf="this.type === 'skywallet'"
+                  routerLink="/dashboard/transactions/deposit">Deposit from Wallet</a>
+
+                <div class="customdropDownHolder1" *ngIf="this.type === 'skywallet'">
+                  <a href="javascript:;" class="dropbtn"><span class="textWithIcon">Transfer Coins</span><i
+                      class="fa fa-caret-right imgInBtn ml-2"></i></a>
+                  <div class="dropDownBox1">
+                    <a href="javascript:;" *ngIf="this.type === 'skywallet'" (click)="transferCC()">Between
+                      SkyVaults</a>
+                    <a href="javascript:;" *ngIf="this.type === 'skywallet'" (click)="redirect('transfer')">To Another
+                      SkyVault User</a>
+                    <a href="javascript:;" *ngIf="this.type === 'skywallet'" (click)="redirect('sky_exchange')">To a
+                      Crypto Exchange</a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- <div class="col-12 homeHeadRight mt-2">
+            <div class="homeHeadRightDropInner">
+                     
+          </div>
+        </div> -->
+      </div>
+
+      <div class="homeBody">
+        <div class="tableWrapper">
+          <div class="tableHeader">
+            <div class="tableHeaderLeft">
+              <span class="refreshbtn" *ngIf="this.type === 'localwallet'">
+                <button onClick="window.location.reload();" class="refresh_page"> &#x21bb;</button>
+              </span>
+              <span class="refreshbtn" *ngIf="this.type === 'skywallet'">
+                <button (click)="getSkyDetail(usersky , sno)" class="refresh_page"> &#x21bb;</button>
+              </span>
+              <span class="tableHead">Recent Transactions
+              </span>
+            </div>
+
+            <div class="mr-auto">
+              <div class="position-relative search tableSearchFieldWrap ml-3">
+                <i class="fa fa-search position-absolute"></i>
+                <input class="form-control tableSearchField" type="text" (keyup)="doFilter($event.target.value)"
+                  [(ngModel)]="term" placeholder="Search">
+              </div>
+            </div>
+
+            <!-- <div class="custom_check" *ngIf="this.type === 'skywallet'">
+            <input type="checkbox" id="change" class="text-white d-none pb-1">
+            <label for="change" class="text-white ml-1">Make this wallet a public change wallet.
+            </label>
+          </div> -->
+
+            <div class="tableHeaderRight">
+              <!-- <div class="custom_check" *ngIf="this.type === 'skywallet'">
+                <input type="checkbox" id="record" class="text-white d-none pb-1" [(ngModel)]="recordCheck"
+                  (change)="record($event.target.checked)">
+                <label for="record" class="text-white mr-3">Delete transaction records
+                </label>
+              </div> -->
+
+              <!-- <div class="col-12 homeHeadRight mt-2">
+                <div class="homeHeadRightDropInner"> -->
+
+
+              <div class="customdropDownHolder m-l-10" *ngIf="this.type === 'skywallet'"
+                (clickOutside)="closeWltFunc()">
+                <a href="javascript:;" class="btnCustomBlue" (click)="toggleWltFunc()"> <span
+                    class="textWithIcon">SkyVault
+                    Actions</span><img src="assets/caret-down.svg" alt="" class="imgInBtn">
+                </a>
+                <div class="dropDownBox" *ngIf="showWalletDropdown">
+                  <a href="javascript:;" class="ml-3" (click)="deleteUser('health')">Synchronize SkyVault</a>
+                  <a href="javascript:;" class="ml-3" (click)="deleteUser('deletewallet')">Delete SkyVault</a>
+
+                  <div class="customdropDownHolder1">
+                    <a href="javascript:;" class="dropbtn"><span class="textWithIcon">Records Actions</span><i
+                        class="fa fa-caret-right imgInBtn ml-2"></i></a>
+                    <div class="dropDownBox1">
+                      <a href="javascript:;" (click)="download('sky')">Export Statements</a>
+                      <a href="javascript:;" (click)="record()">Delete Transaction Records</a>
+                    </div>
+                  </div>
+
+                  <div class="customdropDownHolder1">
+                    <a href="javascript:;" class="dropbtn"><span class="textWithIcon">Pass Key Actions</span><i
+                        class="fa fa-caret-right imgInBtn ml-2"></i></a>
+                    <div class="dropDownBox1">
+                      <a href="javascript:;" (click)="detectFix()">Fix Pass Key</a>
+                      <a href="javascript:;" (click)="deleteUser('backup')">Back up Pass Key</a>
+                      <a href="javascript:;" (click)="downloadpasskey()">Export Pass Key</a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+
+              <div class="customdropDownHolder" *ngIf="this.type === 'localwallet'" (clickOutside)="closeWltFunc()">
+                <a href="javascript:;" class="btnBlueWallet" (click)="toggleWltFunc()"> <span class="textWithIcon">Other
+                    Actions</span><img src="assets/caret-down.svg" alt="" class="imgInBtn">
+                </a>
+                <div class="dropDownBox" *ngIf="showWalletDropdown">
+
+
+                  <div class="customdropDownHolder1">
+                    <a href="javascript:;" class="dropbtn"><span class="textWithIcon">Wallet Actions</span><i
+                        class="fa fa-caret-right imgInBtn"></i></a>
+                    <div class="dropDownBox1">
+                      <a href="javascript:;" (click)="deleteUserModalToggler('backup')">Back up Wallet</a>
+                      <a href="javascript:;" (click)="deleteUserModalToggler('deletewallet')">Delete Wallet</a>
+                      <a href="javascript:;" (click)="deleteUserModalToggler('rename')">Rename Wallet</a>
+                    </div>
+                  </div>
+
+
+                  <div class="customdropDownHolder1">
+                    <a href="javascript:;" class="dropbtn"><span class="textWithIcon">Coin Actions</span><i
+                        class="fa fa-caret-right imgInBtn"></i></a>
+                    <div class="dropDownBox1">
+                      <a href="javascript:;" (click)="deleteUserModalToggler('health')"><span
+                          class="textWithIcon">Verify Coin Authenticity</span></a>
+                      <!-- <a href="javascript:;" (click)="deleteUserModalToggler('fix')"><span class="textWithIcon">Fix
+                          Fragmented Coins</span></a> -->
+                      <a href="javascript:;" (click)="deleteUserModalToggler('fixlimbo')"><span class="textWithIcon">Fix
+                          Unprocessed Coins</span></a>
+                    </div>
+                  </div>
+
+                  <div class="customdropDownHolder1">
+                    <a href="javascript:;" class="dropbtn"><span class="textWithIcon">Records Actions</span><i
+                        class="fa fa-caret-right imgInBtn"></i></a>
+                    <div class="dropDownBox1">
+                      <a href="javascript:;" (click)="deleteUserModalToggler('delete')"><span
+                          class="textWithIcon">Delete Transaction Records</span></a>
+                      <a href="javascript:;" (click)="download('local')"><span class="textWithIcon">Export
+                          History</span></a>
+                      <a href="javascript:;" (click)="listDownload()"><span class="textWithIcon">Download Serial
+                          Numbers</span></a>
+                    </div>
+                  </div>
+
+                  <a href="javascript:;" (click)="redirect('show_colors')"><span class="textWithIcon">Show
+                      Colors</span></a>
+                </div>
+              </div>
+
+              <!-- </div>
+              </div> -->
+              <!-- <ul> -->
+              <!-- <li><a href="" class="menu-item"><span>Coin Actions</span><i class="fa fa-caret-rightml-2"></i></a>
+                      <div class="submenu-container">
+                        <a href="javascript:;" (click)="deleteUserModalToggler('health')">Verify Coin Authenticity</a>
+                        <a href="javascript:;" (click)="deleteUserModalToggler('fix')">Fix Fragmented Coins</a>
+                        <a href="javascript:;" (click)="deleteUserModalToggler('fixlimbo')">Fix Unprocessed Coins</a>
+                      </div>
+                      </li>-->
+              <!-- </ul> -->
+
+
+              <!-- </div> -->
+              <!-- <div class="position-relative search tableSearchFieldWrap searchbar">
+                <i class="fa fa-search position-absolute"></i>
+                <input class="form-control tableSearchField" type="text" (keyup)="doFilter($event.target.value)"
+                  [(ngModel)]="term" placeholder="Search">
+              </div> -->
+            </div>
+
+          </div>
+
+          <div class="example-container mat-elevation-z8 table table-bordered table-responsive-sm tableFixHead"
+            (matSortChange)="sortData($event)" *ngIf="this.type === 'localwallet'">
+            <!-- <table mat-table matSort [dataSource]="dataSourcelocal" class="blackBgTableInDark" >
+            <ng-container matColumnDef="datetime">
+              <th scope="col" class="text-center pb-2" mat-header-cell mat-sort-header *matHeaderCellDef>
+                <h6>Date</h6>
+              </th>
+              <td mat-cell class="pt-1" *matCellDef="let element"> {{element.datetime | date: 'dd/MM/yyyy' }} </td>
+            </ng-container>
+            <ng-container matColumnDef="message">
+              <th scope="col" class="text-center pb-2" mat-header-cell mat-sort-header *matHeaderCellDef>
+                <h6>Transaction remarks</h6>
+              </th>
+              <td mat-cell class="pt-1" *matCellDef="let element"> {{element.message}} </td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+              <th class="text-center pb-2" mat-header-cell mat-sort-header *matHeaderCellDef>
+                <h6>Type</h6>
+              </th>
+              <td mat-cell class="pt-1" *matCellDef="let element"> {{element.type }} </td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th class="text-center pb-2" mat-header-cell mat-sort-header *matHeaderCellDef>
+                <h6>Amount (cc)</h6>
+              </th>
+              <td mat-cell class="pt-1" *matCellDef="let element"><span class=""
+                  [ngStyle]="{'color':element.amount > 0 ? '#39D02B' : 'red' }">{{element.amount}}</span></td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table> -->
+            <table matSort (matSortChange)="sortData($event)">
+              <!-- <thead> -->
+              <tr>
+                <th mat-sort-header="datetime">Date</th>
+                <th mat-sort-header="message">Transaction Remarks</th>
+                <th mat-sort-header="type">Type</th>
+                <th mat-sort-header="amount">Amount (CC)</th>
+                <th mat-sort-header="running_balance">Balance</th>
+                <th></th>
+              </tr>
+              <!-- </thead> -->
+              <tbody>
+                <tr *ngFor="let dessert of sortedData | filter:term" class="scroll">
+                  <td>{{dessert.datetime | date : 'short'}}</td>
+                  <td [innerHTML]="dessert.message"></td>
+                  <td>{{dessert.type | titlecase }}</td>
+                  <td class="text-right">
+                    <span [ngStyle]="{'color':dessert.amount > 0 ? '#39D02B' : 'red' }">
+                      {{dessert.amount}}
+                    </span>
+                  </td>
+                  <td class="text-right">{{dessert.running_balance}}</td>
+                  <td class="text-center" (click)="receipt(dessert.receiptid, dessert.datetime)">
+                    <a style="cursor: pointer;"><i style="color:#0884ff" class="fa fa-search"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+            <div *ngIf="transaction.payload?.transactions?.length == 0">
+              <div class="d-flex justify-content-center text-white">No Transactions!</div>
+            </div>
+          </div>
+
+          <div class="example-container mat-elevation-z8 table table-bordered table-responsive-sm tableFixHead"
+            *ngIf="this.type === 'skywallet'">
+            <!-- <table mat-table matSort [dataSource]="dataSourceSky" class="blackBgTableInDark">
+            <ng-container matColumnDef="time">
+              <th scope="col" class="text-center pb-2" mat-header-cell mat-sort-header *matHeaderCellDef>
+                <h6>Date</h6>
+              </th>
+              <td mat-cell class="pt-1" *matCellDef="let element"> {{element.time | date: 'short' }} </td>
+            </ng-container>
+            <ng-container matColumnDef="memo">
+              <th scope="col" class="text-center pb-2" mat-header-cell mat-sort-header *matHeaderCellDef>
+                <h6>Transaction remarks</h6>
+              </th>
+              <td mat-cell class="pt-1" *matCellDef="let element"> {{element.memo}} </td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+              <th class="text-center pb-2" mat-header-cell mat-sort-header *matHeaderCellDef>
+                <h6>Type</h6>
+              </th>
+              <td mat-cell class="pt-1" *matCellDef="let element"> {{element.type }} </td>
+            </ng-container>
+            <ng-container matColumnDef="balance">
+              <th class="text-center pb-2" mat-header-cell mat-sort-header *matHeaderCellDef>
+                <h6>Balance</h6>
+              </th>
+              <td mat-cell class="text-right pt-1" *matCellDef="let element"> {{element.balance }} </td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th class="text-center pb-2" mat-header-cell mat-sort-header *matHeaderCellDef>
+                <h6>Amount (cc)</h6>
+              </th>
+              <td mat-cell class="text-right pt-1" *matCellDef="let element"><span class=""
+                  [ngStyle]="{'color':element.amount > 0 ? '#39D02B' : 'red' }">{{element.amount}}</span></td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsSky sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsSky;"></tr>
+          </table> -->
+            <table matSort (matSortChange)="sortSkyData($event)">
+              <!-- <thead> -->
+              <tr>
+                <th mat-sort-header="time">Date</th>
+                <th mat-sort-header="memo">Transaction Remarks</th>
+                <th mat-sort-header="type">Type</th>
+                <th mat-sort-header="amount">Amount (CC)</th>
+                <th mat-sort-header="balance">Balance</th>
+                <th></th>
+              </tr>
+              <!-- </thead> -->
+              <tbody>
+                <tr *ngFor="let dessert of sortedSkyData | filter:term" class="scroll">
+                  <td>{{dessert.time | date : 'short'}}</td>
+                  <td>{{dessert.memo}}</td>
+                  <td>{{dessert.type | titlecase }}</td>
+                  <td class="text-right">
+                    <span
+                      [ngStyle]="{'color':dessert.type == 'withdraw' || dessert.type == 'sent' || dessert.type == 'pay' ? 'red' :'#39D02B'}">
+                      {{dessert.type == 'withdraw' || dessert.type == 'sent' ||
+                      dessert.type
+                      == 'pay' ? '-'+dessert.amount : dessert.amount}}
+                    </span>
+                  </td>
+                  <td class="text-right">{{dessert.balance}}</td>
+                  <td class="text-center" (click)="skyreceipt(dessert.guid, dessert.time)"><a
+                      style="cursor: pointer;"><i style="color:#0884ff" class="fa fa-search"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+            <div *ngIf="skyDetails?.statements == null || skyDetails?.statements?.length == 0">
+              <div class="d-flex justify-content-center text-white" *ngIf="loadingMessage == ''">No Transactions!</div>
+              <div class="d-flex justify-content-center text-white"
+                *ngIf="loadingMessage == 'Collecting Statements...'">
+                {{loadingMessage}}</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="showLoader">
+      <div class="text-center">
+        <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+        <span style="color:#ffffff">{{loadingMessage}}</span>
+        <!-- <span class="loaderText">RAIDA Server connecting...</span> -->
+      </div>
+    </ng-container>
+
+  </div>
+</div>
+
+
+<div class="raidaServerStatusWrap">
+  <div class="row raidaserveRow">
+    <div class="col-sm-12">
+      <div class="raidaServerStatus">
+        <!-- <div class="custom_check" *ngIf="type === 'skywallet'">
+          <input type="checkbox" id="change" class="text-white d-none pb-1"
+            (change)="publicChange($event.target.checked)">
+          <label for="change" class="text-white ml-1">Make this wallet a public change wallet.
+          </label>
+          <img class="pb-2" data-toggle="tooltip" data-placement="top"
+            ngbTooltip="This will allow anyone in the world to exchange your denominations for theirs. This is not recommended"
+            class="infoicon" src="assets/info.svg" alt="">
+        </div> -->
+        <!-- <a href="javascript:;" class="radia_btn"> -->
+        <ng-container>
+          <!-- <div class="circle_design" [ngStyle]="{'background':successInfo === true ? '#39D02B' : 'red' }"></div>
+            RAIDA status: &nbsp;
+            <span *ngIf="successInfo"> Connected </span>
+            <span *ngIf="!successInfo">Lost Connection</span> -->
+
+          <div class="sectionOne">
+            <div class="serverDiv">
+              <!-- <button onClick="window.location.reload();" class="refresh_page mr-1"> &#x21bb;</button> -->
+
+              <div class="raidalogo ml-1"><img src="assets/raida-logo.svg" alt="icon"></div>
+
+
+              <div class="signalWrap" *ngFor="let d of latencies">
+                <!-- <div class="successInfo"> -->
+                <div placement="top" [ngStyle]="{'background-color': d != 0 ? '#39D02B' : 'rgb(255, 60, 45)'}"
+                  class="signalDiv"></div>
+                <!-- <span *ngIf="!successInfo">All RAIDA Status</span> -->
+              </div>
+              <!-- </div> -->
+
+            </div>
+          </div>
+
+        </ng-container>
+        <!-- </a> -->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- if no data comes then below div will be shown -->
+<!-- <div class="homeWrapperEmpty" *ngIf="emptyHome">
+        <div class="text-center">
+            <h4 class="titleOne fontItalic">You have no Cloud wallets created!</h4>
+            <div class="gap10"></div>
+            <a href="javascript:;" routerLink="/" class="btnCustomBlue">Create new Cloud wallet</a>
+        </div>
+    </div> -->
+
+<!-- <div class="input-group my-4 col-6 mx-auto">
+      <input class="form-control py-2 border-right-0 border" type="search" placeholder="Type something..." id="example-search-input">
+      <span class="input-group-append">
+          <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split border border-left-0 border-right-0 rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <button class="btn btn-outline-primary rounded-right" type="button">
+              <i class="fas fa-search"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div role="separator" class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+          </div>
+      </span>
+  </div> -->
+
+<div class="modalContainer" *ngIf="deleteUserModal">
+  <div class="modalOverlay"
+    (click)="type === 'localwallet' ? deleteUserModalToggler('deletewallet') : deleteUser('deletewallet')"></div>
+  <div class="modalWrap modalMedium">
+    <div class="modalHeader">
+      <h1>Delete Wallet</h1>
+      <div class="modalClose"
+        (click)="type === 'localwallet' ? deleteUserModalToggler('deletewallet') : deleteUser('deletewallet')">
+        <img src="assets/close-white.svg" alt="icon">
+      </div>
+    </div>
+    <div class="modalBody">
+      <div class="gap20"></div>
+      <div class="sectionOne">
+        <h2 class="modalSubhed" *ngIf="this.type === 'localwallet'">Deleting the Wallet deletes the transaction records
+          too.</h2>
+        <h2 class="modalSubhed" *ngIf="this.type === 'localwallet'">Are you sure you want to delete your Wallet:
+          {{userLocal}}? </h2>
+        <h2 class="modalSubhed" *ngIf="this.type === 'skywallet'">You will not be able to send or receive CC
+          using this Wallet.</h2>
+        <h2 class="modalSubhed" *ngIf="this.type === 'skywallet'">Are you sure you want to delete your SkyVault:
+          {{usersky}}? </h2>
+        <div class="gap20"></div>
+        <form [formGroup]="deleteForm">
+          <div class="formField">
+            <label class="checkboxInpHolder checkBoxWrap">
+              <input type="checkbox" formControlName="check2"><span>I understand that this process is permanent and
+                irreversible.</span>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="gap50"></div>
+    </div>
+    <div class="modalFooter">
+      <div class="buttonWrap">
+        <button class="btnCustomBlue buttonWide" *ngIf="this.type === 'localwallet'"
+          [ngClass]="{'disabled': this.deleteForm.invalid}" (click)="deletewallet()">Yes, delete Wallet.</button>
+        <button class="btnCustomBlue buttonWide" *ngIf="this.type === 'skywallet'"
+          [ngClass]="{'disabled': this.deleteForm.invalid}" (click)="deletewallet()">Yes, delete SkyVault.</button>
+        <button class="cancelTransparent"
+          (click)="type === 'localwallet' ? deleteUserModalToggler('deletewallet') :  deleteUser('deletewallet')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modalContainer" *ngIf="fixlimboModal">
+  <div class="modalOverlay" (click)="this.fixlimboModal = !this.fixlimboModal"></div>
+  <div class="modalWrap modalMedium">
+    <div class="modalHeader">
+      <h1>Fix Wallet</h1>
+      <div class="modalClose" (click)="this.fixlimboModal = !this.fixlimboModal">
+        <img src="assets/close-white.svg" alt="icon">
+      </div>
+    </div>
+    <div class="modalBody">
+      <div class="gap20"></div>
+      <div class="sectionOne">
+        <h2 class="modalSubhed">Find your Wallet's unprocessed coins.</h2>
+        <h2 class="modalSubhed">Do you want to fix your Wallet: {{userLocal}}? </h2>
+      </div>
+      <div class="gap50"></div>
+    </div>
+    <div class="modalFooter">
+      <div class="buttonWrap">
+        <button class="btnCustomBlue buttonWide" routerLink="/dashboard/functions/fix-limbo">Yes,
+          fix Wallet.</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modalContainer" *ngIf="fixModal">
+  <div class="modalOverlay" (click)="this.fixModal = !this.fixModal"></div>
+  <div class="modalWrap modalMedium">
+    <div class="modalHeader">
+      <h1 *ngIf="type === 'localwallet'">Fix Wallet</h1>
+      <h1 *ngIf="type === 'skywallet'">Fix Pass Key</h1>
+      <div class="modalClose" (click)="this.fixModal = !this.fixModal">
+        <img src="assets/close-white.svg" alt="icon">
+      </div>
+    </div>
+    <div class="modalBody">
+      <div class="gap20"></div>
+      <div class="sectionOne" *ngIf="type == 'localwallet'">
+        <h2 class="modalSubhed">Fix your wallet's fractured coins.</h2>
+        <h2 class="modalSubhed">Do you want to fix your wallet: {{userLocal}}? </h2>
+      </div>
+      <div class="sectionOne" *ngIf="type == 'skywallet'">
+        <h2 class="modalSubhed">Fix your SkyVault's Pass Key.</h2>
+        <h2 class="modalSubhed">Do you want to fix your SkyVault: {{usersky}}? </h2>
+      </div>
+      <div class="gap50"></div>
+    </div>
+    <div class="modalFooter">
+      <div class="buttonWrap">
+        <button class="btnCustomBlue buttonWide" *ngIf="type === 'skywallet'" (click)="fixKeycard()">Yes,
+          fix Pass Key.</button>
+        <button class="btnCustomBlue buttonWide" *ngIf="type === 'localwallet'"
+          routerLink="/dashboard/functions/fix">Yes, fix Wallet.</button>
+        <!-- <button class="cancelTransparent"
+          (click)="type === 'localwallet' ? deleteUserModalToggler('fix') : deleteUser('fix')">Cancel</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modalContainer" *ngIf="healthModal">
+  <div class="modalOverlay" (click)="type === 'localwallet' ? deleteUserModalToggler('health') : deleteUser('health')">
+  </div>
+  <div class="modalWrap modalMedium">
+    <div class="modalHeader">
+      <h1 *ngIf="type == 'localwallet'">Verify Coin Authenticity</h1>
+      <h1 *ngIf="type === 'skywallet'">Synchronize SkyVault</h1>
+      <div class="modalClose"
+        (click)="type === 'localwallet' ? deleteUserModalToggler('health') : deleteUser('health')">
+        <img src="assets/close-white.svg" alt="icon">
+      </div>
+    </div>
+    <div class="modalBody">
+      <div class="gap20"></div>
+      <div class="sectionOne" *ngIf="type == 'localwallet'">
+        <h2 class="modalSubhed">Verifying the authenticity of your coins will ensure that all your coins are 100%
+          authentic. It will move coins to
+          the Fractured (Fracked) or Counterfeit folder if they are not 100% authentic.</h2>
+        <h2 class="modalSubhed">Do you want to check the authenticity of your coins in the Wallet, {{userLocal}}? </h2>
+      </div>
+      <div class="sectionOne" *ngIf="type == 'skywallet'">
+        <h2 class="modalSubhed">This will ensure that the CCs in your SkyVault account are synchronized on all
+          RAIDA.</h2>
+        <h2 class="modalSubhed">Do you want to sync your {{usersky}} with RAIDA? </h2>
+      </div>
+      <div class="gap50"></div>
+    </div>
+    <div class="modalFooter">
+      <div class="buttonWrap">
+        <button class="btnCustomBlue buttonWide" routerLink="/dashboard/functions/health_check">Yes</button>
+        <!-- <button class="cancelTransparent"
+          (click)="type === 'localwallet' ? deleteUserModalToggler('health') : deleteUser('health')">Cancel</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modalContainer" *ngIf="backupModal">
+  <div class="modalOverlay" (click)="type === 'localwallet' ? deleteUserModalToggler('backup') : deleteUser('backup')">
+  </div>
+  <div class="modalWrap modalMedium">
+    <div class="modalHeader">
+      <h1>Back up Wallet</h1>
+      <div class="modalClose"
+        (click)="type === 'localwallet' ? deleteUserModalToggler('backup') : deleteUser('backup')">
+        <img src="assets/close-white.svg" alt="icon">
+      </div>
+    </div>
+    <div class="modalBody">
+      <div class="gap20"></div>
+      <div class="sectionOne">
+        <h2 class="modalSubhed">This will allow you to create a backup of your coins.</h2>
+        <h2 class="modalSubhed" *ngIf="type === 'localwallet'">Do you want to make a backup of your Wallet:
+          {{userLocal}}? </h2>
+        <h2 class="modalSubhed" *ngIf="type === 'skywallet'">Do you want to make a backup of your Wallet:
+          {{usersky}}? </h2>
+      </div>
+      <div class="gap50"></div>
+    </div>
+    <div class="modalFooter">
+      <div class="buttonWrap">
+        <button class="btnCustomBlue buttonWide" routerLink="/dashboard/functions/backup">YES, BACK UP WALLET</button>
+        <!-- <button class="cancelTransparent"
+          (click)="type === 'localwallet' ? deleteUserModalToggler('backup') : deleteUser('backup')">Cancel</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modalContainer" *ngIf="deleteModal">
+  <div class="modalOverlay" (click)="deleteUserModalToggler('delete')"></div>
+  <div class="modalWrap modalMedium">
+    <div class="modalHeader">
+      <h1>Delete Transaction History</h1>
+      <div class="modalClose" (click)="deleteUserModalToggler('delete')">
+        <img src="assets/close-white.svg" alt="icon">
+      </div>
+    </div>
+    <div class="modalBody">
+      <div class="gap20"></div>
+      <div class="sectionOne">
+        <h2 class="modalSubhed">You will not be able to see your transaction history.</h2>
+        <h2 class="modalSubhed">Are you sure you want to delete transaction history of: {{userLocal}}? </h2>
+        <div class="gap20"></div>
+        <form [formGroup]="deleteTrans">
+          <div class="formField">
+            <label class="checkboxInpHolder checkBoxWrap" for="delete">
+              <input type="checkbox" id="delete" formControlName="check2"><span>I understand that this process is
+                permanent and
+                irreversible.</span>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="gap50"></div>
+    </div>
+    <div class="modalFooter">
+      <div class="buttonWrap">
+        <button class="btnCustomBlue buttonWide" [ngClass]="{'disabled': this.deleteTrans.invalid}"
+          (click)="deleteTransaction()">Yes, delete transaction.</button>
+        <button class="cancelTransparent" (click)="deleteUserModalToggler('delete')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modalContainer" *ngIf="showreceipt">
+  <div class="modalOverlay" (click)="showreceipt = false"></div>
+  <div class="modalWrap modalMedium">
+    <div class="modalHeader">
+      <h1>Details:</h1>
+      <div class="modalClose" (click)="showreceipt = false">
+        <img src="assets/close-white.svg" alt="icon">
+      </div>
+    </div>
+    <div class="modalBody scroll1">
+      <div class="gap20"></div>
+      <div class="sectionOne">
+        <p class="text-white mb-n1">Receipt: {{receipid}}</p>
+        <p class="text-white mb-n1">{{receiptTime | date:'MM/dd/yyyy HH:mm'}}</p>
+        <div class="gap20"></div>
+        <div class="formField">
+          <label for="">Total Coins Attempted: &nbsp; <span style="opacity: 0.7;">{{totalcoins}}</span></label>
+        </div>
+        <div class="gap10"></div>
+        <div class="formField">
+          <label for="">Total Authentic: &nbsp; <span style="opacity: 0.7;">{{totalauthentic}}</span></label>
+        </div>
+        <div class="gap10"></div>
+        <div class="formField">
+          <label for="">Total Authentic (Fractured): &nbsp; <span style="opacity: 0.7;">{{totalfracked}}</span></label>
+        </div>
+        <div class="gap10"></div>
+        <div class="formField">
+          <label for="">Total Counterfeit: &nbsp; <span style="opacity: 0.7;">{{totalcounterfeit}}</span></label>
+        </div>
+        <div class="gap10"></div>
+        <div class="formField">
+          <label for="">Total Unprocessed: &nbsp; <span style="opacity: 0.7;">{{totallimbo}}</span></label>
+        </div>
+        <div class="gap20"></div>
+        <p class="text-white mb-n1">The Pownstring shows each of the 25 RAIDA’s responses from 0 to 24 encoded in a
+          single character. p=pass,
+          f=fail, u=untried, n=no response and e=error.</p>
+        <div class="gap30"></div>
+        <div *ngFor="let data of receiptdetails | keyvalue : returnZero">
+          <!-- <p class="text-white mb-n1" *ngFor="let val of data.value | keyvalue : returnZero">{{val.key}} : {{val.value}}
+          </p><br> -->
+          <p class="text-white mb-n1">Serial Number : {{data.value.sn}}</p>
+          <p class="text-white mb-n1"> Pownstring : {{data.value.pownstring}}</p>
+          <p class="text-white mb-n1"> Result : {{data.value.result}}</p>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modalContainer" *ngIf="renameModal">
+  <div class="modalOverlay" (click)="deleteUserModalToggler('rename')"></div>
+  <div class="modalWrap modalMedium">
+    <div class="modalHeader">
+      <h1>Rename wallet</h1>
+      <div class="modalClose" (click)="deleteUserModalToggler('rename')">
+        <img src="assets/close-white.svg" alt="icon">
+      </div>
+    </div>
+    <div class="modalBody">
+      <div class="gap20"></div>
+      <div class="sectionOne">
+        <!-- <input type="text" placeholder="wallet name" [(ngModel)]="wallet_name"> -->
+        <div class="formField">
+          <label for="username">Wallet name</label>
+          <input type="text" placeholder="Ex: LocalWallet" class="" [(ngModel)]="wallet_name" name="username" #reName>
+        </div>
+      </div>
+    </div>
+    <div class="gap50"></div>
+    <div class="modalFooter">
+      <div class="buttonWrap">
+        <button class="btnCustomBlue buttonWide" [ngClass]="{'disabled': this.wallet_name === ''}"
+          (click)="rename()">Yes, Rename Wallet</button>
+        <!-- <button class="cancelTransparent" (click)="deleteUserModalToggler('rename')">Cancel</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modalContainer" *ngIf="showRaida">
+  <div class="modalOverlay" (click)="showRaida = !showRaida"></div>
+  <div class="modalWrap modalMedium">
+    <div class="modalHeader">
+      <h1>All RAIDA Status</h1>
+      <div class="modalClose" (click)="showRaida = !showRaida">
+        <img src="assets/close-white.svg" alt="icon">
+      </div>
+    </div>
+    <div class="modalBody">
+      <div class="gap20"></div>
+      <div class="sectionOne">
+        <div class="serverDiv">
+          <div class="raidalogo"><img src="assets/raida-logo.svg" alt="icon"></div>
+          <div class="signalWrap" *ngFor="let d of latencies">
+            <div placement="top" [ngStyle]="{'background-color': d != 0 ? '#39D02B' : 'rgb(255, 60, 45)'}"
+              class="signalDiv"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="onEventLoadWrap" *ngIf="showLoader1">
+  <ng-container>
+    <div class="text-center  loader_show">
+      <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+      <span style="color:#ffffff">{{loadingMessage}}</span>
+    </div>
+  </ng-container>
+</div>

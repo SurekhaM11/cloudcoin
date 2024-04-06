@@ -1,0 +1,55 @@
+
+<div class="gap30"></div>
+<div class="transWrapper">
+  <div class="headerbackWrap border-0">
+      <a href="javascript:;" routerLink="/dashboard/create-skyvault-dash/simple-setup" class="backBtnInHeader"><img src="assets/arrow.svg" alt=""></a>
+  </div>
+  <div class="gap20"></div>
+  <div class="gap10"></div>
+  <div class="transBody">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+            <h2 class="titleOne">Upload CC to your SkyVault</h2>
+            <p class="titleTwo" style="opacity: 0.8;">CC are special files, either of PNG or TEXT format. You can upload them on your SkyVault or store them offline, on a USB stick for example.</p>
+            <div class="skyAddressFieldWrap">
+              <div class="formField">
+                <label for="username">Upload file</label>
+                <div class="uploadFileWrap">
+                    <span>{{fileName || "Choose a file to upload"}}</span>
+                    <div class="uploadIconWrap">
+                      <input type="file" (change)="onFileInput($event)" accept=".png, .id, .bin">
+                      <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+                    </div>
+                </div>
+                  <ng-container>
+                    <span class="errorMsg" *ngIf="errorInfo"><img src="assets/error_info_icon.svg" alt="error icon">{{this.errorMsg}}</span>
+                    <span class="successMsg" *ngIf="successInfo"><img src="assets/info_green.svg" alt="error icon"> {{this.successMsg}}</span>
+                  </ng-container>
+              </div>
+              <div class="gap20"></div>
+              <div class="uploadBtnWrap">
+                <a href="javascript:;"  class="btnCustomBlue btnLarge" (click)="upload()">Upload to my SkyVault</a>
+                <a href="javascript:;" routerLink="/dashboard/home" class="uploadLaterLink ml-2 text-center ">I'll upload later</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <img src="assets/deposit-img-black-white.png" alt="rocket image" class="stepperMainImg">
+          </div>
+      </div>
+    </div>
+      <div class="transBottomFooter">
+        <div class="bottomPartSubmit" style="border-top: 2px solid rgba(255, 255, 255, 0.26); padding-top: 20px; padding-bottom: 10px;">
+            <div class="container">
+              <span class="infoText">
+                <img src="assets/info_circle.svg" alt="">You can go to exchanges.bitcoin.com or cloudcoin.global to buy CC and upload those files here. 
+              </span>
+              <span class="infoText">
+                <img src="assets/info_circle.svg" alt="">Receive files that contain CC from your friends/colleagues and upload them here or later inside the application. 
+              </span>
+            </div>
+        </div>
+  </div>
+</div>
+

@@ -1,0 +1,93 @@
+<div class="authWrapper authWrapperIntro">
+    <!-- <div class="themingWrap" (clickOutside)="closeThemeDropdown()">
+        <a href="javascript:;" class="SelectedthemeName" (click)="themeDropDownCaller()">
+            <ng-container *ngIf="themeLightActive">
+                Light mode <img src="assets/lightmode_new.svg" alt="">
+            </ng-container>
+            <ng-container *ngIf="themeDarkActive">
+                Dark mode <img src="assets/darkmode_new.svg" alt="">
+            </ng-container>
+        </a>
+        <div class="selectThemeDropdown" *ngIf="themeDropdwnToggler">
+            <a href="javascript:;" class="themeDropItem" (click)="themeLightCaller()">Light mode <img src="assets/lightmode_new.svg" alt=""></a>
+            <a href="javascript:;" class="themeDropItem" (click)="themeDarkCaller()">Dark mode <img src="assets/darkmode_new.svg" alt=""></a>
+        </div>
+    </div> -->
+    <div class="welcomeHolder">
+        <div class="container" *ngIf="showContent">
+            <img src="assets/logo_new_only_cc.svg" alt="logo" class="welcomeLogo">
+            <h2 class="welcomeHeading">Welcome to CloudCoin Manager!</h2>
+            <p class="welcomeSubhead">All-in-one Software to Manage Your CloudCoins</p>
+            <div class="row walletChooserWrap">
+                <div class="col-md-6">
+                    <div class="walletItem">
+                        <img src="assets/skywallet_icon.svg" alt="" class="walletIcon">
+                        <h2 class="walletItemHeader">SkyVault</h2>
+                        <p class="walletItemDesc">Store and transfer your CC online in the <b> RAIDA Cloud</b>. Your
+                            CC is safe in the RAIDA cloud.</p>
+                        <a href="javascript:;" class="btnCustomBlue" routerLink="/skywallet">Create a SkyVault</a>
+                        <!-- <a href="javascript:;" class="textColorBlueLink" routerLink="/existing-login">Use An Existing SkyVault</a> -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="walletItem">
+                        <img src="assets/localwallet_icon.svg" alt="" class="walletIcon">
+                        <h2 class="walletItemHeader">Wallet</h2>
+                        <p class="walletItemDesc">Store CloudCoins as <b>files</b> on your device. Your Wallet is
+                            on your computer, but not online.</p>
+                        <a href="javascript:;" class="btnCustomBlue" routerLink="/localwallet">Create a Wallet</a>
+                    </div>
+                </div>
+                <div class="gap50"></div>
+                <div class="col-12 mt-5">
+                    <div class="walletItem">
+                        <a href="javascript:;" class="btnCustomBlue" routerLink="/dashboard">Skip</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" *ngIf="isShow && (showContent == false)">
+            <h2 class="text-white">Connecting to RAIDA servers...</h2>
+        </div>
+
+        <ng-container *ngIf="showError">
+            <ng-lottie height="70px" [options]="errorOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+            <div class="text-center" style="color:#ffffff;margin-bottom: 10px">{{errorMessage}}</div>
+            <div class="text-center">
+                <button class="customBtn" (click)="hideErrorMessage()">
+                    <fa-icon icon="arrow-left"></fa-icon>
+                </button>
+            </div>
+        </ng-container>
+        <div class="onEventLoadWrap" *ngIf="showLoader">
+            <ng-container>
+                <div class="text-center loader_show">
+                    <ng-lottie height="180px" [options]="options" (animationCreated)="animationCreated($event)">
+                    </ng-lottie>
+                    <span style="color:#ffffff">RAIDA servers connecting...</span>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <!-- <div class="authHolder text-center">
+        <div class="boxHolderLeft boxHolderLeftIntrobg">
+            <img src="assets/get-started.png" alt="" class="boxImg">
+        </div>
+        <div class="boxHolderRight boxHolderRightIntrobg">
+            <div class="boxHolderRightIner">
+                <img src="assets/CCLogo.svg" alt="cclogo" class="ccLogo">
+                <h1 class="smallHeading">Skywallet</h1>
+                <p class="subTitle">Skywallet helps you instantly transfer & store CloudCoins online. You can also download CloudCoins, which are essentially files from your Skywallet and store it in your computer or on a device of your choice.</p>
+                <div class="gap20"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="javascript:;" routerLink="create-user" class="btnCustomBlack btn-block">Get started</a>
+                        <div class="gap20"></div>
+                        <a href="javascript:;" routerLink="login-chose" class="btnCustomWhite btn-block">Use an existing Skywallet</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div> -->
+</div>

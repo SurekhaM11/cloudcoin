@@ -1,0 +1,294 @@
+<div class="nftGalleryWrap">
+    <div class="nftGalHeadWrap">
+        <div class="headerbackWrap">
+            <img class="nft-icon mr-3 " src="assets/nft.png" alt="localwallet icon">
+            <span class="titleOne">NFT Gallery</span>
+        </div>
+        <div class="btnFlexWrap">
+            <a href="javascript:;" class="btnCustomBlue" (click)='getCorrectRoute()'>Create New</a>
+            <a href="javascript:;" class="btnCustomBlue" (click)="getRoute()">Import</a>
+            <a href="javascript:;" class="btnCustomWhite" (click)="healthCheck()">Verify Coin Authenticity</a>
+            <a href="javascript:;" class="btnCustomBlue" *ngIf="frackedcount>0" (click)="frackedCheck()">Fix Fracked</a>
+            <a href="javascript:;" class="btnCustomBlue" *ngIf="limbocount>0" (click)="limboCheck()">Fix Limbo</a>
+        </div>
+        <div class="zoom-in">
+            <div class="row">
+                <div class="p-2" *ngFor="let image of img; let i=index">
+                    <div class="nftsHolder checked">
+                        <!-- <label class="customCheckboxWrap">
+                        <input type="checkbox" class="memCheck" (change)="selectImgs(sn1[i] , title1[i] , dname1[i], $event.target.checked)">
+                        <span class="checkmarkCheck"></span>
+                    </label> -->
+                        <img class="nfts" [src]="img[i]" alt="Image Source" data-toggle="tooltip"
+                            tooltipClass="my-custom-class" data-placement="top"
+                            ngbTooltip="Total number of copies = {{total_sns[i]}}" (click)="getDetails(sn1[i])">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalContainer" *ngIf="healthModal">
+        <div class="modalOverlay" (click)="this.healthModal = !this.healthModal"></div>
+        <div class="modalWrap modalMedium">
+            <div class="modalHeader">
+                <h1>Verify NFT Authenticity</h1>
+                <div class="modalClose" (click)="this.healthModal = !this.healthModal">
+                    <img src="assets/close-white.svg" alt="icon">
+                </div>
+            </div>
+            <div class="modalBody">
+                <div class="gap20"></div>
+                <div class="sectionOne">
+                    <h2 class="modalSubhed">This process verifies the authenticity of your NFTs. If an NFT’s associated
+                        coin is found to be fractured or counterfeit, it will be placed in the appropriate folder. Do
+                        you want to verify the authenticity of your NFTs?</h2>
+                    <!-- <h2 class="modalSubhed">Do you want to check the health of your wallet: NFTs? </h2> -->
+                </div>
+                <div class="gap50"></div>
+            </div>
+            <div class="modalFooter">
+                <div class="buttonWrap">
+                    <button class="btnCustomBlue buttonWide" routerLink="/dashboard/functions/nft-health">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalContainer" *ngIf="fixModal">
+        <div class="modalOverlay" (click)="this.fixModal = !this.fixModal"></div>
+        <div class="modalWrap modalMedium">
+            <div class="modalHeader">
+                <h1>Fix Wallet</h1>
+                <div class="modalClose" (click)="this.fixModal = !this.fixModal">
+                    <img src="assets/close-white.svg" alt="icon">
+                </div>
+            </div>
+            <div class="modalBody">
+                <div class="gap20"></div>
+                <div class="sectionOne">
+                    <h2 class="modalSubhed">Fix your wallet's damaged/fracked coins.</h2>
+                    <h2 class="modalSubhed">Do you want to fix your wallet: NFTs? </h2>
+                </div>
+                <div class="gap50"></div>
+            </div>
+            <div class="modalFooter">
+                <div class="buttonWrap">
+                    <button class="btnCustomBlue buttonWide" routerLink="/dashboard/functions/fix-nft">Yes, fix
+                        wallet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalContainer" *ngIf="fixlimboModal">
+        <div class="modalOverlay" (click)="this.fixlimboModal = !this.fixlimboModal"></div>
+        <div class="modalWrap modalMedium">
+            <div class="modalHeader">
+                <h1>Fix Wallet</h1>
+                <div class="modalClose" (click)="this.fixlimboModal = !this.fixlimboModal">
+                    <img src="assets/close-white.svg" alt="icon">
+                </div>
+            </div>
+            <div class="modalBody">
+                <div class="gap20"></div>
+                <div class="sectionOne">
+                    <h2 class="modalSubhed">Fix your wallet's limbo coins.</h2>
+                    <h2 class="modalSubhed">Do you want to fix your wallet: Nfts? </h2>
+                </div>
+                <div class="gap50"></div>
+            </div>
+            <div class="modalFooter">
+                <div class="buttonWrap">
+                    <button class="btnCustomBlue buttonWide" routerLink="/dashboard/functions/fix-nft-limbo">Yes,
+                        fix wallet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalContainer" *ngIf="modalOpen">
+        <div class="modalOverlay" (click)="modalToggler()"></div>
+        <div class="modalWrap modalMedium">
+            <div class="modalHeader">
+                <h1>NFT Details</h1>
+                <div class="ml-auto customdropDownHolder" (clickOutside)="closeWltFunc()">
+                    <a href="javascript:;" class="btnCustomBlue" (click)="toggleWltFunc()"> <span class="textWithIcon">
+                            Actions</span><img src="assets/caret-down.svg" alt="" class="imgInBtn">
+                    </a>
+                    <div class="dropDownBox" *ngIf="showWalletDropdown">
+                        <a href="javascript:;" (click)="Recycle()">Recycle</a>
+                        <a href="javascript:;" (click)="withdraw()">Withdraw</a>
+                        <a href="javascript:;" (click)="UploadNft()"> Publish NFT</a>
+                    </div>
+                </div>
+                <div class="modalClose" (click)="modalToggler()">
+                    <img src="assets/close-white.svg" alt="icon">
+                </div>
+            </div>
+            <div class="modalBody">
+                <div class="gap20"></div>
+                <ng-container *ngIf="nftDetails">
+                    <div class="sectionOne">
+                        <h2 class="modalSubhed">{{title_detail}} </h2>
+                        <div class="gap10"></div>
+                        <h2 class="modalDesc">{{desc_detail}} </h2>
+                        <div class="gap10"></div>
+                        <div *ngIf="!modalOpen2">
+                            <h2 class="modalSmDesc">{{sn_detail}}</h2>
+                            <div class="gap20"></div>
+                            <div class="nftsHolder nftMainImgHolder checked">
+                                <label class="customCheckboxWrap">
+                                    <input type="checkbox" class="memCheck"
+                                        (change)="selectImgs(sn_detail , title_detail , dname_detail, $event.target.checked)">
+                                    <span class="checkmarkCheck"></span>
+                                </label>
+                                <img [src]="img_detail[0]" alt="Image Source" class="nftMainImg">
+                                <!-- <span class="dark_mode_text">{{sn_detail}}</span> -->
+                            </div>
+                        </div>
+
+                        <div *ngIf="modalOpen2">
+                            <div class="row">
+                                <div class="p-2" *ngFor='let value of nft_gallery '>
+                                    <div class="nftsHolderSm checked">
+                                        <label class="customCheckboxWrap">
+                                            <input type="checkbox" class="memCheck"
+                                                (change)="selectImgs(value.nft_sn,title_detail , dname_detail,$event.target.checked)">
+                                            <span class="checkmarkCheck"></span>
+                                        </label>
+                                        <img [src]="value.nft_image" alt="Image Source"
+                                            style="width:auto; height: 200px; padding-left: 5px; ">
+                                        <span class="dark_mode_text">{{value.nft_sn}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <h2 class="modalSmDesc">{{sn_detail}}</h2>
+                    <div class="gap20"></div>
+                    <div class="nftMainImgHolder">
+                        <img [src]="img_detail" alt="" class="nftMainImg">
+                    </div>
+                </div> -->
+                </ng-container>
+                <ng-container *ngIf="!nftDetails">
+                    <div class="authenticity_wrap">
+                        <div class="auth_left_panel">
+                            <div class="sectionOne">
+                                <h2 class="modalDesc">{{desc_detail}}</h2>
+                                <div class="gap10"></div>
+                                <div *ngIf="!modalOpen2">
+                                    <h2 class="modalSmDesc">{{sn_detail}}</h2>
+                                    <div class="gap20"></div>
+                                    <div class="nftMainImgHolder">
+                                        <img [src]="img_detail[0]" alt="" class="nftMainImg nftMainImgSm">
+                                    </div>
+                                </div>
+
+                                <div *ngIf="modalOpen2">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-6 p-1 m-2" *ngFor='let value of nft_gallery '>
+                                            <div class="nftsHolder">
+                                                <img [src]="value.nft_image" alt="Image Source"
+                                                    style="width: 100%; height:100%; padding-left: 5px;">
+                                                <span style="padding: 20px; font-size: 10px;">{{value.nft_sn}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <h2 class="modalSmDesc">{{sn_detail}} </h2>
+                            <div class="gap20"></div>
+                            <div class="nftMainImgHolder">
+                                <img [src]="img_detail" alt="" class="nftMainImg nftMainImgSm">
+                            </div>
+                        </div>
+                    </div> -->
+
+                        <div class="auth_right_panel">
+                            <div class="sectionOne">
+                                <div *ngIf="condition=='success'">
+                                    <h2 class="modalDesc">{{verifiedDesc}}</h2>
+                                    <div class="gap10"></div>
+                                    <h2 class="modalSmDesc">{{verifiedSn}}</h2>
+                                    <div class="gap20"></div>
+                                    <div class="nftMainImgHolder">
+                                        <img [src]="verifiedImg" alt="" class="nftMainImg nftMainImgSm">
+                                    </div>
+                                    <div class="gap10"></div>
+                                    <button class="btnCustomWhite" (click)="download_pngImg()">Download PNG</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="gap50"></div>
+            </div>
+
+            <div class="modalFooter">
+                <ng-container *ngIf="nftDetails">
+                    <div class="buttonWrap">
+                        <button class="btnCustomBlue" (click)="checkValidity()">Confirm Authenticity</button>
+                        <button class="btnCustomBlue m-2" (click)='MintToExisting()'>Make Copies</button>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!nftDetails">
+                    <div class="buttonWrap">
+                        <button class="btnCustomBlue" (click)="toggleAuthentication()">Back</button>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="modalContainer1" *ngIf="WithdrawModal">
+        <div class="modalOverlay1" (click)="this.WithdrawModal = !this.WithdrawModal"></div>
+        <div class="modalWrap modalMedium">
+            <div class="modalHeader">
+                <h1>Withdraw NFT</h1>
+                <div class="modalClose" (click)="this.WithdrawModal = !this.WithdrawModal">
+                    <img src="assets/close-white.svg" alt="icon">
+                </div>
+            </div>
+            <div class="modalBody">
+                <div class="gap20"></div>
+                <div class="sectionOne">
+                    <div class="formField">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="username">Withdraw to :</label>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="filepicker">
+                                    <span>{{file}}</span>
+                                    <div class="icon_wrap" (click)="getPath()">
+                                        <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gap50"></div>
+                </div>
+                <div class="modalFooter">
+                    <div class="buttonWrap">
+                        <button class="btnCustomBlue buttonWide" (click)="exportBySerialNo()">Yes,
+                            Withdraw</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="onEventLoadWrap" *ngIf="showLoader">
+            <ng-container>
+                <div class="text-center  loader_show">
+                    <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)">
+                    </ng-lottie>
+                    <span style="color:#ffffff">{{loadingMessage}}</span>
+                </div>
+            </ng-container>
+        </div>

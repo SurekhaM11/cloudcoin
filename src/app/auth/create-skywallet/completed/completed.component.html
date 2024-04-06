@@ -1,0 +1,74 @@
+<div class="authWrapper">
+  <a href="javascript:;" routerLink="/skywallet/upload-cc" class="backlinkBtn"><img src="assets/back_arrow.svg" alt=""></a>
+  <div class="bodyInnerWrapper">
+    <div class="stepperHolder">
+      <div class="stepperWrap">
+        <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Address setup</span>
+          </div>
+        </div>
+        <!-- <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Security setup</span>
+          </div>
+        </div> -->
+        <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Pass Key</span>
+          </div>
+        </div>
+        <div class="step stepActive">
+          <div class="circleWrap">
+            <div class="circle"></div>
+          </div>
+          <div class="steptextWrap">
+            <span class="amount">Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2 class="titleOne"><span style="color: #0884FF;">{{user}}</span> has been created.</h2>
+          <!-- <p class="titleTwo" style="opacity: 0.8;">You do not have to write this information down because it is written in the Cloudcoin/file itself. </p> -->
+          <!-- <div class="skyAddressFieldWrap">
+            <p class="titleTwo">Recovery email address: &nbsp; <span style="opacity: 0.7;">{{this.email === 'null'?'Not available' : this.email}}</span> </p>
+            <p class="titleTwo" *ngIf="this.type == 'simple'">Password: &nbsp; <span style="opacity: 0.7;">{{this.pass === 'null'?'Not available' : this.pass}}</span> </p>
+            <div class="gap10"></div>
+            <div class="formField" *ngIf="this.type === 'advance'">
+              <label for="username">Your authentication file:</label>
+              <div class="uploadFileWrap">
+                  <span style="opacity: 0.7;">../John/Desktop/sean.sa.png</span>
+                  <div class="uploadIconWrap">
+                    <input type="file">
+                    <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+                  </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="col-md-4">
+          <img src="assets/ready-img-black-white.png" alt="rocket image" class="stepperMainImg">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottomPartSubmit">
+    <div class="bottomFooter">
+      <div class="container">
+        <a href="javascript:;" class="btnCustomBlue btnLarge" routerLink="/dashboard" (click)="go()">Go To Dashboard</a>
+      </div>
+    </div>
+  </div>
+</div>

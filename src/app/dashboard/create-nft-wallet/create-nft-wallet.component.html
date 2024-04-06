@@ -1,0 +1,258 @@
+<div class="transWrapper">
+    <div class="headerbackWrap">
+        <span class="titleOne">CREATE NFT</span>
+    </div>
+    <form [formGroup]="nftForm" (ngSubmit)="onSubmit(nftForm)">
+        <div class="transBody">
+            <div class="gap10"></div>
+            <p class="titleTwo" style="opacity: 0.8;">Here you can turn your CloudCoins into NFTs by embedding
+                CloudCoins
+                into PNG images. You can always turn your NFTs back into CloudCoins.</p>
+            <div class="gap10"></div>
+            <!-- <p class="titleTwo" style="opacity: 0.8;">"If you would like to publish your NFTs so that they can be verified as authentic,
+                please go to settings and configure your web server and your DNS domain."
+            </p> -->
+            <div *ngIf="!dname_enable">
+                <p class="titleTwo">If you would like to publish your NFTs so that they can be verified as authentic, please go to "Settings" and configure your web server and your DNS domain.</p>
+            </div>
+            <div class="gap20"></div>
+            <div class="gap10"></div>
+            <!-- <p class="titleTwo" style="opacity: 0.8;">Optionally If you own a domain name, You can create records in
+                your
+                DNS Server that prove that you are the creator of the NFT and customize each NFT.</p> -->
+            <!-- <h2>Step 1:Creating the NFTs</h2>
+            <p class="titleTwo" style="opacity: 0.8;">First you will create the NFTs from PNGs that you have. Then If
+                you
+                like, you can register your NFTs with your DNS server so that users can verify that they are </p> -->
+            <ng-container>
+                <div class="formField">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="username">PNG file to be used:</label>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="filepicker">
+                                <span>{{file}}</span>
+                                <div class="icon_wrap" (click)="getPath()">
+                                    <img src="assets/folder_icon.svg" alt="" class="folderIcon">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gap10"></div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label class="dark_mode_text" for="title">Title of the NFT (Must be fewer than 61
+                            characters)</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class=" form-control text_box_two" type="text" formControlName="title" maxlength="61"
+                            name="title" id="title" (keydown.enter)="$event.preventDefault()">
+                    </div>
+                </div>
+                <div *ngIf="isValidInput('title')">
+                    <span class="errorMsg1" *ngIf="nftForm.controls['title'].errors?.required"><img
+                            src="assets/error_info_icon.svg" alt="error icon">Title is required.</span>
+                    <span class="errorMsg1"><img src="assets/error_info_icon.svg" alt="error icon"> Only numbers,
+                        letters and hyphens are permitted.</span>
+                </div>
+                <div class="gap10"></div>
+                <div *ngIf="dname_enable">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="dark_mode_text" for="qualname">Verification Domain Name (optional):
+                                <span class="ml-1">
+                                    <img src="assets/icons_info1.png"
+                                        title="You can create records in your DNS Server that prove that you are the creator of the NFT and customize each NFT."
+                                        style="height: 18px ; width:18px" />
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control text_box_two" type="text" formControlName="dnsname"
+                                maxlength="61" (keydown.enter)="$event.preventDefault()">
+                        </div>
+                    </div>
+                    <div *ngIf="isValidInput('dnsname')">
+                        <span class="errorMsg1"><img src="assets/error_info_icon.svg" alt="error icon">Please enter
+                            domain
+                            name in valid format. Max length is 61.</span>
+                    </div>
+                </div>
+                <div class="gap20"></div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label class="dark_mode_text" for="IncludeOtherText">Wallet to get Coins from:</label>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="lineSection">
+                            <div class="customeDropdownTwo">
+                                <div class="triger" (click)="customSelToggler('local')">
+                                    <!-- <img [src]="cSelectorImg" height="20" alt="">-->
+                                    <span>{{cSelectorText}}</span>
+                                </div>
+                                <div class="menuShowTwo scroll" *ngIf="customSelectorOpen">
+                                    <div class="menus" *ngFor="let data of all; let i = index;"
+                                        (click)="customSelector(data.name, 'local')">
+                                        <img src="assets/folder-w-border.svg" height="18" alt="icon">
+                                        <span>{{data.name}}</span>
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gap10"></div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label class="dark_mode_text" for="nftnumber">Number of NFTs to create:</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control text_box_two" type="number" formControlName="nftnumber"
+                            id="nftnumber" value="1" (change)="balancecheck()" name="nftnumber">
+                    </div>
+                </div>
+                <span class="errorMsg1"
+                    *ngIf="!nftForm.get('nftnumber').valid && nftForm.get('nftnumber').touched ">Enter
+                    valid data.</span>
+                <div class="gap20"></div>
+                <div class="formField">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="dark_mode_text" for="Description">Description:</label>
+                        </div>
+                        <div class="col-md-2">
+                            <textarea name="description" class="form-control text_box_two"
+                                style="width:300px; height:100px;" formControlName="description"
+                                id="description"></textarea>
+                        </div>
+                    </div>
+                    <div *ngIf="isValidInput('description')">
+                        <span class="errorMsg1" *ngIf="nftForm.controls['description'].errors?.required"><img
+                                src="assets/error_info_icon.svg" alt="error icon">Description is reqiured.</span>
+                        <span class="errorMsg1"><img src="assets/error_info_icon.svg" alt="error icon"> Only numbers
+                            and
+                            letters are permitted.</span>
+                    </div>
+                </div>
+                <div class="gap10"></div>
+                <div class="gap20"></div>
+                <p class="titleTwo" style="opacity: 0.8;">NOTE: You may recyle your NFT anytime, so don't worry about making
+                    a
+                    mistake. You can simply redo it.</p>
+                <!-- <div class="row">
+                <div class="col-md-4">
+                <label class="dark_mode_text" for="text">Add Text To Image (Optional)</label>
+                </div>
+                <div class="col-md-2">
+                <input class="form-control text_box_two" type="text" formControlName="personal_text" (keydown.enter)="$event.preventDefault()">
+                </div>
+                </div> -->
+                <!-- <div *ngIf="isValidInput('personal_text')">
+                    <span class="errorMsg1" *ngIf="nftForm.controls['personal_text'].errors?.required"><img
+                            src="assets/error_info_icon.svg" alt="error icon">Description is reqiured.</span>
+                    <span class="errorMsg1"><img src="assets/error_info_icon.svg" alt="error icon"> Only Numbers and
+                        letters are allowed</span>
+                </div>
+                <div class="gap10"></div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="formField">
+                            <label>Write Serial Numbers on NFTs?</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="radio" name="format_one" formControlName="format_one" value="false" id="format_one"
+                            (change)="formatradio($event)"><span class="btn_text">No</span>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="radio" name="format_one" formControlName="format_one" value="true" id="format_one"
+                            (change)="formatradio($event)"><span class="btn_text">Yes</span>
+                    </div>
+                </div>
+                <div *ngIf="textformat">
+                    <div class="gap10"></div>
+                    <div class="row">
+                    <div class="col-md-4">
+                    <label class="dark_mode_text" for="color">X location of upper left corner of Serial Number:</label>
+                    </div>
+                    <div class="col-md-2">
+                    <input class="form-control text_box_two" type="number" formControlName="xcoordinates" value="10">
+                    </div>
+                    </div>
+                    <div class="gap10"></div>
+                    <div class="row">
+                    <div class="col-md-4">
+                    <label class="dark_mode_text" for="fontsize">Y location of upper left corner of Serial
+                        Number:</label>
+                    </div>
+                    <div class="col-md-2">
+                    <input class="form-control text_box_two" type="number" formControlName="ycoordinates" value="10">
+                    </div>
+                    </div>
+                    <div class="gap10"></div>
+                    <div class="row">
+                    <div class="col-md-4">
+                    <label class=" colorpicker dark_mode_text" for="color">Color of the Serial Number:</label>
+                    </div>
+                    <div class="col-md-2">
+                    <input class="form-control text_box_two" type="color" name="colorpicker" formControlName="colorpicker"
+                        id="colorpicker">
+                    </div>
+                    </div> -->
+                <!-- <div class="gap10"></div>
+                    <div class="row">
+                    <div class="col-md-4">
+                    <label class="dark_mode_text" for="transparency">Text Transparency: </label>
+                    </div>
+                    <div class="col-md-2">
+                    <input class="form-control text_box_two" type="text" name="transparency" id="transparency"
+                        formControlName="transparency" value="1" onkeypress="return /[0-9.]/i.test(event.key)">
+                    </div>
+                    </div>
+                    <span class="errorMsg1"
+                        *ngIf="!nftForm.get('transparency').valid && nftForm.get('transparency').touched ">Enter
+                        valid data(0-1)</span> -->
+                <!-- <div class="gap10"></div>
+                    <div class="row">
+                    <div class="col-md-4">
+                    <label class="dark_mode_text" for="fontsize">Font size:</label>
+                    </div>
+                    <div class="col-md-2">
+                    <input type="number" class="form-control text_box_two" name="fontsize" formControlName="fontsize"
+                        value="16">
+                    </div>
+                    </div>
+                    <span class="errorMsg1"
+                        *ngIf="!nftForm.get('fontsize').valid && nftForm.get('fontsize').touched ">Enter
+                        valid data(16-72)</span>
+                </div> -->
+            </ng-container>
+            <div class="transBottomFooter">
+                <div class="bottomPartSubmit">
+                    <div class="bottomFooter">
+                        <div class="container">
+                            <button href="javascript:;" class="btnCustomBlue btnLarge"
+                                [ngClass]="{btnDisable: this.nftForm.invalid || this.filepick == false || this.walletselected == false }"
+                                type="submit">Create
+                                NFT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="onEventLoadWrap" *ngIf="showLoader">
+    <ng-container>
+        <div class="text-center  loader_show">
+            <ng-lottie height="150px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+            <span style="color:#ffffff">{{loadingMessage}}</span>
+        </div>
+    </ng-container>
+</div>

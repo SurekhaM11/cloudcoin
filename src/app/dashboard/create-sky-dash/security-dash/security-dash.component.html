@@ -1,0 +1,167 @@
+<div class="gap20"></div>
+<div class="transWrapper">
+  <div class="headerbackWrap border-0">
+    <a href="javascript:;" routerLink="/dashboard/create-skyvault-dash" class="backBtnInHeader"><img
+        src="assets/arrow.svg" alt=""></a>
+  </div>
+  <div class="gap10"></div>
+  <div class="transBody">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <p class="titleOne">Security setup for: <span style="color: #0884FF;">{{this.user}}</span></p>
+          <!-- <div class="gap10"></div> -->
+          <form [formGroup]="setPassForm">
+            <div class="skyAddressFieldWrap">
+              <div class="formField passwordSetWrap">
+                <div class="passwordSetLeft">
+                  <label for="setupRecoveryPsw">Password</label>
+                  <div class="gap10"></div>
+                  <div class="passwordWithIcon">
+                    <input class="" (input)="setNewvalues($event)" [type]="fieldTextType ? 'text' : 'password'"
+                      formControlName="password" placeholder="Enter a strong password" name="password">
+                    <button class="fa eyeIcon text-white mt-1" [ngClass]="{
+                        'fa-eye-slash': !fieldTextType,
+                        'fa-eye': fieldTextType
+                      }" (click)="toggleFieldTextType()"></button>
+                  </div>
+                  <!-- <div class="gap20"></div>
+                    <div class="custom-control custom-switch position-relative d-flex align-items-center">
+                      <div class="check_box">
+                        <input type="checkbox" class="custom-control-input" id="setupRecovery" type="checkbox"
+                      data-toggle="toggle" (change)="getStatus($event)"/>
+                      <label for="setupRecovery" class="custom-control-label">Set up recovery email 
+                      </label>
+                      </div>
+                      <img data-toggle="tooltip" data-placement="top" ngbTooltip="This will allow you to recover your password in case you forgot it" class="infoicon mb-1" src="assets/info.svg" alt="" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?">
+                    </div>                   
+                    <div class="gap10"></div>
+                    <input class="" type="text" [attr.disabled]="'disabled'?'isSelect==false': null" formControlName="email" placeholder="Ex: john.doe@example.com" name="email" >
+                    <div *ngIf="isValidInput('email')">
+                      <span class="errorMsg" *ngIf="setPassForm.controls['email'].hasError('pattern')"><img src="assets/error_info_icon.svg" alt="error icon">Invalid format</span>
+                      <span class="errorMsg" *ngIf="setPassForm.controls['email'].hasError('required')"><img src="assets/error_info_icon.svg" alt="error icon">E-mail name is reqiured.</span>
+                    </div> -->
+                </div>
+                <div class="passwordStatusWrap">
+                  <h2>Strength:
+                    <span
+                      *ngIf="(setPassForm.controls['password'].hasError('minlength') && setPassForm.controls['password'].hasError('hasCapitalCase'))  
+                      || (setPassForm.controls['password'].hasError('hasCapitalCase') && setPassForm.controls['password'].hasError('hasSpecialCharacters'))  
+                      || (setPassForm.controls['password'].hasError('hasSpecialCharacters') && setPassForm.controls['password'].hasError('minlength'))"
+                      style="color:#FF443C">
+                      Low
+                    </span>
+                    <span style="color:#FF6100" *ngIf="isMedium && setPassForm.controls.password.invalid">
+                      Medium
+                    </span>
+                    <span style="color:#39D02B" *ngIf="setPassForm.controls.password.valid">
+                      Strong
+                    </span>
+                  </h2>
+                  <span class="pswStatusTxt">
+                    <i
+                      [ngClass]="setPassForm.controls['password'].hasError('required') || setPassForm.controls['password'].hasError('minlength')  ? 'fa fa-close text-danger' : 'fa fa-check text-success'"></i>
+                    At least 8 characters
+                  </span>
+                  <span class="pswStatusTxt">
+                    <i
+                      [ngClass]="setPassForm.controls['password'].hasError('required') || setPassForm.controls['password'].hasError('hasCapitalCase')  ? 'fa fa-close text-danger' : ' text-success fa fa-check'"></i>
+                    At least 1 capital letter
+                  </span>
+                  <span class="pswStatusTxt">
+                    <i
+                      [ngClass]="setPassForm.controls['password'].hasError('required') || setPassForm.controls['password'].hasError('hasSpecialCharacters') ? 'fa fa-close text-danger' : 'fa fa-check text-success'"></i>
+                    At least 1 special character
+                  </span>
+                </div>
+              </div>
+              <div class="gap10"></div>
+              <div class="formField passwordWithIcon">
+                <label for="setupRecoveryPsw">Picture Password</label>
+                <div class="pt-1 pb-1" style="opacity: 0.7; font-size: 15px;">
+                  <label>A {{randomChar}} was {{randomV1}} near {{randomPlace}} where they found a {{randomThing}}. When
+                    the {{randomThing}} was {{randomV2}}, there was {{randomEvent}}. </label>
+                </div>
+                <div class="picturePswWrap">
+
+                  <div class="row row5">
+                    <div class="col-2">
+                      <div class="picturePswImgWrap picturePswImg" [ngStyle]="{'background-color': randombgcolorC}">
+                        <img class="picturePswImg" [src]=randomUrlChar>
+                        <div class="charNameWrap">
+                          <span class="" title="{{randomChar | titlecase}}">{{randomChar | titlecase}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="picturePswImgWrap" [ngStyle]="{'background-color': randombgcolorV1}">
+                        <img class="picturePswImg" [src]=randomUrlVerb_01>
+                        <div class="charNameWrap">
+                          <span class="" title="{{randomV1 | titlecase}}">{{randomV1 | titlecase}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="picturePswImgWrap" [ngStyle]="{'background-color': randombgcolorP}">
+                        <img class="picturePswImg" [src]=randomUrlPlace>
+                        <div class="charNameWrap">
+                          <span class="" title="{{randomPlace | titlecase}}">{{randomPlace | titlecase}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="picturePswImgWrap" [ngStyle]="{'background-color': randombgcolorT}">
+                        <img class="picturePswImg" [src]=randomUrlThing>
+                        <div class="charNameWrap">
+                          <span class="" title="{{randomThing | titlecase}}">{{randomThing | titlecase}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="picturePswImgWrap" [ngStyle]="{'background-color': randombgcolorV2}">
+                        <img class="picturePswImg" [src]=randomUrlVerb_02>
+                        <div class="charNameWrap">
+                          <span class="" title="{{randomV2 | titlecase}}">{{randomV2 | titlecase}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="picturePswImgWrap" [ngStyle]="{'background-color': randombgcolorE}">
+                        <img class="picturePswImg" [src]=randomUrlEvent>
+                        <div class="charNameWrap">
+                          <span class="" title="{{randomEvent | titlecase}}">{{randomEvent | titlecase}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <img src="assets/setup-sec-img-black-white.png" alt="setup image" class="stepperMainImg">
+        </div>
+      </div>
+    </div>
+    <div class="transBottomFooter">
+      <div class="bottomPartSubmit">
+        <div class="container">
+          <span class="infoText">
+            <img src="assets/info_circle.svg" alt="">You can log on to multiple devices using your SkyVault address &
+            its unique password.
+          </span>
+        </div>
+        <div class="bottomFooter">
+          <div class="container">
+            <button href="javascript:;" routerLink="/dashboard/create-skyvault-dash/upload-cc"
+              class="btnCustomBlue btnLarge btnDisable"
+              [ngClass]="{'btnDisable':setPassForm.controls.password.invalid || (setPassForm.controls.email.invalid && this.isSelect)}"
+              [disabled]="setPassForm.controls.password.invalid || (setPassForm.controls.email.invalid && this.isSelect)"
+              (click)="save()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
